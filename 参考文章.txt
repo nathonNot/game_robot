@@ -1,0 +1,3 @@
+https://eyehere.net/2012/python-game-bot-autopy-2/     用Python制作游戏外挂 4399小游戏
+https://github.com/autopilot-rs/autopy                 autopy 官方文档
+https://blog.csdn.net/korekara88730/article/details/48796831      qq炫舞机器人
