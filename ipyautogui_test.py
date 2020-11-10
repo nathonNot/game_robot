@@ -1,16 +1,17 @@
 import pyautogui
 import cv2
 
-def left_click(path): #左键点击
-    left_click1 = pyautogui.locateOnScreen(path)
-    print('left_click1::', left_click1)  # 返回屏幕所在位置
-    if left_click1:
-        url_x, url_y = pyautogui.center(left_click1)
-        pyautogui.leftClick(url_x, url_y)
-        return True
+# 右键单击,路径中不能有中文
+def right_click(path):
+    coords = pyautogui.locateOnScreen(path)
+    if coords:
+        #获取定位到的图中间点坐标
+        x,y=pyautogui.center(coords)
+        #右击该坐标点
+        pyautogui.rightClick(x,y)
     return False
 
 
 if __name__ == '__main__':
-    left_click(r"image\\此电脑.png")
+    right_click("image\\vs_code.png")
     
