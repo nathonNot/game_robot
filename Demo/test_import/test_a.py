@@ -1,11 +1,11 @@
-from lib.func_wrap import frame_rate
+from lib.BaseModule import BaseModule
 
-class A:
+class A(BaseModule):
 
     def __init__(self):
         print("init")
 
-    def funcname(self):
+    def fram_update(self):
         """
         docstring
         """
