@@ -1,13 +1,13 @@
 from lib.func_wrap import frame_rate
 
-class A:
+class B:
 
     def __init__(self):
-        print("init")
+        print("init b")
 
     def funcname(self):
         """
         docstring
         """
-        print("class a")
+        print("class b")
         return 0
