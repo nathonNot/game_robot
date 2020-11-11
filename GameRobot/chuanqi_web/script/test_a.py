@@ -6,8 +6,5 @@ class A(BaseModule):
         print("init")
 
     def fram_update(self):
-        """
-        docstring
-        """
-        print("class a")
+        print("帧频刷新")
         return 0

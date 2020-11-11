@@ -19,6 +19,7 @@ def right_click(path):
 def left_click(path):
     coords = get_screen_box(path)
     if coords:
+        print("找到"+path)
         #获取定位到的图中间点坐标
         x,y=pyautogui.center(coords)
         #右击该坐标点
