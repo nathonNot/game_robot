@@ -29,7 +29,7 @@ def init_file(path: str):
                     if o.__module__ == "lib.BaseModule":
                         continue
                     base = o()
-                    gbd.module_list.append(base)
+                    gbd.module_dc[o.__module__] = base
             except Exception as identifier:
                 pass
-    print(gbd.module_list)
+    print(gbd.module_dc)
