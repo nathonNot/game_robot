@@ -24,33 +24,26 @@ class TuanLian(BaseModule):
         tl_k = controls.get_screen_box_all("image\\tl_k.png")
         tl_j = controls.get_screen_box_all("image\\tl_j.png")
         if up:
-            for u in up:
-                self.onec_button.append(["up",u.left])
-                self.chick_button = u
+            self.add_button_cilck(up,"up")
         if down:
-            for d in down:
-                self.onec_button.append(["down",d.left])
-                self.chick_button = d
+            self.add_button_cilck(down,"down")
         if right:
-            for r in right:
-                self.onec_button.append(["right",r.left])
-                self.chick_button = r
+            self.add_button_cilck(right,"right")
         if left:
-            for l in left:
-                self.onec_button.append(["left",l.left])
-                self.chick_button = l
+            self.add_button_cilck(left,"left")
         if tl_k:
-            for k in tl_k:
-                self.onec_button.append(["k",k.left])
-                self.chick_button = k
+            self.add_button_cilck(tl_k,"k")
         if tl_j:
-            for j in tl_j:
-                self.onec_button.append(["j",j.left])
-                self.chick_button = j
+            self.add_button_cilck(tl_j,"j")
         if len(self.onec_button) >0:
             self.onec_button.sort(key = lambda x: x[1])
             print(self.onec_button)
             pyautogui.leftClick(self.chick_button)
             for key in self.onec_button:
                 pyautogui.press(key[0])
-            
+    
+
+    def add_button_cilck(self,button_find,button_name):
+        for button in button_find:
+            self.onec_button.append([button_name,button.left])
+            self.chick_button = button
