@@ -4,6 +4,9 @@ import pyautogui
 def get_screen_box(path,contrast_ratio = 0.9):
     return pyautogui.locateOnScreen(path,confidence=contrast_ratio)
 
+def get_screen_box_all(path,contrast_ratio = 0.9):
+    return pyautogui.locateAllOnScreen(path,confidence=contrast_ratio)
+
 # 右键单击,路径中不能有中文
 def right_click(path):
     coords = get_screen_box(path)
