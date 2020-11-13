@@ -4,6 +4,8 @@ import lib.gui_controls as controls
 # 兵魂
 class BingHun(BaseModule):
 
+    is_act = False
+
     def __init__(self):
         print("init")
 

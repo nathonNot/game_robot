@@ -20,8 +20,6 @@ with pynput.mouse.Events() as event:
         elif isinstance(i, pynput.mouse.Events.Scroll):
             #鼠标滚轮。
             print(i.x, i.y, i.dx, i.dy)
-
-
         break
     
     i = event.get(1)

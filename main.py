@@ -8,6 +8,7 @@ from lib.utils import init_file
 import lib.global_data as gbd
 import ctypes, win32con, ctypes.wintypes, win32gui
 
+# 快捷键线程
 class Hotkey(threading.Thread):
  
     def run(self):
@@ -28,13 +29,15 @@ class Hotkey(threading.Thread):
         finally:
             user32.UnregisterHotKey(None, 1)
 
+
+
 if __name__ == '__main__':
     # path = "GameRobot/chuanqi_web/script"
     path = "GameRobot/jiuyin/script"
     init_file(path)
     EXIT = True
     Hk = Hotkey()
-    Hk.run()
+    Hk.start()
     while(EXIT):
         for m in gbd.module_dc.values():
             if m.is_act:
