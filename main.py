@@ -42,4 +42,4 @@ if __name__ == '__main__':
         for m in gbd.module_dc.values():
             if m.is_act:
                 m.fram_update()
-        time.sleep(1)
+        time.sleep(0.2)

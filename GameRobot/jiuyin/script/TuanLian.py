@@ -6,7 +6,7 @@ import pyautogui
 # 团练授业
 class TuanLian(BaseModule):
 
-    is_act = True
+    is_act = False
     
     onec_button = []
     chick_button = None
