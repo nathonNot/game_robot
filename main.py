@@ -6,11 +6,18 @@ import threading
 from lib.BaseModule import BaseModule
 from lib.utils import init_file
 import lib.global_data as gbd
-import ctypes, win32con, ctypes.wintypes, win32gui
+import lib.version_authentication as va
+import ctypes
+import win32con
+import ctypes.wintypes
+import win32gui
+import datetime
 
 # 快捷键线程
+
+
 class Hotkey(threading.Thread):
- 
+
     def run(self):
         global EXIT
         user32 = ctypes.windll.user32
@@ -30,9 +37,22 @@ class Hotkey(threading.Thread):
             user32.UnregisterHotKey(None, 1)
 
 
-
-if __name__ == '__main__':
-    # path = "GameRobot/chuanqi_web/script"
+def main():
+    version_data = va.get_version()
+    if version_data == None:
+        print("版本号异常")
+        return
+    version = version_data.get("version")
+    end_time = version_data.get("end_time")
+    if end_time == None:
+        print("时间异常")
+        return
+    time_now = datetime.datetime.now()
+    time_now = time_now.year * 1000 + time_now.month*100 + time_now.day
+    if time_now > end_time:
+        print("有效期结束")
+        return
+    print(f"当前程序版本号：：：{version}")
     path = "GameRobot/jiuyin/script"
     init_file(path)
     EXIT = True
@@ -43,3 +63,9 @@ if __name__ == '__main__':
             if m.is_act:
                 m.fram_update()
         time.sleep(0.2)
+
+
+if __name__ == '__main__':
+    # path = "GameRobot/chuanqi_web/script"
+    main()
+    input()

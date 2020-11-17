@@ -17,7 +17,7 @@ def init_file(path: str):
         moudle = file.split(".")[0]
         moudle_name = base_module_path+"." + moudle
         lib = importlib.import_module(moudle_name)
-        print(lib.__dir__())
+        # print(lib.__dir__())
         for d in lib.__dir__():
             if "__" in d:
                 continue

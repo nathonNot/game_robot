@@ -6,7 +6,7 @@ import pyautogui
 # 团练授业
 class TuanLian(BaseModule):
 
-    is_act = False
+    is_act = True
     
     onec_button = []
     chick_button = None
@@ -15,7 +15,7 @@ class TuanLian(BaseModule):
         print("初始化团练授业模块")
 
     def fram_update(self):
-        print("do update")
+        print("扫描")
         self.onec_button.clear()
         up = controls.get_screen_box_all("image\\tl_up.png")
         down = controls.get_screen_box_all("image\\tl_down.png")
