@@ -10,7 +10,6 @@ import lib.version_authentication as va
 import ctypes
 import win32con
 import ctypes.wintypes
-import win32gui
 import datetime
 import lib.windows_con as win_con
 import game_robot
