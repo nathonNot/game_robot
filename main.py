@@ -13,6 +13,7 @@ import ctypes.wintypes
 import datetime
 import lib.windows_con as win_con
 import game_robot
+import lib
 # 快捷键线程
 
 class Hotkey(threading.Thread):
