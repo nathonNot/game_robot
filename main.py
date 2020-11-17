@@ -22,7 +22,6 @@ class Hotkey(threading.Thread):
             raise RuntimeError
         try:
             msg = ctypes.wintypes.MSG()
-            print(msg)
             while user32.GetMessageA(ctypes.byref(msg), None, 0, 0) != 0:
                 if msg.message == win32con.WM_HOTKEY:
                     if msg.wParam == 99:
@@ -51,12 +50,12 @@ def main():
         return
     print(f"当前程序版本号：：：{version}")
     print("设置九阴窗口")
-    win_con.set_windwos()
     import game_robot
-    EXIT = True
+    global EXIT
     Hk = Hotkey()
     Hk.start()
     while(EXIT):
+        win_con.set_windwos()
         for m in gbd.module_dc.values():
             if m.is_act:
                 m.fram_update()
@@ -65,5 +64,6 @@ def main():
 
 if __name__ == '__main__':
     # path = "GameRobot/chuanqi_web/script"
+    EXIT = True
     main()
     input()

@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\wenmai\\envs\\jiuyin_robot\\Scripts\\python.exe"
+    "python.pythonPath": "D:\\DevelopLanguage\\python\\env\\jiuyin_robot\\Scripts\\python.exe",
+    "python.formatting.provider": "black"
 }
