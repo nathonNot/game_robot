@@ -3,8 +3,6 @@ import argparse
 import os
 import time
 import threading
-from lib.BaseModule import BaseModule
-from lib.utils import init_file
 import lib.global_data as gbd
 import lib.version_authentication as va
 import ctypes
@@ -12,7 +10,6 @@ import win32con
 import ctypes.wintypes
 import datetime
 import lib.windows_con as win_con
-import game_robot
 import lib
 # 快捷键线程
 
@@ -55,8 +52,7 @@ def main():
     print(f"当前程序版本号：：：{version}")
     print("设置九阴窗口")
     win_con.set_windwos()
-    path = "game_robot/jiuyin/script"
-    init_file(path)
+    import game_robot
     EXIT = True
     Hk = Hotkey()
     Hk.start()

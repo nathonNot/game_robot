@@ -1,6 +1,6 @@
 
 from lib.BaseModule import BaseModule
-import lib.gui_controls as controls
+from lib.gui_controls import controls
 import pyautogui
 
 # 团练授业

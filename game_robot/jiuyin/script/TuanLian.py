@@ -1,6 +1,6 @@
 
 from lib.BaseModule import BaseModule
-import lib.gui_controls as controls
+from lib.gui_controls import Controls
 import pyautogui
 
 # 团练授业
@@ -17,12 +17,12 @@ class TuanLian(BaseModule):
     def fram_update(self):
         print("扫描")
         self.onec_button.clear()
-        up = controls.get_screen_box_all("image\\tl_up.png")
-        down = controls.get_screen_box_all("image\\tl_down.png")
-        right = controls.get_screen_box_all("image\\tl_right.png")
-        left = controls.get_screen_box_all("image\\tl_left.png")
-        tl_k = controls.get_screen_box_all("image\\tl_k.png")
-        tl_j = controls.get_screen_box_all("image\\tl_j.png")
+        up = Controls.get_screen_box_all("image\\tl_up.png")
+        down = Controls.get_screen_box_all("image\\tl_down.png")
+        right = Controls.get_screen_box_all("image\\tl_right.png")
+        left = Controls.get_screen_box_all("image\\tl_left.png")
+        tl_k = Controls.get_screen_box_all("image\\tl_k.png")
+        tl_j = Controls.get_screen_box_all("image\\tl_j.png")
         if up:
             self.add_button_cilck(up,"up")
         if down:

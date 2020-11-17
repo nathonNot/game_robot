@@ -44,7 +44,7 @@
  [],
  False,
  False,
- 1605610466,
+ 1605611696,
  [('run.exe',
    'c:\\users\\wenmai\\envs\\jiuyin_robot\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
    'EXECUTABLE')])
