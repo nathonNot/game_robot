@@ -13,7 +13,7 @@ import ctypes.wintypes
 import win32gui
 import datetime
 import lib.windows_con as win_con
-
+import game_robot
 # 快捷键线程
 
 class Hotkey(threading.Thread):
@@ -55,7 +55,7 @@ def main():
     print(f"当前程序版本号：：：{version}")
     print("设置九阴窗口")
     win_con.set_windwos()
-    path = "GameRobot/jiuyin/script"
+    path = "game_robot/jiuyin/script"
     init_file(path)
     EXIT = True
     Hk = Hotkey()

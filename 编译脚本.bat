@@ -1,0 +1,1 @@
+pyinstaller -D main.py -o release --add-data game_robot;game_robot --add-data image;image --key asdbasd

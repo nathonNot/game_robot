@@ -21,4 +21,5 @@ PyTweening==1.0.3
 pywin32==300
 pywin32-ctypes==0.2.0
 requests==2.25.0
+tinyaes==1.0.1
 urllib3==1.26.2
