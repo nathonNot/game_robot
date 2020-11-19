@@ -3,17 +3,30 @@ import win32api,win32gui,win32con #导入win32api相关模块
 
 class Controls:
 
+    screen = None
+
+    @classmethod
+    def get_screen(cls):
+        cls.screen = pyautogui.screenshot()
+
+    @classmethod
+    def localall(cls,path,region,contrast_ratio=0.9):
+        return pyautogui.locateAll(path, cls.screen,region=region,confidence = contrast_ratio)
+
+    @classmethod
+    def screen_close(cls):
+        try:
+            cls.screen.fp.close()
+        except AttributeError:
+            # Screenshots on Windows won't have an fp since they came from
+            # ImageGrab, not a file. Screenshots on Linux will have fp set
+            # to None since the file has been unlinked
+            pass
+
     # 路径，对比度
     @staticmethod
     def get_screen_box(path, contrast_ratio=0.9):
         return pyautogui.locateOnScreen(path, confidence=contrast_ratio)
-
-    @staticmethod
-    def get_screen_box_all(path, contrast_ratio=0.9, region=None):
-        if region:
-            pyautogui.locateAllOnScreen(
-                path, confidence=contrast_ratio, region=region)
-        return pyautogui.locateAllOnScreen(path, confidence=contrast_ratio)
 
     # 右键单击,路径中不能有中文
     @staticmethod
@@ -40,8 +53,15 @@ class Controls:
             return True
         return False
 
+    @staticmethod
+    def activate_hwnd(hwnd):
+        win32api.SendMessage(hwnd, win32con.WM_ACTIVATEAPP,0x1,0)
+        win32api.SendMessage(hwnd, win32con.WM_ACTIVATE,0x2,0)
+        win32api.SendMessage(hwnd, win32con.WM_IME_SETCONTEXT,0x1,0xC000000F)
+        win32api.SendMessage(hwnd, win32con.WM_IME_NOTIFY,0x2,0)
+
     # 键盘摁下抬起
     @staticmethod
     def key_post(hwnd,key):
-        win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, key, 0)
-        win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0)
+        win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, key, 0x2E0001)
+        win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0x2E0001)

@@ -2,7 +2,7 @@ from lib.BaseModule import BaseModule
 from lib.gui_controls import Controls
 import pyautogui
 from lib import global_data
-import win32gui, win32con
+import win32gui, win32con, win32api
 
 
 # 团练授业
@@ -27,12 +27,12 @@ class TuanLian(BaseModule):
         xleft, ytop, xright, ybottom = win32gui.GetWindowRect(hwnd)
         form = (xleft, ytop, (xright - xleft), (ybottom - ytop))
         self.onec_button.clear()
-        up = Controls.get_screen_box_all("image\\tl_up.png", region=form)
-        down = Controls.get_screen_box_all("image\\tl_down.png", region=form)
-        right = Controls.get_screen_box_all("image\\tl_right.png", region=form)
-        left = Controls.get_screen_box_all("image\\tl_left.png", region=form)
-        tl_k = Controls.get_screen_box_all("image\\tl_k.png", region=form)
-        tl_j = Controls.get_screen_box_all("image\\tl_j.png", region=form)
+        up = Controls.localall("image\\tl_up.png", form)
+        down = Controls.localall("image\\tl_down.png", form)
+        right = Controls.localall("image\\tl_right.png", form)
+        left = Controls.localall("image\\tl_left.png", form)
+        tl_k = Controls.localall("image\\tl_k.png", form)
+        tl_j = Controls.localall("image\\tl_j.png", form)
         if up:
             self.add_button_cilck(up, "up", win32con.VK_UP)
         if down:
@@ -50,16 +50,22 @@ class TuanLian(BaseModule):
             pyautogui.FAILSAFE = False
             self.onec_button.sort(key=lambda x: x[1])
             print(self.onec_button)
-            pyautogui.leftClick(self.chick_button)
+            # pyautogui.leftClick(self.chick_button)
+            # win32api.SendMessage(hwnd, win32con.WM_ACTIVATE,0x2,0)
+            # win32api.SendMessage(hwnd, win32con.WM_IME_SETCONTEXT,0x1,0xC000000F)
+            # win32api.SendMessage(hwnd, win32con.WM_IME_NOTIFY,0x2,0)
+            Controls.activate_hwnd(hwnd)
             for key in self.onec_button:
                 if (key[1] - last_x) <= 5:
                     continue
-                # Controls.key_post(hwnd, key[2])
+                Controls.key_post(hwnd, key[2])
                 last_x = key[1]
-                pyautogui.press(key[0])
-            pyautogui.moveTo(0, 0)
+                # pyautogui.press(key[0])
+            # pyautogui.moveTo(0, 0)
 
     def add_button_cilck(self, button_find, button_name, vk_key):
         for button in button_find:
+            if button is None:
+                continue
             self.onec_button.append([button_name, button.left, vk_key])
             self.chick_button = button

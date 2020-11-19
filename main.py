@@ -1,5 +1,6 @@
 import importlib
 import argparse
+from lib.gui_controls import Controls
 import os
 import time
 import threading
@@ -54,12 +55,18 @@ def main():
     global EXIT
     Hk = Hotkey()
     Hk.start()
+    controls = Controls()
     while(EXIT):
-        win_con.set_windwos()
-        for m in gbd.module_dc.values():
-            if m.is_act:
-                m.fram_update()
-        time.sleep(0.2)
+        try:
+            win_con.set_windwos()
+            controls.get_screen()
+            for m in gbd.module_dc.values():
+                if m.is_act:
+                    m.fram_update()
+            controls.screen_close()
+        except Exception as e:
+            print(str(e))
+        time.sleep(0.1)
 
 
 if __name__ == '__main__':
