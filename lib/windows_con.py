@@ -10,6 +10,9 @@ def set_windwos():
     for hwnd in hWndList:
         # clsname = win32gui.GetClassName(hwnd)
         title = win32gui.GetWindowText(hwnd)
+        # if "Flask" in title:
+        print(hwnd,title)
+        # print(title,hwnd)
         if (title.find("九阴真经") >= 0): #调整目标窗口到坐标(600,300),大小设置为(600,600)
             global_data.hwnd_list.append(hwnd)
             # screenshot_by_hwnd(hwnd)

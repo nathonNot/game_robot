@@ -1,5 +1,5 @@
 import pyautogui
-
+import win32api,win32gui,win32con #导入win32api相关模块
 
 class Controls:
 
@@ -39,3 +39,9 @@ class Controls:
             pyautogui.leftClick(x, y)
             return True
         return False
+
+    # 键盘摁下抬起
+    @staticmethod
+    def key_post(hwnd,key):
+        win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, key, 0)
+        win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0)

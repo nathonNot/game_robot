@@ -2,7 +2,7 @@ from lib.BaseModule import BaseModule
 from lib.gui_controls import Controls
 import pyautogui
 from lib import global_data
-import win32gui
+import win32gui, win32con
 
 
 # 团练授业
@@ -34,17 +34,17 @@ class TuanLian(BaseModule):
         tl_k = Controls.get_screen_box_all("image\\tl_k.png", region=form)
         tl_j = Controls.get_screen_box_all("image\\tl_j.png", region=form)
         if up:
-            self.add_button_cilck(up, "up")
+            self.add_button_cilck(up, "up", win32con.VK_UP)
         if down:
-            self.add_button_cilck(down, "down")
+            self.add_button_cilck(down, "down", win32con.VK_DOWN)
         if right:
-            self.add_button_cilck(right, "right")
+            self.add_button_cilck(right, "right", win32con.VK_RIGHT)
         if left:
-            self.add_button_cilck(left, "left")
+            self.add_button_cilck(left, "left", win32con.VK_LEFT)
         if tl_k:
-            self.add_button_cilck(tl_k, "k")
+            self.add_button_cilck(tl_k, "k", 0x4B)
         if tl_j:
-            self.add_button_cilck(tl_j, "j")
+            self.add_button_cilck(tl_j, "j", 0x4A)
         last_x = 0
         if len(self.onec_button) > 0:
             pyautogui.FAILSAFE = False
@@ -54,11 +54,12 @@ class TuanLian(BaseModule):
             for key in self.onec_button:
                 if (key[1] - last_x) <= 5:
                     continue
-                last_x = key[1]
-                pyautogui.press(key[0])
+                Controls.key_post(hwnd, key[2])
+                # last_x = key[1]
+                # pyautogui.press(key[0])
             pyautogui.moveTo(0, 0)
 
-    def add_button_cilck(self, button_find, button_name):
+    def add_button_cilck(self, button_find, button_name, vk_key):
         for button in button_find:
-            self.onec_button.append([button_name, button.left])
+            self.onec_button.append([button_name, button.left, vk_key])
             self.chick_button = button
