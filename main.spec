@@ -4,7 +4,7 @@ block_cipher = pyi_crypto.PyiBlockCipher(key='asdbasd')
 
 
 a = Analysis(['main.py'],
-             pathex=['lib', 'D:\\demo\\jiuyin_robot'],
+             pathex=[],
              binaries=[],
              datas=[('image', 'image')],
              hiddenimports=['pywintypes'],
