@@ -30,7 +30,7 @@ class TuanLian(BaseModule):
         up = Controls.localall("image\\tl_up.png", form)
         down = Controls.localall("image\\tl_down.png", form)
         right = Controls.localall("image\\tl_right.png", form)
-        left = Controls.localall("image\\tl_left.png", form)
+        left = Controls.localall("image\\tl_left.bmp", form)
         tl_k = Controls.localall("image\\tl_k.png", form)
         tl_j = Controls.localall("image\\tl_j.png", form)
         if up:
@@ -67,5 +67,11 @@ class TuanLian(BaseModule):
         for button in button_find:
             if button is None:
                 continue
-            self.onec_button.append([button_name, button.left, vk_key])
+            new_list = [button_name, button.left, vk_key]
+            if new_list in self.onec_button:
+                continue
+            next_list = [button_name,button.left + 1,vk_key]
+            if next_list in self.onec_button:
+                continue
+            self.onec_button.append()
             self.chick_button = button

@@ -39,7 +39,6 @@ def log_init(level="DEBUG"):
     logger.add(
         "log\\runtime_{time}.log", retention="10 days", rotation="5 MB", level=level
     )
-    # logger.add('runtime.log', retention='10 days')
 
 
 def main():
