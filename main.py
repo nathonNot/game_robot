@@ -12,10 +12,12 @@ import ctypes.wintypes
 import datetime
 import lib.windows_con as win_con
 import lib
+import json
+
 # 快捷键线程
 
-class Hotkey(threading.Thread):
 
+class Hotkey(threading.Thread):
     def run(self):
         global EXIT
         user32 = ctypes.windll.user32
@@ -35,6 +37,12 @@ class Hotkey(threading.Thread):
 
 
 def main():
+    with open("config\\config.json", "r") as f:
+        config = json.loads(f.read())
+    if config == "" or config is None:
+        print("未找到配置文件")
+        return
+
     version_data = va.get_version()
     if version_data == None:
         print("版本号异常")
@@ -45,18 +53,19 @@ def main():
         print("时间异常")
         return
     time_now = datetime.datetime.now()
-    time_now = time_now.year * 1000 + time_now.month*100 + time_now.day
+    time_now = time_now.year * 1000 + time_now.month * 100 + time_now.day
     if time_now > end_time:
         print("有效期结束")
         return
-    print(f"当前程序版本号：：：{version}")
+    print("当前程序版本号：：：" + config["version"])
     print("设置九阴窗口")
     import game_robot
+
     global EXIT
     Hk = Hotkey()
     Hk.start()
     controls = Controls()
-    while(EXIT):
+    while EXIT:
         try:
             win_con.set_windwos()
             controls.get_screen()
@@ -69,7 +78,7 @@ def main():
         time.sleep(0.1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # path = "GameRobot/chuanqi_web/script"
     EXIT = True
     main()
