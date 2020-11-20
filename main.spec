@@ -6,7 +6,7 @@ block_cipher = pyi_crypto.PyiBlockCipher(key='asdbasd')
 a = Analysis(['main.py'],
              pathex=[],
              binaries=[],
-             datas=[('image', 'image'),('config','config')],
+             datas=[('image', 'image'),('config','config'),('log','log')],
              hiddenimports=['pywintypes'],
              hookspath=[],
              runtime_hooks=[],

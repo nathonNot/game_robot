@@ -3,7 +3,7 @@ from lib.gui_controls import Controls
 import pyautogui
 from lib import global_data
 import win32gui, win32con, win32api
-
+from loguru import logger
 
 # 团练授业
 class TuanLian(BaseModule):
@@ -14,7 +14,7 @@ class TuanLian(BaseModule):
     chick_button = None
 
     def __init__(self):
-        print("初始化团练授业模块")
+        logger.info("初始化团练授业模块")
 
     def fram_update(self):
         if len(global_data.hwnd_list) <= 0:
@@ -49,7 +49,7 @@ class TuanLian(BaseModule):
         if len(self.onec_button) > 0:
             pyautogui.FAILSAFE = False
             self.onec_button.sort(key=lambda x: x[1])
-            print(self.onec_button)
+            logger.info(self.onec_button)
             # pyautogui.leftClick(self.chick_button)
             # win32api.SendMessage(hwnd, win32con.WM_ACTIVATE,0x2,0)
             # win32api.SendMessage(hwnd, win32con.WM_IME_SETCONTEXT,0x1,0xC000000F)

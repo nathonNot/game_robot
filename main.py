@@ -13,8 +13,7 @@ import datetime
 import lib.windows_con as win_con
 import lib
 import json
-
-# 快捷键线程
+from loguru import logger
 
 
 class Hotkey(threading.Thread):
@@ -36,29 +35,36 @@ class Hotkey(threading.Thread):
             user32.UnregisterHotKey(None, 1)
 
 
+def log_init(level="DEBUG"):
+    logger.add(
+        "log\\runtime_{time}.log", retention="10 days", rotation="5 MB", level=level
+    )
+    # logger.add('runtime.log', retention='10 days')
+
+
 def main():
     with open("config\\config.json", "r") as f:
         config = json.loads(f.read())
     if config == "" or config is None:
-        print("未找到配置文件")
+        logger.error("未找到配置文件")
         return
-
+    log_init(config["log_level"])
     version_data = va.get_version()
     if version_data == None:
-        print("版本号异常")
+        logger.error("版本号异常")
         return
     version = version_data.get("version")
     end_time = version_data.get("end_time")
     if end_time == None:
-        print("时间异常")
+        logger.error("时间异常")
         return
     time_now = datetime.datetime.now()
     time_now = time_now.year * 1000 + time_now.month * 100 + time_now.day
     if time_now > end_time:
-        print("有效期结束")
+        logger.error("有效期结束")
         return
-    print("当前程序版本号：：：" + config["version"])
-    print("设置九阴窗口")
+    logger.info("当前程序版本号：：：" + config["version"])
+    logger.info("设置九阴窗口")
     import game_robot
 
     global EXIT
@@ -74,7 +80,7 @@ def main():
                     m.fram_update()
             controls.screen_close()
         except Exception as e:
-            print(str(e))
+            logger.error(str(e))
         time.sleep(0.1)
 
 
