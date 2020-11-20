@@ -16,11 +16,11 @@ class TuanLian(BaseModule):
     def __init__(self):
         logger.info("初始化团练授业模块")
 
-    def fram_update(self):
-        if len(global_data.hwnd_list) <= 0:
-            return
-        for hwnd in global_data.hwnd_list:
-            self.update_hwnd(hwnd)
+    # def fram_update(self):
+    #     if len(global_data.hwnd_list) <= 0:
+    #         return
+    #     for hwnd in global_data.hwnd_list:
+    #         self.update_hwnd(hwnd)
 
     def update_hwnd(self, hwnd):
         # 获取窗口左上角和右下角坐标
@@ -30,7 +30,7 @@ class TuanLian(BaseModule):
         up = Controls.localall("image\\tl_up.png", form)
         down = Controls.localall("image\\tl_down1.png", form)
         right = Controls.localall("image\\tl_right1.png", form)
-        left = Controls.localall("image\\tl_left1.bmp", form)
+        left = Controls.localall("image\\tl_left.bmp", form)
         tl_k = Controls.localall("image\\tl_k.png", form)
         tl_j = Controls.localall("image\\tl_j.png", form)
         if up:

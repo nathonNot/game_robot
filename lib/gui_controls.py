@@ -14,6 +14,10 @@ class Controls:
         return pyautogui.locateAll(path, cls.screen,region=region,confidence = contrast_ratio)
 
     @classmethod
+    def locate(cls,path,region,contrast_ratio=0.9):
+        return pyautogui.locate(image, screenshotIm, **kwargs)
+
+    @classmethod
     def screen_close(cls):
         try:
             cls.screen.fp.close()
