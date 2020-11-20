@@ -1,5 +1,5 @@
 *.pyc
-.vscode/settings.json
-build/*
+/.vscode/
+/build/*
 dist.zip
-dist/main
+/dist/main/*
