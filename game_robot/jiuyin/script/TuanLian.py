@@ -28,9 +28,9 @@ class TuanLian(BaseModule):
         form = (xleft, ytop, (xright - xleft), (ybottom - ytop))
         self.onec_button.clear()
         up = Controls.localall("image\\tl_up.png", form)
-        down = Controls.localall("image\\tl_down.png", form)
-        right = Controls.localall("image\\tl_right.png", form)
-        left = Controls.localall("image\\tl_left.bmp", form)
+        down = Controls.localall("image\\tl_down1.png", form)
+        right = Controls.localall("image\\tl_right1.png", form)
+        left = Controls.localall("image\\tl_left1.bmp", form)
         tl_k = Controls.localall("image\\tl_k.png", form)
         tl_j = Controls.localall("image\\tl_j.png", form)
         if up:
