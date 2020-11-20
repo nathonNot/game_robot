@@ -48,7 +48,7 @@ class TuanLian(BaseModule):
         last_x = 0
         if len(self.onec_button) > 0:
             pyautogui.FAILSAFE = False
-            self.onec_button.sort(key=lambda x: x[1])
+            self.de_repetition()
             logger.info(self.onec_button)
             # pyautogui.leftClick(self.chick_button)
             # win32api.SendMessage(hwnd, win32con.WM_ACTIVATE,0x2,0)
@@ -70,8 +70,17 @@ class TuanLian(BaseModule):
             new_list = [button_name, button.left, vk_key]
             if new_list in self.onec_button:
                 continue
-            next_list = [button_name,button.left + 1,vk_key]
-            if next_list in self.onec_button:
-                continue
-            self.onec_button.append()
+            self.onec_button.append(new_list)
             self.chick_button = button
+
+    def de_repetition(self):
+        self.onec_button.sort(key=lambda x: x[1])
+        new_list = []
+        for button in self.onec_button:
+            if button in new_list:
+                continue
+            new_button = [button[0], button[1] - 1, button[2]]
+            if new_button in new_list:
+                continue
+            new_list.append(button)
+        self.onec_button = new_list
