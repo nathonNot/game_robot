@@ -1,5 +1,6 @@
 import pyautogui
-import win32api,win32gui,win32con #导入win32api相关模块
+import win32api, win32gui, win32con  # 导入win32api相关模块
+
 
 class Controls:
 
@@ -11,17 +12,19 @@ class Controls:
         cls.screen = pyautogui.screenshot()
 
     @classmethod
-    def localall(cls,path,hwnd,contrast_ratio=0.9):
+    def localall(cls, path, hwnd, contrast_ratio=0.9):
         cls.get_hwnd_form(hwnd)
-        return pyautogui.locateAll(path, cls.screen,region=cls.form,confidence = contrast_ratio)
+        return pyautogui.locateAll(
+            path, cls.screen, region=cls.form, confidence=contrast_ratio
+        )
 
     @classmethod
-    def locate(cls,path,hwnd,contrast_ratio=0.9):
+    def locate(cls, path, hwnd, contrast_ratio=0.9):
         cls.get_hwnd_form(hwnd)
-        return pyautogui.locate(image, screenshotIm,region=cls.form)
+        return pyautogui.locate(path, cls.screen, region=cls.form)
 
     @classmethod
-    def get_hwnd_form(cls,hwnd):
+    def get_hwnd_form(cls, hwnd):
         xleft, ytop, xright, ybottom = win32gui.GetWindowRect(hwnd)
         cls.form = (xleft, ytop, (xright - xleft), (ybottom - ytop))
 
@@ -57,7 +60,7 @@ class Controls:
     def left_click(path):
         coords = Controls.get_screen_box(path)
         if coords:
-            print("找到"+path)
+            print("找到" + path)
             # 获取定位到的图中间点坐标
             x, y = pyautogui.center(coords)
             # 右击该坐标点
@@ -67,13 +70,13 @@ class Controls:
 
     @staticmethod
     def activate_hwnd(hwnd):
-        win32api.SendMessage(hwnd, win32con.WM_ACTIVATEAPP,0x1,0)
-        win32api.SendMessage(hwnd, win32con.WM_ACTIVATE,0x2,0)
-        win32api.SendMessage(hwnd, win32con.WM_IME_SETCONTEXT,0x1,0xC000000F)
-        win32api.SendMessage(hwnd, win32con.WM_IME_NOTIFY,0x2,0)
+        win32api.SendMessage(hwnd, win32con.WM_ACTIVATEAPP, 0x1, 0)
+        win32api.SendMessage(hwnd, win32con.WM_ACTIVATE, 0x2, 0)
+        win32api.SendMessage(hwnd, win32con.WM_IME_SETCONTEXT, 0x1, 0xC000000F)
+        win32api.SendMessage(hwnd, win32con.WM_IME_NOTIFY, 0x2, 0)
 
     # 键盘摁下抬起
     @staticmethod
-    def key_post(hwnd,key):
+    def key_post(hwnd, key):
         win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, key, 0x2E0001)
         win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0x2E0001)
