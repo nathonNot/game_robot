@@ -4,18 +4,26 @@ import win32api,win32gui,win32con #导入win32api相关模块
 class Controls:
 
     screen = None
+    form = None
 
     @classmethod
     def get_screen(cls):
         cls.screen = pyautogui.screenshot()
 
     @classmethod
-    def localall(cls,path,region,contrast_ratio=0.9):
-        return pyautogui.locateAll(path, cls.screen,region=region,confidence = contrast_ratio)
+    def localall(cls,path,hwnd,contrast_ratio=0.9):
+        cls.get_hwnd_form(hwnd)
+        return pyautogui.locateAll(path, cls.screen,region=cls.form,confidence = contrast_ratio)
 
     @classmethod
-    def locate(cls,path,region,contrast_ratio=0.9):
-        return pyautogui.locate(image, screenshotIm, **kwargs)
+    def locate(cls,path,hwnd,contrast_ratio=0.9):
+        cls.get_hwnd_form(hwnd)
+        return pyautogui.locate(image, screenshotIm,region=cls.form)
+
+    @classmethod
+    def get_hwnd_form(cls,hwnd):
+        xleft, ytop, xright, ybottom = win32gui.GetWindowRect(hwnd)
+        cls.form = (xleft, ytop, (xright - xleft), (ybottom - ytop))
 
     @classmethod
     def screen_close(cls):

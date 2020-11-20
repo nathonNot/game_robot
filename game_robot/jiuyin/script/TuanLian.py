@@ -24,15 +24,13 @@ class TuanLian(BaseModule):
 
     def update_hwnd(self, hwnd):
         # 获取窗口左上角和右下角坐标
-        xleft, ytop, xright, ybottom = win32gui.GetWindowRect(hwnd)
-        form = (xleft, ytop, (xright - xleft), (ybottom - ytop))
         self.onec_button.clear()
-        up = Controls.localall("image\\tl_up.png", form)
-        down = Controls.localall("image\\tl_down1.png", form)
-        right = Controls.localall("image\\tl_right1.png", form)
-        left = Controls.localall("image\\tl_left.bmp", form)
-        tl_k = Controls.localall("image\\tl_k.png", form)
-        tl_j = Controls.localall("image\\tl_j.png", form)
+        up = Controls.localall("image\\tl_up.png", hwnd)
+        down = Controls.localall("image\\tl_down1.png", hwnd)
+        right = Controls.localall("image\\tl_right1.png", hwnd)
+        left = Controls.localall("image\\tl_left.bmp", hwnd)
+        tl_k = Controls.localall("image\\tl_k.png", hwnd)
+        tl_j = Controls.localall("image\\tl_j.png", hwnd)
         if up:
             self.add_button_cilck(up, "up", win32con.VK_UP)
         if down:
