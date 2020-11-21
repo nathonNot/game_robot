@@ -33,3 +33,4 @@ def init_file(path: str):
             except Exception as identifier:
                 pass
     print(gbd.module_dc)
+

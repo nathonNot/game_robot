@@ -16,3 +16,38 @@ mpWi6CMLZduub1kAvew4B5HKSRohQAQdOIPjOHQwaw5Ie6cRNeBk4RG2K4cS12qf
 /o8W74udDObVKkFZ8wJAPL8bRWv0IWTlvwM14mKxcVf1qCuhkT8GgrG/YP/8fcW8
 SiT+DifcA7BVOgQjgbTchSfaA+YNe7A9qiVmA+G4GQ==
 '''
+import json
+from loguru import logger
+import lib.version_authentication as va
+import datetime
+
+def log_init(level="DEBUG"):
+    logger.add(
+        "log\\runtime_{time}.log", retention="10 days", rotation="5 MB", level=level
+    )
+
+
+def init_config():
+    with open("config\\config.json", "r") as f:
+        config = json.loads(f.read())
+    if config == "" or config is None:
+        logger.error("未找到配置文件")
+        return
+    log_init(config["log_level"])
+    version_data = va.get_version()
+    if version_data == None:
+        logger.error("版本号异常")
+        return
+    version = version_data.get("version")
+    end_time = version_data.get("end_time")
+    if end_time == None:
+        logger.error("时间异常")
+        return
+    time_now = datetime.datetime.now()
+    time_now = time_now.year * 1000 + time_now.month * 100 + time_now.day
+    if time_now > end_time:
+        logger.error("有效期结束")
+        return
+    logger.info("当前程序版本号：：：" + config["version"])
+    return True
+    
