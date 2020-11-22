@@ -1,10 +1,8 @@
 import importlib
-import argparse
 import os
-import time
-import threading
 from lib.BaseModule import BaseModule
 import lib.global_data as gbd
+from lib.thread_class import MainRefresh
 
 def init_file(path: str):
     for file in os.listdir(path):
@@ -34,3 +32,13 @@ def init_file(path: str):
                 pass
     print(gbd.module_dc)
 
+
+def start_thread():
+    main_thread = MainRefresh()
+    main_thread.start()
+    gbd.threads.append(main_thread)
+    # Hk = Hotkey()
+    # Hk.start()
+    # gbd.threads.append(Hk)
+    # for t in gbd.threads:
+    #     t.join()

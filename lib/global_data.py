@@ -8,3 +8,5 @@ this_screen = None
 Exit = False
 
 threa_sleep_time = 0.1
+
+threads = []
