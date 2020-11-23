@@ -12,7 +12,7 @@ def main():
         return
     logger.info("设置九阴窗口")
     import game_robot
-    gbd.Exit = True
+    gbd.Exit = False
     show_login()
 
 
