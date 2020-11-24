@@ -1,12 +1,11 @@
 from qt_ui.Ui_login import Ui_LoginForm
-import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from lib.utils import start_thread
-import os
 import lib.global_data as gbd
 import requests
 import json
 from lib.version_authentication import decode_data
+from PyQt5.QtWidgets import QWidget
+from lib.ui_lib import BaseForm
 
 def do_register(user_name, user_pas):
     data = {"user_name": user_name, "user_pass": user_pas}
@@ -24,7 +23,10 @@ def do_login(user_name, user_pas):
     res = requests.post("http://127.0.0.1:8000/api/user/get_user",json=data,headers=header)
     return decode_data(res.text)
 
-class LoginForm(Ui_LoginForm):
+class LoginForm(Ui_LoginForm,BaseForm):
+
+    enter_succes_func = None
+
     def setupUi(self, LoginForm):
         super().setupUi(LoginForm)
         self.bt_login.clicked.connect(self.on_bt_login_clicked)
@@ -42,9 +44,11 @@ class LoginForm(Ui_LoginForm):
             gbd.user_data = gbd.UserData(**data)
             print("跳转到页面")
         else:
-            data = json.loads(data)
+            data = json.loads(data["datas"])
             self.lb_log.setText(data.get("msg",""))
-            self.close()
+            self.widget.hide()
+            self.enter_succes_func()
+        gbd.Exit = True
         start_thread()
 
     def on_bt_register_clicked(self):
@@ -60,39 +64,8 @@ class LoginForm(Ui_LoginForm):
         else:
             data = json.loads(data)
             self.lb_log.setText(data.get("msg",""))
-
-
-class MainWiondows(QMainWindow):
-    def closeEvent(self, event):
-        """
-        对MainWindow的函数closeEvent进行重构
-        退出软件时结束所有进程
-        :param event:
-        :return:
-        """
-        reply = QMessageBox.question(
-            self, "本程序", "是否要退出程序？", QMessageBox.Yes | QMessageBox.No, QMessageBox.No
-        )
-        if reply == QMessageBox.Yes:
-            event.accept()
-            gbd.Exit = False
-            for t in gbd.threads:
-                t.join()
-            os._exit(0)
-        else:
-            event.ignore()
     
-    def init_form(self):
-        self.login_form = LoginForm()
-        self.login_form.setupUi(self)
 
-
-def show_login():
-    app = QApplication(sys.argv)
-    MainWindow = MainWiondows()
-    MainWindow.init_form()
-    MainWindow.show()
-    sys.exit(app.exec_())
 
 
 if __name__ == "__main__":

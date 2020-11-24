@@ -2,8 +2,7 @@ import lib.global_data as gbd
 from loguru import logger
 from lib.thread_class import MainRefresh
 from config import init_config
-from model.login import show_login
-
+from model.main_windows import show_login
 
 
 def main():
