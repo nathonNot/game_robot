@@ -5,7 +5,8 @@ from lib.utils import start_thread
 import os
 import lib.global_data as gbd
 import requests
-
+import json
+from lib.version_authentication import decode_data
 
 def do_register(user_name, user_pas):
     data = {"user_name": user_name, "user_pass": user_pas}
@@ -13,8 +14,15 @@ def do_register(user_name, user_pas):
         "X_Forwarded_For":"192.168.3.89"
     }
     res = requests.post("http://127.0.0.1:8000/api/user/create_user",json=data,headers=header)
-    print(res.text)
+    return decode_data(res.text)
 
+def do_login(user_name, user_pas):
+    data = {"user_name": user_name, "user_pass": user_pas}
+    header = {
+        "X_Forwarded_For":"192.168.3.89"
+    }
+    res = requests.post("http://127.0.0.1:8000/api/user/get_user",json=data,headers=header)
+    return decode_data(res.text)
 
 class LoginForm(Ui_LoginForm):
     def setupUi(self, LoginForm):
@@ -28,8 +36,15 @@ class LoginForm(Ui_LoginForm):
         if user_name == "" or user_pas == "":
             self.lb_log.setText("登录失败，用户名或密码不能为空")
             return
-
-        print("登录")
+        data = do_login(user_name, user_pas)
+        if data.get("status_code") == 200:
+            data = json.loads(data)
+            gbd.user_data = gbd.UserData(**data)
+            print("跳转到页面")
+        else:
+            data = json.loads(data)
+            self.lb_log.setText(data.get("msg",""))
+            self.close()
         start_thread()
 
     def on_bt_register_clicked(self):
@@ -38,7 +53,13 @@ class LoginForm(Ui_LoginForm):
         if user_name == "" or user_pas == "":
             self.lb_log.setText("注册失败，用户名或密码不能为空")
             return
-        do_register(user_name, user_pas)
+        ret = do_register(user_name, user_pas)
+        data = ret.get("datas",None)
+        if data is None:
+            self.lb_log.setText("网络错误")
+        else:
+            data = json.loads(data)
+            self.lb_log.setText(data.get("msg",""))
 
 
 class MainWiondows(QMainWindow):
@@ -60,13 +81,16 @@ class MainWiondows(QMainWindow):
             os._exit(0)
         else:
             event.ignore()
+    
+    def init_form(self):
+        self.login_form = LoginForm()
+        self.login_form.setupUi(self)
 
 
 def show_login():
     app = QApplication(sys.argv)
     MainWindow = MainWiondows()
-    ui = LoginForm()
-    ui.setupUi(MainWindow)
+    MainWindow.init_form()
     MainWindow.show()
     sys.exit(app.exec_())
 

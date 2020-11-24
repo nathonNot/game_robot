@@ -47,3 +47,13 @@ def get_version():
     data = rsa.private_long_decrypt(response.content)
     data = json.loads(data)
     return data
+
+def decode_data(content):
+    try:
+        rsa = RsaUtil()
+        data = rsa.private_long_decrypt(content)
+        data = json.loads(data)
+    except Exception as identifier:
+        data = {}
+
+    return data
