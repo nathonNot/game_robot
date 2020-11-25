@@ -29,5 +29,5 @@ def show_login():
     app = QApplication(sys.argv)
     MainWindow = MainWiondows()
     MainWindow.init_form()
-    MainWindow.login_widget.widget.show()
+    MainWindow.login_widget.show_ui()
     sys.exit(app.exec_())

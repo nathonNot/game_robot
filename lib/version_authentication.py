@@ -39,14 +39,11 @@ class RsaUtil:
 
 
 def get_version():
-    url = "http://47.102.159.15:8002/get_version"
+    url = "https://fuakorm.com/api/jiuyin/get_version"
     response = requests.get(url)
     if response.status_code != 200:
         return None
-    rsa = RsaUtil()
-    data = rsa.private_long_decrypt(response.content)
-    data = json.loads(data)
-    return data
+    return response.json()
 
 def decode_data(content):
     try:

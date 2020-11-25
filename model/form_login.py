@@ -48,8 +48,8 @@ class LoginForm(Ui_LoginForm,BaseForm):
             self.lb_log.setText(data.get("msg",""))
             self.widget.hide()
             self.enter_succes_func()
-        gbd.Exit = True
-        start_thread()
+        # gbd.Exit = True
+        # start_thread()
 
     def on_bt_register_clicked(self):
         user_name = self.le_user_name.text()
