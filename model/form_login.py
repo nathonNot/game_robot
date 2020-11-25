@@ -38,16 +38,19 @@ class LoginForm(Ui_LoginForm,BaseForm):
         if user_name == "" or user_pas == "":
             self.lb_log.setText("登录失败，用户名或密码不能为空")
             return
-        data = do_login(user_name, user_pas)
-        if data.get("status_code") == 200:
-            data = json.loads(data)
-            gbd.user_data = gbd.UserData(**data)
-            print("跳转到页面")
-        else:
-            data = json.loads(data["datas"])
-            self.lb_log.setText(data.get("msg",""))
-            self.widget.hide()
-            self.enter_succes_func()
+        try:
+            data = do_login(user_name, user_pas)
+            if data.get("status_code") == 200:
+                data = json.loads(data)
+                gbd.user_data = gbd.UserData(**data)
+                print("跳转到页面")
+            else:
+                data = json.loads(data["datas"])
+                self.lb_log.setText(data.get("msg",""))
+                self.widget.hide()
+                self.enter_succes_func()
+        except Exception as identifier:
+            self.lb_log.setText(str(identifier))
         # gbd.Exit = True
         # start_thread()
 

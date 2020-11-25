@@ -40,7 +40,7 @@ def unzip(data):
     frzip.close()
 
 def start_exe():
-    exe_path = "start main\\main.exe"
+    exe_path = "cd main && start main.exe"
     os.system(exe_path)
 
 def download_from_url(url, dst):
@@ -86,7 +86,7 @@ def download_from_url(url, dst):
     return True
 
 if __name__ == '__main__':
-    # update("https://fuakorm.com/api/jiuyin/get_version")
+    update("https://fuakorm.com/api/jiuyin/get_version")
     # unzip("0.0.0.2.zip")
-    exe_path = "start dist\\main\\main.exe"
-    os.system(exe_path)
+    # exe_path = "start dist\\main\\main.exe"
+    # os.system(exe_path)
