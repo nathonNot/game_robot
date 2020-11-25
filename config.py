@@ -16,6 +16,11 @@ mpWi6CMLZduub1kAvew4B5HKSRohQAQdOIPjOHQwaw5Ie6cRNeBk4RG2K4cS12qf
 /o8W74udDObVKkFZ8wJAPL8bRWv0IWTlvwM14mKxcVf1qCuhkT8GgrG/YP/8fcW8
 SiT+DifcA7BVOgQjgbTchSfaA+YNe7A9qiVmA+G4GQ==
 '''
+
+base_url = "https://fuakorm.com"
+# base_url = "http://127.0.0.1:8000"
+
+
 import json
 from loguru import logger
 import lib.version_authentication as va

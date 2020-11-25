@@ -26,41 +26,39 @@ class MainWiondows(QMainWindow,BaseForm):
         self.login_widget.bt_register.clicked.connect(self.on_bt_register_clicked)
 
     def on_bt_login_clicked(self):
-        user_name = self.le_user_name.text()
-        user_pas = self.le_user_pas.text()
+        user_name = self.login_widget.le_user_name.text()
+        user_pas = self.login_widget.le_user_pas.text()
         if user_name == "" or user_pas == "":
-            self.lb_log.setText("登录失败，用户名或密码不能为空")
+            self.login_widget.lb_log.setText("登录失败，用户名或密码不能为空")
             return
         try:
             data = md_user.do_login(user_name, user_pas)
             if data.get("status_code") == 200:
                 data = json.loads(data)
                 gbd.user_data = gbd.UserData(**data)
-                print("跳转到页面")
+                self.login_widget.widget.hide()
+                self.main_widget.show_ui()
             else:
                 data = json.loads(data["datas"])
-                self.lb_log.setText(data.get("msg",""))
-                self.widget.hide()
-                self.main_widget.widget.show()
+                self.login_widget.lb_log.setText(data.get("msg",""))
         except Exception as identifier:
-            self.lb_log.setText(str(identifier))
+            self.login_widget.lb_log.setText(str(identifier))
         # gbd.Exit = True
         # start_thread()
 
     def on_bt_register_clicked(self):
-        user_name = self.le_user_name.text()
-        user_pas = self.le_user_pas.text()
+        user_name = self.login_widget.le_user_name.text()
+        user_pas = self.login_widget.le_user_pas.text()
         if user_name == "" or user_pas == "":
-            self.lb_log.setText("注册失败，用户名或密码不能为空")
+            self.login_widget.lb_log.setText("注册失败，用户名或密码不能为空")
             return
         ret = md_user.do_register(user_name, user_pas)
         data = ret.get("datas",None)
         if data is None:
-            self.lb_log.setText("网络错误")
+            self.login_widget.lb_log.setText("网络错误")
         else:
             data = json.loads(data)
-            self.lb_log.setText(data.get("msg",""))
-
+            self.login_widget.lb_log.setText(data.get("msg",""))
 
 
 def show_login():
