@@ -11,12 +11,12 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>设置</string>
   </property>
   <widget class="QPushButton" name="bt_start_up">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>290</x>
      <y>240</y>
      <width>75</width>
      <height>31</height>
@@ -24,19 +24,6 @@
    </property>
    <property name="text">
     <string>启动</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="bt_stop">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>240</y>
-     <width>75</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>停止</string>
    </property>
   </widget>
   <widget class="QLabel" name="lb_user_name">

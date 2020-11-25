@@ -6,11 +6,15 @@ import json
 from lib.ui_lib import BaseForm
 from lib import global_data as gbd
 from model import md_user
+from lib.utils import start_thread
 
-class MainWiondows(QMainWindow,BaseForm):
+
+class MainWiondows(QMainWindow, BaseForm):
+
+    log_q = []
 
     def closeEvent(self, event):
-        super(BaseForm,self).closeEvent(event)
+        super(BaseForm, self).closeEvent(event)
 
     def init_form(self):
         self.login_widget = LoginForm()
@@ -22,8 +26,15 @@ class MainWiondows(QMainWindow,BaseForm):
         self.init_call_back()
 
     def init_call_back(self):
+        gbd.main_log_info_call_back = self.log_print
         self.login_widget.bt_login.clicked.connect(self.on_bt_login_clicked)
-        self.login_widget.bt_register.clicked.connect(self.on_bt_register_clicked)
+        self.login_widget.bt_register.clicked.connect(
+            self.on_bt_register_clicked)
+        self.main_widget.cb_tuanlian.clicked.connect(
+            self.on_cb_tuanlian_clicked)
+        self.main_widget.cb_neigong.clicked.connect(self.on_cb_neigong_clicked)
+        self.main_widget.bt_start_up.clicked.connect(
+            self.on_bt_start_up_clicked)
 
     def on_bt_login_clicked(self):
         user_name = self.login_widget.le_user_name.text()
@@ -39,11 +50,9 @@ class MainWiondows(QMainWindow,BaseForm):
                 self.login_widget.widget.hide()
                 self.main_widget.show_ui()
             else:
-                self.login_widget.lb_log.setText(data.get("msg",""))
+                self.login_widget.lb_log.setText(data.get("msg", ""))
         except Exception as identifier:
             self.login_widget.lb_log.setText(str(identifier))
-        # gbd.Exit = True
-        # start_thread()
 
     def on_bt_register_clicked(self):
         user_name = self.login_widget.le_user_name.text()
@@ -52,12 +61,35 @@ class MainWiondows(QMainWindow,BaseForm):
             self.login_widget.lb_log.setText("注册失败，用户名或密码不能为空")
             return
         ret = md_user.do_register(user_name, user_pas)
-        data = ret.get("datas",None)
+        data = ret.get("datas", None)
         if data is None:
             self.login_widget.lb_log.setText("网络错误")
         else:
             data = json.loads(data)
-            self.login_widget.lb_log.setText(data.get("msg",""))
+            self.login_widget.lb_log.setText(data.get("msg", ""))
+
+    def on_cb_neigong_clicked(self):
+        gbd.module_dc["内功"].is_act = self.main_widget.cb_neigong.isChecked()
+
+    def on_cb_tuanlian_clicked(self):
+        gbd.module_dc["团练"].is_act = self.main_widget.cb_tuanlian.isChecked()
+
+    def on_bt_start_up_clicked(self):
+        if gbd.Exit:
+            gbd.Exit = False
+            for t in gbd.threads:
+                t.join()
+            self.main_widget.bt_start_up.setText("启动")
+        else:
+            self.main_widget.bt_start_up.setText("停止")
+            gbd.Exit = True
+            start_thread()
+
+    def log_print(self, log_info):
+        if len(self.log_q) > 1:
+            self.log_q.pop(0)
+        self.log_q.append(log_info)
+        self.main_widget.lb_log.setText("\n".join(self.log_q))
 
 
 def show_login():

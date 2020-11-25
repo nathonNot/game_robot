@@ -17,3 +17,8 @@ class BaseModule:
     
     def update_hwnd(self,hwnd):
         pass
+
+    def set_log(self,log_info):
+        if global_data.main_log_info_call_back is None:
+            return
+        global_data.main_log_info_call_back(log_info)

@@ -1,8 +1,7 @@
 from lib.BaseModule import BaseModule
 from lib.gui_controls import Controls
 import pyautogui
-from lib import global_data
-import win32gui, win32con, win32api
+import win32con
 from loguru import logger
 
 # 团练授业
@@ -48,6 +47,7 @@ class TuanLian(BaseModule):
             pyautogui.FAILSAFE = False
             self.de_repetition()
             logger.info(self.onec_button)
+            self.set_log(self.get_log_data())
             # pyautogui.leftClick(self.chick_button)
             # win32api.SendMessage(hwnd, win32con.WM_ACTIVATE,0x2,0)
             # win32api.SendMessage(hwnd, win32con.WM_IME_SETCONTEXT,0x1,0xC000000F)
@@ -82,3 +82,20 @@ class TuanLian(BaseModule):
                 continue
             new_list.append(button)
         self.onec_button = new_list
+    
+    def get_log_data(self):
+        log_data = []
+        for bt in self.onec_button:
+            if bt[0] == "right":
+                log_data.append("右")
+            if bt[0] == "down":
+                log_data.append("下")
+            if bt[0] == "left":
+                log_data.append("左")
+            if bt[0] == "up":
+                log_data.append("上")
+            if bt[0] == "j":
+                log_data.append("j")
+            if bt[0] == "k":
+                log_data.append("k")
+        return ",".join(log_data)
