@@ -33,13 +33,12 @@ class MainWiondows(QMainWindow,BaseForm):
             return
         try:
             data = md_user.do_login(user_name, user_pas)
+            msg_data = json.loads(data["datas"])
             if data.get("status_code") == 200:
-                data = json.loads(data)
-                gbd.user_data = gbd.UserData(**data)
+                gbd.user_data = gbd.UserData(**msg_data)
                 self.login_widget.widget.hide()
                 self.main_widget.show_ui()
             else:
-                data = json.loads(data["datas"])
                 self.login_widget.lb_log.setText(data.get("msg",""))
         except Exception as identifier:
             self.login_widget.lb_log.setText(str(identifier))

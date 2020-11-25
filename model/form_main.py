@@ -10,4 +10,5 @@ class MainForm(Ui_main,BaseForm):
 
     def show_ui(self):
         self.lb_user_name.setText(global_data.user_data.user_name)
+        self.bt_chongzhi.setVisible(False)
         self.widget.show()
