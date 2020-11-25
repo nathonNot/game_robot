@@ -50,7 +50,7 @@ class MainWiondows(QMainWindow, BaseForm):
                 self.login_widget.widget.hide()
                 self.main_widget.show_ui()
             else:
-                self.login_widget.lb_log.setText(data.get("msg", ""))
+                self.login_widget.lb_log.setText(msg_data.get("msg", ""))
         except Exception as identifier:
             self.login_widget.lb_log.setText(str(identifier))
 
