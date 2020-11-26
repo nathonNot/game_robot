@@ -46,6 +46,7 @@ def input_zip(input_path,out_path):
         fzip.write(name, arcname=path_name)
     #关闭
     fzip.close()
+    print("build success "+out_path)
 
 if __name__ == '__main__':
     build()
