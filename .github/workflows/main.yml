@@ -44,11 +44,11 @@ jobs:
         CI: true
 # Deploy
     - name: Deploy
-      uses: easingthemes/ssh-deploy@v2.0.7
+      run: |
+        pip install paramiko
+        python sftp_put.py
       env:
           SSH_PRIVATE_KEY: ${{ secrets.ALY_SSH_TOKEN }}
-          ARGS: "-avz --delete"
-          SOURCE: "release"
           REMOTE_HOST: ${{ secrets.ALY_SSH_HOST }}
           REMOTE_USER: "root"
-          TARGET: "/home/docker/nginx/download"
+          REMOTE_PAS: ${{ secrets.ALY_SSH_PASSWORD }}
