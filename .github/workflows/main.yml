@@ -31,17 +31,6 @@ jobs:
         python build_exe.py
       env:
           CI: true
-    # 使用 node:10
-    - name: use Node.js 10
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10
-    # npm install
-    - name: npm install
-      run: |
-        npm install
-      env:
-        CI: true
 # Deploy
     - name: Deploy
       run: |
