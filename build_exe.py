@@ -38,8 +38,8 @@ def input_zip(input_path,out_path):
     fzip = zipfile.ZipFile(out_path, 'w', zipfile.ZIP_DEFLATED)
     for index, name in enumerate(file_name):
         path_name = name.replace("dist\\","")
-        print(path_name)
-        print("zip file:"+str(index)+"//"+str(len(file_name)))
+        # print(path_name)
+        # print("zip file:"+str(index)+"//"+str(len(file_name)))
         # arcname = os.path.join(basename, path_name)
         #写入要压缩文件，并添加归档文件名称
         index += 1
