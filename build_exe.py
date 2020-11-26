@@ -3,16 +3,16 @@ import shutil,zipfile,os
 import zlib
 
 def build():
-    try:
-        path = 'build'
-        shutil.rmtree(path)
-    except Exception as identifier:
-        print("del file fail:"+str(identifier))
-    try:
-        path = 'dist\\main'
-        shutil.rmtree(path)
-    except Exception as identifier:
-        print("del file fail:"+str(identifier))
+    # try:
+    #     path = 'build'
+    #     shutil.rmtree(path)
+    # except Exception as identifier:
+    #     print("del file fail:"+str(identifier))
+    # try:
+    #     path = 'dist\\main'
+    #     shutil.rmtree(path)
+    # except Exception as identifier:
+    #     print("del file fail:"+str(identifier))
 
     cmd = 'pyinstaller main.spec'
     res = os.popen(cmd)
