@@ -29,15 +29,13 @@ def listdir(path, list_name:list):  #传入存储的list
             list_name.append(file_path)  
 
 def input_zip(input_path,out_path):
-    logdir = 'dist'
-    zipname = 'release/release.zip'
     #遍历要压缩目录
     file_name = []
-    listdir(logdir,file_name)
+    listdir(input_path,file_name)
     # 获取压缩目录名称
     # basename = os.path.basename(os.getcwd())
     #创建zip对象，
-    fzip = zipfile.ZipFile(zipname, 'w', zipfile.ZIP_DEFLATED)
+    fzip = zipfile.ZipFile(out_path, 'w', zipfile.ZIP_DEFLATED)
     for index, name in enumerate(file_name):
         path_name = name.replace("dist\\","")
         print(path_name)
@@ -51,4 +49,7 @@ def input_zip(input_path,out_path):
 
 if __name__ == '__main__':
     build()
-    # input_zip("","")
+    # 标准编译包
+    input_zip('dist','release/release.zip')
+    # 更新包
+    input_zip('dist/main','release/update/release.zip')
