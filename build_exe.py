@@ -7,12 +7,12 @@ def build():
         path = 'build'
         shutil.rmtree(path)
     except Exception as identifier:
-        print("删除文件失败:"+str(identifier))
+        print("del file fail:"+str(identifier))
     try:
         path = 'dist\\main'
         shutil.rmtree(path)
     except Exception as identifier:
-        print("删除文件失败:"+str(identifier))
+        print("del file fail:"+str(identifier))
 
     cmd = 'pyinstaller main.spec'
     res = os.popen(cmd)
@@ -39,7 +39,7 @@ def input_zip(input_path,out_path):
     for index, name in enumerate(file_name):
         path_name = name.replace("dist\\","")
         print(path_name)
-        print("压缩文件:"+str(index)+"//"+str(len(file_name)))
+        print("zip file:"+str(index)+"//"+str(len(file_name)))
         # arcname = os.path.join(basename, path_name)
         #写入要压缩文件，并添加归档文件名称
         index += 1
