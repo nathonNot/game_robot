@@ -1,6 +1,6 @@
 import pyautogui
 import win32api, win32gui, win32con  # 导入win32api相关模块
-
+import time
 
 class Controls:
 
@@ -80,3 +80,10 @@ class Controls:
     def key_post(hwnd, key):
         win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, key, 0x2E0001)
         win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0x2E0001)
+    
+    # 直接发起鼠标点击，走windows窗口事件
+    @staticmethod
+    def win_mouse_click(hwnd,point,sleep_time = 1):
+        win32api.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, 1, point)
+        time.sleep(sleep_time)
+        win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
