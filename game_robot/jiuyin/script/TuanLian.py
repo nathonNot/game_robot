@@ -28,7 +28,7 @@ class TuanLian(BaseModule):
         down = Controls.localall("image\\tl_down1.png", hwnd)
         right = Controls.localall("image\\tl_right1.png", hwnd)
         left = Controls.localall("image\\tl_left.png", hwnd)
-        tl_k = Controls.localall("image\\tl_k.png", hwnd)
+        tl_k = Controls.localall("image\\tl_k.png", hwnd,0.8)
         tl_j = Controls.localall("image\\tl_j.png", hwnd)
         if up:
             self.add_button_cilck(up, "up", win32con.VK_UP)
