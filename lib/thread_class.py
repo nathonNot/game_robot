@@ -35,11 +35,13 @@ class MainRefresh(threading.Thread):
         while gbd.Exit:
             try:
                 win_con.set_windwos()
-                controls.get_screen()
-                for m in gbd.module_dc.values():
-                    if m.is_act:
-                        m.fram_update()
-                controls.screen_close()
+                if len(gbd.hwnd_list) <= 0:
+                    return
+                for hwnd in gbd.hwnd_list:
+                    controls.get_screen(hwnd)
+                    for m in gbd.module_dc.values():
+                        if m.is_act:
+                            m.fram_update(hwnd)
             except Exception as e:
                 logger.error(str(e))
             time.sleep(gbd.threa_sleep_time)

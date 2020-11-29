@@ -9,11 +9,8 @@ class BaseModule:
         pass
 
     @logger.catch
-    def fram_update(self):
-        if len(global_data.hwnd_list) <= 0:
-            return
-        for hwnd in global_data.hwnd_list:
-            self.update_hwnd(hwnd)
+    def fram_update(self,hwnd):
+        self.update_hwnd(hwnd)
     
     def update_hwnd(self,hwnd):
         pass
