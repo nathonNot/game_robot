@@ -7,7 +7,7 @@ this_screen = None
 
 Exit = False
 
-threa_sleep_time = 0.1
+threa_sleep_time = 0.5
 
 threads = []
 

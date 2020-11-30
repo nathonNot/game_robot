@@ -82,6 +82,8 @@ class MainWiondows(QMainWindow, BaseForm):
             self.main_widget.bt_start_up.setText("启动")
         else:
             self.main_widget.bt_start_up.setText("停止")
+            for t in gbd.threads:
+                t.join()
             gbd.Exit = True
             start_thread()
 
