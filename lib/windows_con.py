@@ -4,7 +4,7 @@ import win32ui
 import win32con
 from ctypes import windll
 from lib import global_data
-
+import pyautogui
 
 def set_windwos():
     hWndList = []
@@ -20,6 +20,9 @@ def set_windwos():
         if (title.find("九阴真经  江湖") >= 0) or (title.find("九阴真经  武侠") >= 0):
             global_data.hwnd_list.append(hwnd)
             # screenshot_by_hwnd(hwnd)
+            _, win_type, _, _, _ = win32gui.GetWindowPlacement(hwnd)
+            if hwnd == 2:
+                pyautogui.alert(text='请勿将游戏窗口最小化', title='重置窗口')
     x, y = 0, 0
     for hwnd in global_data.hwnd_list:
         # win32gui.SetWindowPos(hwnd, win32con.HWND_TOP,

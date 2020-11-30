@@ -25,6 +25,7 @@ import json
 from loguru import logger
 import lib.version_authentication as va
 import datetime
+import pyautogui
 
 def log_init(level="DEBUG"):
     logger.add(
@@ -42,6 +43,7 @@ def init_config():
     version_data = va.get_version()
     if version_data == None:
         logger.error("版本号异常")
+        pyautogui.alert(text='版本号异常，请更新重试', title='版本异常')
         return
     version = version_data.get("version")
     end_time = version_data.get("end_time")

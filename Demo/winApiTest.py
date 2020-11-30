@@ -15,11 +15,12 @@ def get_hwnd():
     for hwnd in hWndList:
         title = win32gui.GetWindowText(hwnd)
         # 调整目标窗口到坐标(600,300),大小设置为(600,600)
-        if (title.find("九阴真经  江湖") >= 0) or (title.find("九阴真经  武侠") >= 0):
+        if (title.find("111.txt") >= 0) or (title.find("九阴真经  武侠") >= 0):
             print(hwnd, title)
             if hwnd > 0:
                 ret_hwnd = hwnd
     return ret_hwnd
+
 
 # k 0x4B
 # j 0x4A
@@ -38,6 +39,7 @@ def test_done1():
     time.sleep(1)
     win32api.PostMessage(200352, win32con.WM_LBUTTONUP, 1, 0x003002F3)
 
+
 # 按钮点击
 
 
@@ -47,13 +49,13 @@ def mouse_click(x, y):
     time.sleep(1)
     win32api.PostMessage(200352, win32con.WM_LBUTTONUP, 1, point)
 
+
 # 测试，屏幕截屏相关api
-
-
 def test_screen():
     # screen = pyautogui.screenshot()
     import win32gui
     import win32ui
+
     w = 800
     h = 600
     hwnd = get_hwnd()
@@ -71,9 +73,8 @@ def test_screen():
     bmpinfo = dataBitMap.GetInfo()
     bmpstr = dataBitMap.GetBitmapBits(True)
     image = Image.frombuffer(
-        'RGB',
-        (bmpinfo['bmWidth'], bmpinfo['bmHeight']),
-        bmpstr, 'raw', 'BGRX', 0, 1)
+        "RGB", (bmpinfo["bmWidth"], bmpinfo["bmHeight"]), bmpstr, "raw", "BGRX", 0, 1
+    )
 
     dataBitMap.SaveBitmapFile(cDC, bmpfilenamename)
     # Free Resources
@@ -83,7 +84,8 @@ def test_screen():
     win32gui.DeleteObject(dataBitMap.GetHandle())
     # image = cv2.imread(bmpfilenamename)
     locat = pyautogui.locate(
-        "D:\\project\\python\\jiuyin_robot\\image\\chengdu.png", image, confidence=0.8)
+        "D:\\project\\python\\jiuyin_robot\\image\\chengdu.png", image, confidence=0.8
+    )
     print(locat)
     offset_x = locat.left
     offset_y = locat.top
@@ -93,5 +95,13 @@ def test_screen():
         pyautogui.rightClick(x=window_x, y=window_y)
 
 
-if __name__ == '__main__':
-    test_screen()
+# 窗口最大最小化
+def window_test(hwnd):
+    _, win_type, _, _, _ = win32gui.GetWindowPlacement(hdwn)
+    print(win_type)
+
+
+if __name__ == "__main__":
+    hdwn = get_hwnd()
+    _, win_type, _, _, _ = win32gui.GetWindowPlacement(hdwn)
+    print(win_type)
