@@ -46,7 +46,7 @@ class Controls:
         cls.screen = image
 
     @classmethod
-    def localall(cls, path, hwnd, contrast_ratio=0.9):
+    def localall(cls, path, hwnd, contrast_ratio=0.9,offset_form=None):
         locat_all = []
         all_list = pyautogui.locateAll(
             path, cls.screen,confidence=contrast_ratio

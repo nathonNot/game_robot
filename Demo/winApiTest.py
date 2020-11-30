@@ -1,3 +1,4 @@
+from traceback import print_tb
 import win32api
 import win32gui
 import win32con  # 导入win32api相关模块
@@ -6,7 +7,7 @@ import pyautogui
 import cv2
 import numpy as np
 from PIL import Image
-
+import collections
 
 def get_hwnd():
     hWndList = []
@@ -21,7 +22,7 @@ def get_hwnd():
                 ret_hwnd = hwnd
     return ret_hwnd
 
-
+Box = collections.namedtuple('Box', 'left top width height')
 # k 0x4B
 # j 0x4A
 # win32con.VK_LEFT 左
@@ -97,11 +98,46 @@ def test_screen():
 
 # 窗口最大最小化
 def window_test(hwnd):
-    _, win_type, _, _, _ = win32gui.GetWindowPlacement(hdwn)
+    _, win_type, _, _, _ = win32gui.GetWindowPlacement(hwnd)
     print(win_type)
 
+# 图形识别
+def map_read_test(base_map,t_map,rate):
+    """
+    base_map  基底图
+    t_map     匹配图
+    rate      匹配率
+    """
+    img_rgb = cv2.imread(base_map) 
+    img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY) 
+    template = cv2.imread(t_map,0)
+    # cv2.imshow('rgb',img_rgb)
+    # cv2.imshow('gray',img_gray)
+    # cv2.imshow('template',template)
+    w, h = template.shape[::-1] 
+    res = cv2.matchTemplate(img_gray,template,cv2.TM_CCOEFF_NORMED) 
+    threshold = rate 
+    loc = np.where( res >= threshold) 
+    for pt in zip(*loc[::-1]): 
+        cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (7,249,151), 2)    
+    # cv2.imshow('Detected',img_rgb) 
+    # cv2.waitKey(0) 
+    # cv2.destroyAllWindows() 
+    region = (0, 0)
+    match_indices = np.arange(res.size)[(res > threshold).flatten()]
+    matches = np.unravel_index(match_indices[:10000], res.shape)
+
+    # use a generator for API consistency:
+    matchx = matches[1] * 1 + region[0]  # vectorized
+    matchy = matches[0] * 1 + region[1]
+    needleHeight, needleWidth = img_rgb.shape[:2]
+
+    for x, y in zip(matchx, matchy):
+        box = Box(x, y, needleWidth, needleHeight)
+        print(box)
 
 if __name__ == "__main__":
-    hdwn = get_hwnd()
-    _, win_type, _, _, _ = win32gui.GetWindowPlacement(hdwn)
-    print(win_type)
+    base_map = "image\\tl_k.png"
+    t_map = "image\\tl_k1.png"
+    rate = 0.8
+    map_read_test(base_map,t_map,rate)
