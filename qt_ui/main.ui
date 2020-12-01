@@ -104,6 +104,19 @@
     <string>运行日志</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="bt_ws_con">
+   <property name="geometry">
+    <rect>
+     <x>364</x>
+     <y>110</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>连接到服务器</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -8,31 +8,16 @@ from lib.gui_controls import Controls
 from loguru import logger
 import lib.windows_con as win_con
 import time
-
-
-# class Hotkey(threading.Thread):
-#     def run(self):
-#         user32 = ctypes.windll.user32
-#         if not user32.RegisterHotKey(None, 99, win32con.MOD_WIN, win32con.VK_F3):
-#             raise RuntimeError
-#         try:
-#             msg = ctypes.wintypes.MSG()
-#             while user32.GetMessageA(ctypes.byref(msg), None, 0, 0) != 0:
-#                 if msg.message == win32con.WM_HOTKEY:
-#                     if msg.wParam == 99:
-#                         gbd.Exit = False
-#                         return
-#                 user32.TranslateMessage(ctypes.byref(msg))
-#                 user32.DispatchMessageA(ctypes.byref(msg))
-#         finally:
-#             user32.UnregisterHotKey(None, 1)
-
+from lib.web_socket import WebSocketClient
 
 class MainRefresh(threading.Thread):
 
+    is_run = False
+
     def run(self):
         controls = Controls()
-        while gbd.Exit:
+        self.is_run = True
+        while self.is_run:
             try:
                 win_con.set_windwos()
                 if len(gbd.hwnd_list) <= 0:
@@ -45,3 +30,27 @@ class MainRefresh(threading.Thread):
             except Exception as e:
                 logger.error(str(e))
             time.sleep(gbd.threa_sleep_time)
+
+    def stop(self):
+        self.is_run = False
+
+    @staticmethod
+    def class_name():
+        return "MainRefresh"
+
+class WebSocketThread(threading.Thread):
+    
+    ws = None
+
+    def run(self):
+        self.ws = WebSocketClient()
+        self.ws.start_loop()
+    
+    def stop(self):
+        if self.ws == None:
+            return
+        self.ws.close()
+
+    @staticmethod
+    def class_name():
+        return "WebSocketThread"

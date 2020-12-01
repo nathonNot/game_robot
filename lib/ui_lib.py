@@ -25,7 +25,8 @@ class BaseForm():
         # if reply == QMessageBox.Yes:
         event.accept()
         gbd.Exit = False
-        for t in gbd.threads:
+        for t in gbd.threads.values():
+            t.stop()
             t.join()
         os._exit(0)
         # else:

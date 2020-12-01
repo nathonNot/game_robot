@@ -9,7 +9,7 @@ Exit = False
 
 threa_sleep_time = 0.5
 
-threads = []
+threads = {}
 
 class UserData:
 
