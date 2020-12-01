@@ -44,12 +44,12 @@ class WebSocketThread(threading.Thread):
 
     def run(self):
         self.ws = WebSocketClient()
-        self.ws.start_loop()
+        self.ws.do_login()
     
     def stop(self):
         if self.ws == None:
             return
-        self.ws.close()
+        self.ws.client.close()
 
     @staticmethod
     def class_name():

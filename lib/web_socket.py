@@ -1,41 +1,22 @@
 import asyncio
-from typing import Tuple
-import websockets
 import base64
 import json
 from queue import Queue
 from lib import global_data as gbd
 import config
 from loguru import logger
-
-# # 客户端主逻辑
-# async def main_logic():
-#     user_info = {
-#         "user_id":5,
-#         "user_name":"abc",
-#         "user_pass":"1111"
-#     }
-#     user_data = json.dumps(user_info)
-#     user_data = base64.b64encode(user_data.encode('utf-8'))
-#     url = 'ws://127.0.0.1:8000/ws/'+user_data.decode('utf-8')
-
-#     async with websockets.connect(url) as websocket:
-#         cred_text = "i have a connection"
-#         await websocket.send(cred_text)
-#         while True:
-#             response_str = await websocket.recv()
-#             print(response_str)
-
-# asyncio.get_event_loop().run_until_complete(main_logic())
+import websocket
+import time
+try:
+    import thread
+except ImportError:
+    import _thread as thread
 
 class WebSocketClient():
 
     client = None
-    recv_msg_q = Queue()
-    loop = asyncio.new_event_loop()
-    is_run = True
     
-    async def do_login(self):
+    def do_login(self,):
         if gbd.user_data == None:
             gbd.main_log_info_call_back("用户未登录")
             return
@@ -48,50 +29,30 @@ class WebSocketClient():
         user_data = base64.b64encode(user_data.encode('utf-8'))
         url = config.ws_url + "/ws/"+user_data.decode('utf-8')
         try:
-            self.client = await websockets.connect(url)
-            cred_text = "i have a connection"
-            await self.client.send(cred_text)
-            while self.is_run:
-                response_str = await self.client.recv()
-                data = ""
-                try:
-                    data = json.loads(response_str)
-                except Exception as identifier:
-                    logger.error("解析数据错误："+response_str)
-                if data == "":
-                    continue
-                print(data)
+            websocket.enableTrace(True)
+            self.client = websocket.WebSocketApp(url,
+                              on_message = WebSocketClient.on_message,
+                              on_error = WebSocketClient.on_error,
+                              on_close = WebSocketClient.on_close)
+            self.client.on_open = WebSocketClient.on_open
+            self.client.run_forever()
         except Exception as identifier:
             logger.info("socket 连接断开 "+str(identifier))
 
-    @classmethod
-    def send_msg(cls,obj):
-        data = ""
-        try:
-            data = json.dumps(obj)
-        except Exception as identifier:
-            logger.error("解析发送消息失败:"+str(obj))
-        if data == "":
-            return
-        cls.loop.run_until_complete(cls.send_msg("ssssss"))
+    @staticmethod
+    def on_message(ws, message):
+        logger.info(message)
 
-    async def send_msg_sync(self,mes):
-        await self.client.send(mes)
+    @staticmethod
+    def on_error(ws, error):
+        logger.info(error)
 
-    def start_loop(self):
-        self.is_run = True
-        self.loop.run_until_complete(self.do_login())
+    @staticmethod
+    def on_close(ws):
+        logger.info("### closed ###")
 
-    @classmethod
-    def close(cls):
-        try:
-            cls.is_run = False
-            if cls.client:
-                cls.client.close()
-            if cls.loop:
-                cls.loop.close()
-            if cls.recv_msg_q:
-                cls.recv_msg_q.clear()
-        except Exception as identifier:
-            logger.error(str(identifier))
-
+    @staticmethod
+    def on_open(ws):
+        def run(*args):
+            logger.info("con to server")
+        thread.start_new_thread(run, ())
