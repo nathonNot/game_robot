@@ -42,7 +42,11 @@ class WebSocketClient():
     @staticmethod
     def on_message(ws, message):
         logger.info(message)
-        ws.send("okokokokokok")
+        data = {
+            "call_back":"send_user_msg",
+            "data":"hello"
+        }
+        ws.send(json.dumps(data))
 
     @staticmethod
     def on_error(ws, error):
@@ -57,3 +61,7 @@ class WebSocketClient():
         def run(*args):
             logger.info("con to server")
         thread.start_new_thread(run, ())
+
+    @classmethod
+    def send_json(cls,data):
+        cls.client.send(json.dump(data))

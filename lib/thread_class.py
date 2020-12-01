@@ -1,8 +1,5 @@
 import threading
 import lib.global_data as gbd
-import ctypes
-import win32con
-import ctypes.wintypes
 import threading
 from lib.gui_controls import Controls
 from loguru import logger
