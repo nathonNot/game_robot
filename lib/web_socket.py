@@ -42,6 +42,7 @@ class WebSocketClient():
     @staticmethod
     def on_message(ws, message):
         logger.info(message)
+        ws.send("okokokokokok")
 
     @staticmethod
     def on_error(ws, error):

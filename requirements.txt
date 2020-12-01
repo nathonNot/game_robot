@@ -41,3 +41,4 @@ toml==0.10.2
 urllib3==1.26.2
 win32-setctime==1.0.3
 wrapt==1.12.1
+websocket-client
