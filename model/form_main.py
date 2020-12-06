@@ -1,11 +1,9 @@
 from qt_ui.Ui_main import Ui_main
-from PyQt5.QtWidgets import QWidget
 from lib.ui_lib import BaseForm
 from lib import global_data as gbd
 import webbrowser
 from lib.thread_class import WebSocketThread,MainRefresh
 from lib.utils import start_thread,thread_stop
-from PyQt5.QtCore import pyqtSlot
 
 class MainForm(Ui_main,BaseForm):
 
@@ -32,10 +30,10 @@ class MainForm(Ui_main,BaseForm):
         webbrowser.open(url)
     
     def on_cb_neigong_clicked(self):
-        gbd.module_dc["内功"].is_act = self.main_widget.cb_neigong.isChecked()
+        gbd.module_dc["内功"].is_act = self.cb_neigong.isChecked()
 
     def on_cb_tuanlian_clicked(self):
-        gbd.module_dc["团练"].is_act = self.main_widget.cb_tuanlian.isChecked()
+        gbd.module_dc["团练"].is_act = self.cb_tuanlian.isChecked()
 
     def on_bt_start_up_clicked(self):
         if gbd.Exit:
