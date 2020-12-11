@@ -19,6 +19,23 @@ def build():
     output_str = res.read()   # 获得输出字符串
     print(output_str)
 
+def build_update():
+    try:
+        path = 'build'
+        shutil.rmtree(path)
+    except Exception as identifier:
+        print("del file fail:"+str(identifier))
+    try:
+        path = 'dist\\main'
+        shutil.rmtree(path)
+    except Exception as identifier:
+        print("del file fail:"+str(identifier))
+
+    cmd = 'pyinstaller -F --uac-admin -i="image\\icon.ico" -r update.exe.manifest,1 update.py'
+    res = os.popen(cmd)
+    output_str = res.read()   # 获得输出字符串
+    print(output_str)
+
 
 def listdir(path, list_name:list):  #传入存储的list
     for file in os.listdir(path):  
@@ -49,8 +66,9 @@ def input_zip(input_path,out_path):
     print("build success "+out_path)
 
 if __name__ == '__main__':
-    build()
-    # 标准编译包
-    input_zip('dist','release/release.zip')
-    # 更新包
-    input_zip('dist/main','release/update/release.zip')
+    # build()
+    # # 标准编译包
+    # input_zip('dist','release/release.zip')
+    # # 更新包
+    # input_zip('dist/main','release/update/release.zip')
+    build_update()

@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['update.py'],
-             pathex=['D:\\demo\\jiuyin_robot'],
+             pathex=['D:\\project\\python\\jiuyin_robot'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='image\\icon.ico')
+          console=True , uac_admin=True, icon='image\\icon.ico', resources=['update.exe.manifest,1'])
