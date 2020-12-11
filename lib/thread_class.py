@@ -1,4 +1,3 @@
-import threading
 import lib.global_data as gbd
 import threading
 from lib.gui_controls import Controls

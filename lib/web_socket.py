@@ -1,12 +1,9 @@
-import asyncio
 import base64
 import json
-from queue import Queue
 from lib import global_data as gbd
 import config
 from loguru import logger
 import websocket
-import time
 try:
     import thread
 except ImportError:
@@ -41,12 +38,27 @@ class WebSocketClient():
 
     @staticmethod
     def on_message(ws, message):
-        logger.info(message)
-        data = {
-            "call_back":"send_user_msg",
-            "data":"hello"
-        }
-        ws.send(json.dumps(data))
+        # 防止依赖崩
+        from model.socket_hand import function_manager as func_man
+        logger.debug(message)
+        data = ""
+        res = None
+        try:
+            data = json.loads(message)
+            res = {}
+            res["call_back"] = data["func"]
+            res["data"] = func_man.func_dc[data["func"]](data=data["data"])
+        except Exception as identifier:
+            logger.error(str(identifier))
+            logger.error(message)
+            if data != "":
+                res = {
+                    "call_back":data["func"],
+                    "data":str(identifier)
+                }
+        
+        if res != None:
+            ws.send(json.dumps(res))
 
     @staticmethod
     def on_error(ws, error):
