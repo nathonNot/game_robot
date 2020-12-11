@@ -7,7 +7,8 @@ from lib.utils import start_thread, thread_stop
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
-
+from lib import socket_msg
+from lib.web_socket import WebSocketClient
 
 class MainForm(Ui_main, BaseForm):
     def setupUi(self, LoginForm):
@@ -25,7 +26,8 @@ class MainForm(Ui_main, BaseForm):
         self.cb_tuanlian.clicked.connect(self.on_cb_tuanlian_clicked)
         self.cb_neigong.clicked.connect(self.on_cb_neigong_clicked)
         self.bt_start_up.clicked.connect(self.on_bt_start_up_clicked)
-        self.bt_creat_task.clicked.connect(self.bt_creat_task_clicked)
+        self.bt_creat_task.clicked.connect(self.on_bt_creat_task_clicked)
+        self.bt_task_up.clicked.connect(self.on_bt_task_up_clicked)
 
     def open_chongzhi(self):
         url = "www.baidu.com"
@@ -57,12 +59,49 @@ class MainForm(Ui_main, BaseForm):
             thread_stop(WebSocketThread)
             self.bt_ws_con.setText("连接到服务器")
 
-    def bt_creat_task_clicked(self):
-        column_count = self.tw_citan_data.columnCount()
+    def on_bt_creat_task_clicked(self):
         row_count = self.tw_citan_data.rowCount()
         self.tw_citan_data.insertRow(row_count)  # 插入到第一行
-        for i in range(column_count - 1):
-            item = QTableWidgetItem("111111")
-            self.tw_citan_data.setItem(row_count, i, item)
-            if i == 0:
-                item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+        # id
+        item_id = QTableWidgetItem("0")
+        self.tw_citan_data.setItem(row_count, 0, item_id)
+        item_id.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+        item_acc = QTableWidgetItem("000000")
+        self.tw_citan_data.setItem(row_count, 1, item_acc)
+        item_acc_pas = QTableWidgetItem("000000")
+        self.tw_citan_data.setItem(row_count, 2, item_acc_pas)
+        item_acc_server1 = QTableWidgetItem("江湖七区")
+        self.tw_citan_data.setItem(row_count, 3, item_acc_server1)
+        item_acc_server2 = QTableWidgetItem("醉江湖")
+        self.tw_citan_data.setItem(row_count, 4, item_acc_server2)
+        item_update_time = QTableWidgetItem("")
+        self.tw_citan_data.setItem(row_count, 5, item_update_time)
+        item_update_time.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+        item_status = QTableWidgetItem("")
+        self.tw_citan_data.setItem(row_count, 6, item_status)
+        item_update_time.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+        self.tw_citan_ref()
+
+    def tw_citan_ref(self):
+        self.tw_citan_data.resizeColumnsToContents()
+        self.tw_citan_data.resizeRowsToContents()
+
+    def on_bt_task_up_clicked(self):
+        row_count = self.tw_citan_data.rowCount()
+        data = []
+        for row in range(row_count):
+            if row < 0:
+                continue
+            row_data = {
+                "task_id": self.tw_citan_data.item(row, 0).text(),
+                "acc": self.tw_citan_data.item(row, 1).text(),
+                "acc_pas": self.tw_citan_data.item(row, 2).text(),
+                "acc_server1": self.tw_citan_data.item(row, 3).text(),
+                "acc_server2": self.tw_citan_data.item(row, 4).text(),
+            }
+            data.append(row_data)
+        syn = {
+                "call_back":socket_msg.update_citan_task,
+                "data":data
+            }
+        WebSocketClient.send_json(syn)

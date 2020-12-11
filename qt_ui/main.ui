@@ -131,7 +131,7 @@
           <number>16</number>
          </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>78</number>
+          <number>60</number>
          </attribute>
          <column>
           <property name="text">
@@ -146,6 +146,16 @@
          <column>
           <property name="text">
            <string>密码</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>大区</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>服务器</string>
           </property>
          </column>
          <column>

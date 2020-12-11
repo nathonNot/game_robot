@@ -35,6 +35,7 @@ class WebSocketClient():
             self.client.run_forever()
         except Exception as identifier:
             logger.info("socket 连接断开 "+str(identifier))
+            self.client = None
 
     @staticmethod
     def on_message(ws, message):
@@ -73,7 +74,9 @@ class WebSocketClient():
         def run(*args):
             logger.info("con to server")
         thread.start_new_thread(run, ())
+        gbd.socket_client = ws
 
     @classmethod
     def send_json(cls,data):
-        cls.client.send(json.dump(data))
+        if gbd.socket_client != None:
+            gbd.socket_client.send(json.dumps(data))
