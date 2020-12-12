@@ -51,5 +51,4 @@ def thread_stop(thread_obj):
     class_name = thread_obj.class_name()
     if class_name in gbd.threads:
         gbd.threads[class_name].stop()
-        gbd.threads[class_name].join()
         del gbd.threads[class_name]

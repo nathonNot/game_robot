@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>463</width>
-    <height>339</height>
+    <width>589</width>
+    <height>392</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -100,6 +100,13 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
+          <widget class="QLabel" name="lb_an_num">
+           <property name="text">
+            <string>当前在线远端设备数：0</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="bt_task_up">
            <property name="text">
             <string>提交修改</string>
@@ -161,6 +168,11 @@
          <column>
           <property name="text">
            <string>修改时间</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>定时计划（小时）</string>
           </property>
          </column>
          <column>

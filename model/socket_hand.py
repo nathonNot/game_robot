@@ -1,5 +1,6 @@
 from loguru import logger
-
+from model.form_main import MainForm
+from lib.global_data import MainWindow
 
 class FunctionManager:
     
@@ -19,3 +20,11 @@ function_manager = FunctionManager()
 @function_manager(func_name="hand_test")
 def hand_test(data):
     print(data)
+
+
+@function_manager(func_name="citan_table_syn")
+def on_citan_table_syn(data):
+    MainWindow.main_widget.set_data_signal.emit(data)
+    MainWindow.main_widget.ref_data.connect(MainWindow.main_widget.on_ref_data)
+    MainWindow.main_widget.ref_data.emit()
+    MainWindow.main_widget.ref_data.disconnect(MainWindow.main_widget.on_ref_data)

@@ -30,3 +30,7 @@ user_data = None
 main_log_info_call_back = None
 
 socket_client = None
+
+call_back = None
+
+MainWindow = None

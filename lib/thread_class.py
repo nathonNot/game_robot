@@ -5,6 +5,7 @@ from loguru import logger
 import lib.windows_con as win_con
 import time
 from lib.web_socket import WebSocketClient
+from PyQt5.QtCore import QThread
 
 class MainRefresh(threading.Thread):
 
@@ -34,7 +35,7 @@ class MainRefresh(threading.Thread):
     def class_name():
         return "MainRefresh"
 
-class WebSocketThread(threading.Thread):
+class WebSocketThread(QThread):
     
     ws = None
 
