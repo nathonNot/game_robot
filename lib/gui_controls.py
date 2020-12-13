@@ -49,7 +49,7 @@ class Controls:
     def localall(cls, path, hwnd, contrast_ratio=0.9,offset_form=None):
         locat_all = []
         all_list = pyautogui.locateAll(
-            path, cls.screen,confidence=contrast_ratio
+            path, cls.screen,confidence=contrast_ratio,region=offset_form
         )
         if not all_list:
             return []

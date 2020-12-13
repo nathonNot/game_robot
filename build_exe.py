@@ -66,9 +66,9 @@ def input_zip(input_path,out_path):
     print("build success "+out_path)
 
 if __name__ == '__main__':
-    # build()
-    # # 标准编译包
-    # input_zip('dist','release/release.zip')
-    # # 更新包
-    # input_zip('dist/main','release/update/release.zip')
-    build_update()
+    build()
+    # 标准编译包
+    input_zip('dist','release/release.zip')
+    # 更新包
+    input_zip('dist/main','release/update/release.zip')
+    # build_update()

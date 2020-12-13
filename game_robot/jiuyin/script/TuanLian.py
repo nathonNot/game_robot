@@ -26,10 +26,10 @@ class TuanLian(BaseModule):
         self.onec_button.clear()
         up = Controls.localall("image\\tl_up.png", hwnd)
         down = Controls.localall("image\\tl_down1.png", hwnd)
-        right = Controls.localall("image\\tl_right1.png", hwnd)
-        left = Controls.localall("image\\tl_left.png", hwnd)
+        right = Controls.localall("image\\tl_right1.png", hwnd,0.9)
+        left = Controls.localall("image\\tl_left.png", hwnd,0.88)
         tl_k = Controls.localall("image\\tl_k.png", hwnd,0.8)
-        tl_j = Controls.localall("image\\tl_j.png", hwnd)
+        tl_j = Controls.localall("image\\tl_j.png", hwnd,0.8)
         if up:
             self.add_button_cilck(up, "up", win32con.VK_UP)
         if down:
@@ -44,14 +44,9 @@ class TuanLian(BaseModule):
             self.add_button_cilck(tl_j, "j", 0x4A)
         last_x = 0
         if len(self.onec_button) > 0:
-            pyautogui.FAILSAFE = False
             self.de_repetition()
             logger.info(self.onec_button)
             self.set_log(self.get_log_data())
-            # pyautogui.leftClick(self.chick_button)
-            # win32api.SendMessage(hwnd, win32con.WM_ACTIVATE,0x2,0)
-            # win32api.SendMessage(hwnd, win32con.WM_IME_SETCONTEXT,0x1,0xC000000F)
-            # win32api.SendMessage(hwnd, win32con.WM_IME_NOTIFY,0x2,0)
             Controls.activate_hwnd(hwnd)
             for key in self.onec_button:
                 if (key[1] - last_x) <= 5:
