@@ -71,7 +71,7 @@ class MainWiondows(QMainWindow, BaseForm):
 
 def show_login():
     app = QApplication(sys.argv)
-    MainWindow = MainWiondows()
-    MainWindow.init_form()
-    MainWindow.login_widget.show_ui()
+    gbd.MainWindow = MainWiondows()
+    gbd.MainWindow.init_form()
+    gbd.MainWindow.login_widget.show_ui()
     sys.exit(app.exec_())
