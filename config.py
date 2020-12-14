@@ -26,6 +26,7 @@ from loguru import logger
 import lib.version_authentication as va
 import datetime
 import pyautogui
+from lib import global_data as gbd
 
 def log_init(level="DEBUG"):
     logger.add(
@@ -35,11 +36,11 @@ def log_init(level="DEBUG"):
 
 def init_config():
     with open("config\\config.json", "r") as f:
-        config = json.loads(f.read())
-    if config == "" or config is None:
+        gbd.config_dc = json.loads(f.read())
+    if gbd.config_dc == "" or gbd.config_dc is None:
         logger.error("未找到配置文件")
         return
-    log_init(config["log_level"])
+    log_init(gbd.config_dc["log_level"])
     version_data = va.get_version()
     if version_data == None:
         logger.error("版本号异常")
@@ -55,6 +56,6 @@ def init_config():
     if time_now > end_time:
         logger.error("有效期结束")
         return
-    logger.info("当前程序版本号：：：" + config["version"])
+    logger.info("当前程序版本号：：：" + gbd.config_dc["version"])
     return True
-    
+

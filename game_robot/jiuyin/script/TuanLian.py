@@ -1,8 +1,8 @@
 from lib.BaseModule import BaseModule
 from lib.gui_controls import Controls
-import pyautogui
 import win32con
 from loguru import logger
+from lib import global_data as gbd
 
 # 团练授业
 class TuanLian(BaseModule):
@@ -14,7 +14,7 @@ class TuanLian(BaseModule):
 
     def __init__(self):
         logger.info("初始化团练授业模块")
-
+        self.config = gbd.config_dc["tuan_lian"]
     # def fram_update(self):
     #     if len(global_data.hwnd_list) <= 0:
     #         return
@@ -24,12 +24,12 @@ class TuanLian(BaseModule):
     def update_hwnd(self, hwnd):
         # 获取窗口左上角和右下角坐标
         self.onec_button.clear()
-        up = Controls.localall("image\\tl_up.png", hwnd)
-        down = Controls.localall("image\\tl_down1.png", hwnd)
-        right = Controls.localall("image\\tl_right1.png", hwnd,0.9)
-        left = Controls.localall("image\\tl_left.png", hwnd,0.88)
-        tl_k = Controls.localall("image\\tl_k.png", hwnd,0.8)
-        tl_j = Controls.localall("image\\tl_j.png", hwnd,0.8)
+        up = Controls.localall("image\\tl_up.png", hwnd,self.config["up"])
+        down = Controls.localall("image\\tl_down.png", hwnd,self.config["down"])
+        right = Controls.localall("image\\tl_right.png", hwnd,self.config["right"])
+        left = Controls.localall("image\\tl_left.png", hwnd,self.config["left"])
+        tl_k = Controls.localall("image\\tl_k.png", hwnd,self.config["k"])
+        tl_j = Controls.localall("image\\tl_j.png", hwnd,self.config["j"])
         if up:
             self.add_button_cilck(up, "up", win32con.VK_UP)
         if down:

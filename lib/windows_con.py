@@ -1,12 +1,12 @@
 
 import win32gui
-import win32ui
 import win32con
 from ctypes import windll
 from lib import global_data
 import pyautogui
 
 def set_windwos():
+    base_config = global_data.config_dc["base"]
     hWndList = []
     global_data.hwnd_list.clear()
     win32gui.EnumWindows(lambda hWnd, param: param.append(hWnd), hWndList)
@@ -28,6 +28,6 @@ def set_windwos():
         # win32gui.SetWindowPos(hwnd, win32con.HWND_TOP,
         #                       x, y, 800, 600, win32con.SWP_SHOWWINDOW)
         win32gui.SetWindowPos(hwnd, win32con.HWND_BOTTOM,
-                              x, y, 800, 600, win32con.SWP_NOMOVE)
+                              x, y, base_config["resolving_w"], base_config["resolving_h"], win32con.SWP_NOMOVE)
     # 查找窗口句柄
     # win32gui.FindWindow("")

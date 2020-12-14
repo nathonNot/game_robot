@@ -34,3 +34,5 @@ socket_client = None
 call_back = None
 
 MainWindow = None
+
+config_dc = None
