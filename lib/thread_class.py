@@ -20,6 +20,8 @@ class MainRefresh(threading.Thread):
                 if len(gbd.hwnd_list) <= 0:
                     return
                 for hwnd in gbd.hwnd_list:
+                    if gbd.main_window_hwnd == hwnd:
+                        continue
                     controls.get_screen(hwnd)
                     for m in gbd.module_dc.values():
                         if m.is_act:
