@@ -120,6 +120,11 @@ class Controls:
         win32api.SendMessage(hwnd, win32con.WM_IME_SETCONTEXT, 0x1, 0xC000000F)
         win32api.SendMessage(hwnd, win32con.WM_IME_NOTIFY, 0x2, 0)
 
+    @staticmethod
+    def un_activate_hwnd(hwnd):
+        win32api.SendMessage(hwnd, win32con.WM_ACTIVATEAPP, 0, 0)
+        win32api.SendMessage(hwnd, win32con.WM_ACTIVATE, 0, 0)
+
     # 键盘摁下抬起
     @staticmethod
     def key_post(hwnd, key, sleep_time=0):
@@ -137,6 +142,7 @@ class Controls:
             x = box.left
             y = box.top
         Controls.win_mouse_click(hwnd, x, y, sleep_tim)
+        Controls.un_activate_hwnd(hwnd)
 
     # 直接发起鼠标点击，走windows窗口事件
     @staticmethod
