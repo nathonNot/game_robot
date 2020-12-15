@@ -11,7 +11,9 @@ def set_windwos():
     if jiuyin_hwnd != global_data.hwnd_list:
         # 设置qt窗口，刷新数据
         global_data.hwnd_list = jiuyin_hwnd
-        global_data.MainWindow.main_widget.refresh_main_win_combox()
+        global_data.MainWindow.main_widget.ref_data.connect(global_data.MainWindow.main_widget.refresh_main_win_combox)
+        global_data.MainWindow.main_widget.ref_data.emit()
+        global_data.MainWindow.main_widget.ref_data.disconnect(global_data.MainWindow.main_widget.on_ref_data)
     x, y = 0, 0
     for hwnd in global_data.hwnd_list:
         # 主游戏窗口不做处理
