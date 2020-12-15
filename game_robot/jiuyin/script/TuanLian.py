@@ -15,12 +15,7 @@ class TuanLian(BaseModule):
     def __init__(self):
         logger.info("初始化团练授业模块")
         self.config = gbd.config_dc["tuan_lian"]
-    # def fram_update(self):
-    #     if len(global_data.hwnd_list) <= 0:
-    #         return
-    #     for hwnd in global_data.hwnd_list:
-    #         self.update_hwnd(hwnd)
-
+        
     def update_hwnd(self, hwnd):
         # 获取窗口左上角和右下角坐标
         self.onec_button.clear()

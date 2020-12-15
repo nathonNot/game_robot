@@ -9,6 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt,pyqtSignal,QObject
 from lib import socket_msg
 from lib.web_socket import WebSocketClient
+from lib.windows_con import get_jiuyin_hwnd
 
 class MainForm(Ui_main, BaseForm,QObject):
 
@@ -20,6 +21,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         super().setupUi(LoginForm)
 
     def show_ui(self):
+        self.refresh_main_win_combox()
         self.lb_user_name.setText(gbd.user_data.user_name)
         self.bt_chongzhi.setVisible(False)
         self.widget.show()
@@ -30,10 +32,13 @@ class MainForm(Ui_main, BaseForm,QObject):
 
         self.cb_tuanlian.clicked.connect(self.on_cb_tuanlian_clicked)
         self.cb_neigong.clicked.connect(self.on_cb_neigong_clicked)
+        self.cb_shashou.clicked.connect(self.on_cb_shashou_clicked)
+        self.cb_tanwei.clicked.connect(self.on_cb_tanwei_clicked)
         self.bt_start_up.clicked.connect(self.on_bt_start_up_clicked)
         self.bt_creat_task.clicked.connect(self.on_bt_creat_task_clicked)
         self.bt_task_up.clicked.connect(self.on_bt_task_up_clicked)
         self.bt_del_task.clicked.connect(self.on_del_task_clicked)
+        self.cb_main_win.clicked.connect(self.on_cb_main_win_clicked)
         self.set_data_signal.connect(self.set_data)
 
     def open_chongzhi(self):
@@ -45,6 +50,12 @@ class MainForm(Ui_main, BaseForm,QObject):
 
     def on_cb_tuanlian_clicked(self):
         gbd.module_dc["团练"].is_act = self.cb_tuanlian.isChecked()
+    
+    def on_cb_shashou_clicked(self):
+        gbd.module_dc["杀手"].is_act = self.cb_shashou.isChecked()
+    
+    def on_cb_tanwei_clicked(self):
+        gbd.module_dc["摊位"].is_act = self.cb_tuanlian.isChecked()
 
     def on_bt_start_up_clicked(self):
         if gbd.Exit:
@@ -152,3 +163,15 @@ class MainForm(Ui_main, BaseForm,QObject):
             }
             self.install_tb_row(**task_data)
         self.ref_val = None
+    
+    # 刷新主游戏下拉框
+    def refresh_main_win_combox(self):
+        if len(gbd.hwnd_list) < 1:
+            gbd.hwnd_list = get_jiuyin_hwnd()
+        self.cbb_main_win.addItems(gbd.hwnd_list)
+    
+    def on_cb_main_win_clicked(self):
+        if self.cb_main_win.clicked():
+            gbd.main_window_hwnd = self.cbb_main_win.currentText()
+        else:
+            gbd.main_window_hwnd = 0

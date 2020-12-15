@@ -18,7 +18,7 @@ def get_hwnd():
     for hwnd in hWndList:
         title = win32gui.GetWindowText(hwnd)
         # 调整目标窗口到坐标(600,300),大小设置为(600,600)
-        if (title.find("九阴真经  江湖") >= 0) or (title.find("九阴真经  武侠") >= 0):
+        if (title.find("文本文档") >= 0) or (title.find("九阴真经") >= 0):
             print(hwnd, title)
             if hwnd > 0:
                 ret_hwnd = hwnd
@@ -119,6 +119,10 @@ def check(hwnd):
                 if box:
                     return box
 
+# 闪烁窗口
+def fluash_hwnd(hwnd):
+    win32gui.FlashWindowEx(hwnd,True,5,0)
+
 if __name__ == "__main__":
     hwnd = get_hwnd()
-    move_to_pos(hwnd,722,517)
+    fluash_hwnd(hwnd)

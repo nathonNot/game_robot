@@ -1,8 +1,9 @@
 import pyautogui
-import win32api,win32gui,win32ui
+import win32api, win32gui, win32ui
 import win32con  # 导入win32api相关模块
 import time
 from PIL import Image
+
 
 class Controls:
 
@@ -14,7 +15,7 @@ class Controls:
     offset_bottom = 0
 
     @classmethod
-    def get_screen(cls,hwnd):
+    def get_screen(cls, hwnd):
         # cls.screen = pyautogui.screenshot()
         left, top, right, bottom = win32gui.GetWindowRect(hwnd)
         cls.offset_left = left
@@ -33,9 +34,14 @@ class Controls:
         bmpinfo = dataBitMap.GetInfo()
         bmpstr = dataBitMap.GetBitmapBits(True)
         image = Image.frombuffer(
-            'RGB',
-            (bmpinfo['bmWidth'], bmpinfo['bmHeight']),
-            bmpstr, 'raw', 'BGRX', 0, 1)
+            "RGB",
+            (bmpinfo["bmWidth"], bmpinfo["bmHeight"]),
+            bmpstr,
+            "raw",
+            "BGRX",
+            0,
+            1,
+        )
         # bmpfilenamename = "jiuyin.png"
         # dataBitMap.SaveBitmapFile(cDC, bmpfilenamename)
         # 清理内存
@@ -46,10 +52,10 @@ class Controls:
         cls.screen = image
 
     @classmethod
-    def localall(cls, path, hwnd, contrast_ratio=0.9,offset_form=None):
+    def localall(cls, path, hwnd, contrast_ratio=0.9, offset_form=None):
         locat_all = []
         all_list = pyautogui.locateAll(
-            path, cls.screen,confidence=contrast_ratio,region=offset_form
+            path, cls.screen, confidence=contrast_ratio, region=offset_form
         )
         if not all_list:
             return []
@@ -61,11 +67,11 @@ class Controls:
 
     @classmethod
     def locate(cls, path, hwnd, contrast_ratio=0.9):
-        loca_box = pyautogui.locate(path, cls.screen,confidence=contrast_ratio)
+        loca_box = pyautogui.locate(path, cls.screen, confidence=contrast_ratio)
         return cls.offset_box(loca_box)
 
     @classmethod
-    def offset_box(cls,box):
+    def offset_box(cls, box):
         if box is None:
             return None
         new_left = box.left + cls.offset_left
@@ -119,7 +125,7 @@ class Controls:
 
     # 直接发起鼠标点击，走windows窗口事件
     @staticmethod
-    def win_mouse_click(hwnd, x, y, sleep_time=1):
+    def win_mouse_click(hwnd, x, y, sleep_time=0.2):
         point = win32api.MAKELONG(x, y)
         win32api.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, 1, point)
         time.sleep(sleep_time)
@@ -130,3 +136,8 @@ class Controls:
         point = win32api.MAKELONG(x, y)
         win32api.PostMessage(hwnd, win32con.WM_MOUSEMOVE, 0, point)
         time.sleep(sleep_time)
+
+    # 闪烁窗口
+    @staticmethod
+    def flash_hwnd(hwnd, type=True, flash_num=2, time=0):
+        win32gui.FlashWindowEx(hwnd, type, flash_num, time)
