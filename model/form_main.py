@@ -19,9 +19,9 @@ class MainForm(Ui_main, BaseForm,QObject):
 
     def setupUi(self, LoginForm):
         super().setupUi(LoginForm)
+        self.refresh_main_win_combox()
 
     def show_ui(self):
-        self.refresh_main_win_combox()
         self.lb_user_name.setText(gbd.user_data.user_name)
         self.bt_chongzhi.setVisible(False)
         self.widget.show()
@@ -168,10 +168,10 @@ class MainForm(Ui_main, BaseForm,QObject):
     def refresh_main_win_combox(self):
         if len(gbd.hwnd_list) < 1:
             gbd.hwnd_list = get_jiuyin_hwnd()
-        self.cbb_main_win.addItems(gbd.hwnd_list)
+        self.cbb_main_win.addItems([str(i) for i in gbd.hwnd_list])
     
     def on_cb_main_win_clicked(self):
-        if self.cb_main_win.clicked():
-            gbd.main_window_hwnd = self.cbb_main_win.currentText()
+        if self.cb_main_win.isChecked():
+            gbd.main_window_hwnd = int(self.cbb_main_win.currentText())
         else:
             gbd.main_window_hwnd = 0
