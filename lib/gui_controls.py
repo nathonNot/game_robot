@@ -1,5 +1,7 @@
 import pyautogui
-import win32api, win32gui, win32ui
+import win32api
+import win32gui
+import win32ui
 import win32con  # 导入win32api相关模块
 import time
 from PIL import Image
@@ -67,7 +69,8 @@ class Controls:
 
     @classmethod
     def locate(cls, path, hwnd, contrast_ratio=0.9):
-        loca_box = pyautogui.locate(path, cls.screen, confidence=contrast_ratio)
+        loca_box = pyautogui.locate(
+            path, cls.screen, confidence=contrast_ratio)
         return cls.offset_box(loca_box)
 
     @classmethod
@@ -119,9 +122,21 @@ class Controls:
 
     # 键盘摁下抬起
     @staticmethod
-    def key_post(hwnd, key):
+    def key_post(hwnd, key, sleep_time=0):
         win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, key, 0x2E0001)
+        if sleep_time > 0:
+            time.sleep(sleep_time)
         win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0x2E0001)
+
+    @staticmethod
+    def win_mouse_click_box(hwnd, box, rexy=False, sleep_tim=0.2):
+        Controls.activate_hwnd(hwnd)
+        if rexy:
+            x, y = Controls.get_box_xy(box)
+        else:
+            x = box.left
+            y = box.top
+        Controls.win_mouse_click(hwnd, x, y, sleep_tim)
 
     # 直接发起鼠标点击，走windows窗口事件
     @staticmethod
@@ -141,3 +156,9 @@ class Controls:
     @staticmethod
     def flash_hwnd(hwnd, type=True, flash_num=2, time=0):
         win32gui.FlashWindowEx(hwnd, type, flash_num, time)
+
+    @staticmethod
+    def get_box_xy(box):
+        x = box.left + box.width/2
+        y = box.top - box.height
+        return int(x), int(y)

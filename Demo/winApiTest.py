@@ -10,7 +10,6 @@ from PIL import Image
 import collections
 from gui_controls import Controls
 
-
 def get_hwnd():
     hWndList = []
     win32gui.EnumWindows(lambda hWnd, param: param.append(hWnd), hWndList)
@@ -18,7 +17,7 @@ def get_hwnd():
     for hwnd in hWndList:
         title = win32gui.GetWindowText(hwnd)
         # 调整目标窗口到坐标(600,300),大小设置为(600,600)
-        if (title.find("文本文档") >= 0) or (title.find("九阴真经") >= 0):
+        if (title.find("九阴真经 江湖") >= 0) or (title.find("九阴真经") >= 0):
             print(hwnd, title)
             if hwnd > 0:
                 ret_hwnd = hwnd
@@ -123,6 +122,12 @@ def check(hwnd):
 def fluash_hwnd(hwnd):
     win32gui.FlashWindowEx(hwnd,True,5,0)
 
+def tanwei(hwnd):
+    point = win32api.MAKELONG(479, 344)
+    win32api.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, 1, point)
+    time.sleep(0.2)
+    win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
+
 if __name__ == "__main__":
     hwnd = get_hwnd()
-    fluash_hwnd(hwnd)
+    tanwei(hwnd)
