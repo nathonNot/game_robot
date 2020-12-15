@@ -10,6 +10,7 @@ from PyQt5.QtCore import Qt,pyqtSignal,QObject
 from lib import socket_msg
 from lib.web_socket import WebSocketClient
 from lib.windows_con import get_jiuyin_hwnd
+from lib.gui_controls import Controls
 
 class MainForm(Ui_main, BaseForm,QObject):
 
@@ -40,6 +41,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.bt_del_task.clicked.connect(self.on_del_task_clicked)
         self.cb_main_win.clicked.connect(self.on_cb_main_win_clicked)
         self.set_data_signal.connect(self.set_data)
+        self.cbb_main_win.currentIndexChanged.connect(self.on_cbb_main_win_index_changed)
 
     def open_chongzhi(self):
         url = "www.baidu.com"
@@ -175,3 +177,7 @@ class MainForm(Ui_main, BaseForm,QObject):
             gbd.main_window_hwnd = int(self.cbb_main_win.currentText())
         else:
             gbd.main_window_hwnd = 0
+    
+    def on_cbb_main_win_index_changed(self):
+        hwnd = self.cbb_main_win.currentText()
+        Controls.flash_hwnd(int(hwnd))
