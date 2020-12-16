@@ -168,3 +168,8 @@ class Controls:
         x = box.left + box.width/2
         y = box.top - box.height
         return int(x), int(y)
+
+    @staticmethod
+    def win_gunlun_qian(hwnd):
+        for _ in range(50):
+            win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0x780000, 0x0176022C)
