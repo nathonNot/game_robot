@@ -25,6 +25,7 @@ class MainForm(Ui_main, BaseForm,QObject):
     def show_ui(self):
         self.lb_user_name.setText(gbd.user_data.user_name)
         self.bt_chongzhi.setVisible(False)
+        self.bt_ws_con.setVisible(False)
         self.widget.show()
 
     def init_callback(self):

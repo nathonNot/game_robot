@@ -1,6 +1,7 @@
 import requests
 import shutil,zipfile,os
 import zlib
+import json
 
 def build():
     try:
@@ -65,10 +66,18 @@ def input_zip(input_path,out_path):
     fzip.close()
     print("build success "+out_path)
 
+def get_version():
+    with open("config\\config.json","r") as f:
+        config = json.loads(f.read())
+    return config["version"]
+
 if __name__ == '__main__':
+    version = get_version()
     build()
     # 标准编译包
-    input_zip('dist','release/release.zip')
+    pkg_name1 = 'release/release_'+version+'.zip'
+    pkg_name2 = 'release/update/release_'+version+'.zip'
+    input_zip('dist',pkg_name1)
     # 更新包
-    input_zip('dist/main','release/update/release.zip')
+    input_zip('dist/main',pkg_name2)
     # build_update()

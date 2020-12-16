@@ -54,14 +54,14 @@
     </layout>
    </item>
    <item>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QTabWidget" name="tw_config">
      <property name="toolTip">
       <string/>
      </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tabWidgetPage1">
+     <widget class="QWidget" name="page_base">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -120,7 +120,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabWidgetPage2">
+     <widget class="QWidget" name="page_citan">
       <attribute name="title">
        <string>刺探设置</string>
       </attribute>
