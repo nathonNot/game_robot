@@ -1,13 +1,12 @@
 import lib.global_data as gbd
-import threading
 from lib.gui_controls import Controls
 from loguru import logger
 import lib.windows_con as win_con
 import time
 from lib.web_socket import WebSocketClient
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QThread,pyqtSignal
 
-class MainRefresh(threading.Thread):
+class MainRefresh(QThread):
 
     is_run = False
 
@@ -53,3 +52,26 @@ class WebSocketThread(QThread):
     @staticmethod
     def class_name():
         return "WebSocketThread"
+
+class KeyRangeThread(QThread):
+
+    thread_done = pyqtSignal()
+    run_num = 0
+    hwnd = 0
+    def __init__(self,hwnd,run_times):
+        super(KeyRangeThread, self).__init__()
+        self.run_num = run_times
+        self.hwnd = hwnd
+
+    def run(self):
+        Controls.activate_hwnd(self.hwnd)
+        for _ in range(self.run_num):
+            for key in gbd.key_range_list:
+                Controls.key_post(self.hwnd,key)
+            self.msleep(100)
+        self.thread_done.emit()
+        self.sleep(1)
+
+    @staticmethod
+    def class_name():
+        return "KeyRange"

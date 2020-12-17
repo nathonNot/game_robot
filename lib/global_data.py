@@ -37,3 +37,5 @@ call_back = None
 MainWindow = None
 
 config_dc = None
+
+key_range_list = []

@@ -11,6 +11,8 @@ from lib import socket_msg
 from lib.web_socket import WebSocketClient
 from lib.windows_con import get_jiuyin_hwnd
 from lib.gui_controls import Controls
+from lib.utils import win_key_dc
+from lib.thread_class import KeyRangeThread
 
 class MainForm(Ui_main, BaseForm,QObject):
 
@@ -20,10 +22,13 @@ class MainForm(Ui_main, BaseForm,QObject):
 
     def setupUi(self, LoginForm):
         super().setupUi(LoginForm)
+        self.le_range_num.setValidator(QIntValidator(0, 65535))
         self.refresh_main_win_combox()
+        self.refresh_key_range_combox()
 
     def show_ui(self):
         self.lb_user_name.setText(gbd.user_data.user_name)
+        self.lb_key_list.setText("")
         self.bt_chongzhi.setVisible(False)
         self.bt_ws_con.setVisible(False)
         self.widget.show()
@@ -44,10 +49,43 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.cb_lianan.clicked.connect(self.on_cb_lianan_clicked)
         self.set_data_signal.connect(self.set_data)
         self.cbb_main_win.currentIndexChanged.connect(self.on_cbb_main_win_index_changed)
+        self.bt_add_key.clicked.connect(self.on_bt_add_key_clicked)
+        self.bt_clear_key_list.clicked.connect(self.on_bt_clear_key_list_clicked)
+        self.bt_start_range_key.clicked.connect(self.on_bt_start_range_key_clicked)
 
     def open_chongzhi(self):
         url = "www.baidu.com"
         webbrowser.open(url)
+
+    def on_bt_start_range_key_clicked(self):
+        if (self.bt_start_range_key.text == "正在循环按键"):
+            return
+        hwnd = self.cbb_target_hwnd.currentText()
+        run_times = self.le_range_num.text()
+        try:
+            hwnd = int(hwnd)
+            run_times = int(run_times)
+        except Exception as identifier:
+            self.lb_log.setText(str(identifier))
+            return
+        q_thread = KeyRangeThread(hwnd,run_times)
+        q_thread.thread_done.connect(self.thread_key_range_done)
+        start_thread(q_thread,False)
+        self.bt_start_range_key.setText("正在循环按键")
+        self.bt_start_range_key.setEnabled(False)
+
+    def on_bt_add_key_clicked(self):
+        key = self.cbb_key.currentText()
+        gbd.key_range_list.append(win_key_dc[key])
+        old_text = self.lb_key_list.text()
+        if old_text != "":
+            old_text += ","
+        old_text += key
+        self.lb_key_list.setText(old_text)
+
+    def on_bt_clear_key_list_clicked(self):
+        gbd.key_range_list.clear()
+        self.lb_key_list.setText("")
 
     def on_cb_neigong_clicked(self):
         gbd.module_dc["内功"].is_act = self.cb_neigong.isChecked()
@@ -176,6 +214,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         if len(gbd.hwnd_list) < 1:
             gbd.hwnd_list = get_jiuyin_hwnd()
         self.cbb_main_win.addItems([str(i) for i in gbd.hwnd_list])
+        self.cbb_target_hwnd.addItems([str(i) for i in gbd.hwnd_list])
     
     def on_cb_main_win_clicked(self):
         if self.cb_main_win.isChecked():
@@ -186,3 +225,12 @@ class MainForm(Ui_main, BaseForm,QObject):
     def on_cbb_main_win_index_changed(self):
         hwnd = self.cbb_main_win.currentText()
         Controls.flash_hwnd(int(hwnd))
+    
+    # 刷新按键循环下拉框
+    def refresh_key_range_combox(self):
+        key_list = list(win_key_dc.keys())
+        self.cbb_key.addItems(key_list)
+
+    def thread_key_range_done(self):
+        self.bt_start_range_key.setText("开始循环")
+        self.bt_start_range_key.setEnabled(True)

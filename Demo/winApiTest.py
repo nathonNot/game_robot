@@ -152,7 +152,14 @@ def tanwei(hwnd):
     win32api.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, 1, point)
     time.sleep(0.2)
     win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
+def anjian(hwnd):
+    Controls.activate_hwnd(hwnd)
+    Controls.key_post(hwnd, 0x68)
+    for _ in range(100):
+        Controls.key_post(hwnd, 56)
+        time.sleep(0.1)
+
 
 if __name__ == "__main__":
     hwnd = get_hwnd()
-    move_to_pos(hwnd,0,0)
+    anjian(hwnd)
