@@ -41,6 +41,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.bt_task_up.clicked.connect(self.on_bt_task_up_clicked)
         self.bt_del_task.clicked.connect(self.on_del_task_clicked)
         self.cb_main_win.clicked.connect(self.on_cb_main_win_clicked)
+        self.cb_lianan.clicked.connect(self.on_cb_lianan_clicked)
         self.set_data_signal.connect(self.set_data)
         self.cbb_main_win.currentIndexChanged.connect(self.on_cbb_main_win_index_changed)
 
@@ -59,6 +60,9 @@ class MainForm(Ui_main, BaseForm,QObject):
     
     def on_cb_tanwei_clicked(self):
         gbd.module_dc["摊位"].is_act = self.cb_tanwei.isChecked()
+    
+    def on_cb_lianan_clicked(self):
+        gbd.module_dc["连按"].is_act = self.cb_lianon.isChecked()
 
     def on_bt_start_up_clicked(self):
         if gbd.Exit:

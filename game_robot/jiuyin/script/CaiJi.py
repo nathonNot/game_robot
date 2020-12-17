@@ -2,7 +2,6 @@ from lib.BaseModule import BaseModule
 from lib.gui_controls import Controls
 import pyautogui
 from loguru import logger
-import win32gui, win32con, win32api
 import time
 
 # 采集

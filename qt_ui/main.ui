@@ -71,10 +71,10 @@
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="cb_shashou">
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="cb_tuanlian">
            <property name="text">
-            <string>接杀手</string>
+            <string>团练授业</string>
            </property>
           </widget>
          </item>
@@ -85,17 +85,20 @@
            </property>
           </widget>
          </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="cb_shashou">
+           <property name="text">
+            <string>接杀手</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="cbb_main_win"/>
+         </item>
          <item row="0" column="1">
           <widget class="QCheckBox" name="cb_neigong">
            <property name="text">
             <string>自动点内功</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="cb_tuanlian">
-           <property name="text">
-            <string>团练授业</string>
            </property>
           </widget>
          </item>
@@ -106,8 +109,12 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QComboBox" name="cbb_main_win"/>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="cb_lianan">
+           <property name="text">
+            <string>数字8键连按</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
