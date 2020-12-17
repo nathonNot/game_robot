@@ -15,6 +15,14 @@ class Controls:
     offset_right = 0
     offset_top = 0
     offset_bottom = 0
+    thread = None
+
+    @classmethod
+    def sleep(cls,time):
+        if cls.thread == None:
+            time.sleep(time)
+        else:
+            cls.thread.msleep(int(time*100))
 
     @classmethod
     def get_screen(cls, hwnd):
@@ -126,11 +134,11 @@ class Controls:
         win32api.SendMessage(hwnd, win32con.WM_ACTIVATE, 0, 0)
 
     # 键盘摁下抬起
-    @staticmethod
-    def key_post(hwnd, key, sleep_time=0):
+    @classmethod
+    def key_post(cls,hwnd, key, sleep_time=0):
         win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, key, 0x2E0001)
         if sleep_time > 0:
-            time.sleep(sleep_time)
+            cls.sleep(sleep_time)
         win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0x2E0001)
 
     @staticmethod
@@ -145,18 +153,18 @@ class Controls:
         Controls.un_activate_hwnd(hwnd)
 
     # 直接发起鼠标点击，走windows窗口事件
-    @staticmethod
-    def win_mouse_click(hwnd, x, y, sleep_time=0.2):
+    @classmethod
+    def win_mouse_click(cls,hwnd, x, y, sleep_time=0.2):
         point = win32api.MAKELONG(x, y)
         win32api.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, 1, point)
-        time.sleep(sleep_time)
+        cls.sleep(sleep_time)
         win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
 
-    @staticmethod
-    def win_mouse_move(hwnd, x, y, sleep_time=1):
+    @classmethod
+    def win_mouse_move(cls,hwnd, x, y, sleep_time=1):
         point = win32api.MAKELONG(x, y)
         win32api.PostMessage(hwnd, win32con.WM_MOUSEMOVE, 0, point)
-        time.sleep(sleep_time)
+        cls.sleep(sleep_time)
 
     # 闪烁窗口
     @staticmethod

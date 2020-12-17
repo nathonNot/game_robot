@@ -56,6 +56,7 @@ def start_thread(thread_obj,init=True):
 def thread_stop(thread_obj):
     class_name = thread_obj.class_name()
     if class_name in gbd.threads:
+        gbd.threads[class_name].stop()
         gbd.threads[class_name].wait()
         del gbd.threads[class_name]
 

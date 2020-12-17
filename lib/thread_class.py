@@ -6,7 +6,16 @@ import time
 from lib.web_socket import WebSocketClient
 from PyQt5.QtCore import QThread,pyqtSignal
 
-class MainRefresh(QThread):
+class ThreadBase(QThread):
+    
+    @staticmethod
+    def class_name():
+        return "ThreadBase"
+
+    def stop(self):
+        logger.info(self.class_name()+"线程结束")
+
+class MainRefresh(ThreadBase):
 
     is_run = False
 
@@ -27,7 +36,7 @@ class MainRefresh(QThread):
                             m.fram_update(hwnd)
             except Exception as e:
                 logger.error(str(e))
-            time.sleep(gbd.threa_sleep_time)
+            self.msleep(int(gbd.threa_sleep_time*100))
 
     def stop(self):
         self.is_run = False
@@ -36,7 +45,7 @@ class MainRefresh(QThread):
     def class_name():
         return "MainRefresh"
 
-class WebSocketThread(QThread):
+class WebSocketThread(ThreadBase):
     
     ws = None
 
@@ -53,7 +62,7 @@ class WebSocketThread(QThread):
     def class_name():
         return "WebSocketThread"
 
-class KeyRangeThread(QThread):
+class KeyRangeThread(ThreadBase):
 
     thread_done = pyqtSignal()
     run_num = 0
