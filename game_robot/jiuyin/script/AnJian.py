@@ -12,4 +12,4 @@ class AnJian(BaseModule):
     def fram_update(self,hwnd):
         Controls.activate_hwnd(hwnd)
         for _ in range(100):
-            Controls.key_post(hwnd, 97)
+            Controls.key_post(hwnd, 0x61)
