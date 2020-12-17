@@ -62,7 +62,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         gbd.module_dc["摊位"].is_act = self.cb_tanwei.isChecked()
     
     def on_cb_lianan_clicked(self):
-        gbd.module_dc["连按"].is_act = self.cb_lianon.isChecked()
+        gbd.module_dc["连按"].is_act = self.cb_lianan.isChecked()
 
     def on_bt_start_up_clicked(self):
         if gbd.Exit:
