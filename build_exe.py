@@ -75,8 +75,8 @@ if __name__ == '__main__':
     version = get_version()
     build()
     # 标准编译包
-    pkg_name1 = 'release/release_'+version+'.zip'
-    pkg_name2 = 'release/update/release_'+version+'.zip'
+    pkg_name1 = 'release/版本包_'+version+'.zip'
+    pkg_name2 = 'release/update/更新包_'+version+'.zip'
     input_zip('dist',pkg_name1)
     # 更新包
     input_zip('dist/main',pkg_name2)
