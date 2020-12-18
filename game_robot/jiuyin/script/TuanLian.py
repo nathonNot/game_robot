@@ -19,12 +19,14 @@ class TuanLian(BaseModule):
     def update_hwnd(self, hwnd):
         # 获取窗口左上角和右下角坐标
         self.onec_button.clear()
-        up = Controls.localall("image\\tl_up.png", hwnd,self.config["up"])
-        down = Controls.localall("image\\tl_down.png", hwnd,self.config["down"])
-        right = Controls.localall("image\\tl_right.png", hwnd,self.config["right"])
-        left = Controls.localall("image\\tl_left.png", hwnd,self.config["left"])
-        tl_k = Controls.localall("image\\tl_k.png", hwnd,self.config["k"])
-        tl_j = Controls.localall("image\\tl_j.png", hwnd,self.config["j"])
+        x,y = Controls.get_offset()
+        form = (213,410,400,80)
+        up = Controls.localall("image\\tl_up.png", hwnd,self.config["up"],form)
+        down = Controls.localall("image\\tl_down.png", hwnd,self.config["down"],form)
+        right = Controls.localall("image\\tl_right.png", hwnd,self.config["right"],form)
+        left = Controls.localall("image\\tl_left.png", hwnd,self.config["left"],form)
+        tl_k = Controls.localall("image\\tl_k.png", hwnd,self.config["k"],form)
+        tl_j = Controls.localall("image\\tl_j.png", hwnd,self.config["j"],form)
         if up:
             self.add_button_cilck(up, "up", win32con.VK_UP)
         if down:
@@ -44,8 +46,8 @@ class TuanLian(BaseModule):
             self.set_log(self.get_log_data())
             Controls.activate_hwnd(hwnd)
             for key in self.onec_button:
-                if (key[1] - last_x) <= 5:
-                    continue
+                # if (key[1] - last_x) <= 5:
+                #     continue
                 Controls.key_post(hwnd, key[2])
                 last_x = key[1]
 
@@ -64,9 +66,6 @@ class TuanLian(BaseModule):
         new_list = []
         for button in self.onec_button:
             if button in new_list:
-                continue
-            new_button = [button[0], button[1] - 1, button[2]]
-            if new_button in new_list:
                 continue
             new_list.append(button)
         self.onec_button = new_list

@@ -199,17 +199,16 @@ def _locateAll_opencv(needleImage, haystackImage, grayscale=None, limit=10000, r
     needleImage = _load_cv2(needleImage, grayscale)
     needleHeight, needleWidth = needleImage.shape[:2]
     haystackImage = _load_cv2(haystackImage, grayscale)
-
     if region:
         haystackImage = haystackImage[region[1]:region[1]+region[3],
                                       region[0]:region[0]+region[2]]
     else:
         region = (0, 0)  # full image; these values used in the yield statement
+    # new_im = cv2.imwrite("im_save.png", haystackImage)
     if (haystackImage.shape[0] < needleImage.shape[0] or
         haystackImage.shape[1] < needleImage.shape[1]):
         # avoid semi-cryptic OpenCV error below if bad size
         raise ValueError('needle dimension(s) exceed the haystack image or region dimensions')
-
     if step == 2:
         confidence *= 0.95
         needleImage = needleImage[::step, ::step]

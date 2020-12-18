@@ -80,6 +80,10 @@ class Controls:
         return cls.offset_box(loca_box)
 
     @classmethod
+    def get_offset(cls):
+        return cls.offset_left,cls.offset_top
+
+    @classmethod
     def offset_box(cls, box):
         if box is None:
             return None
