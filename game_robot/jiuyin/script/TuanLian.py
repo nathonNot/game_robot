@@ -48,8 +48,6 @@ class TuanLian(BaseModule):
                     continue
                 Controls.key_post(hwnd, key[2])
                 last_x = key[1]
-                # pyautogui.press(key[0])
-            # pyautogui.moveTo(0, 0)
 
     def add_button_cilck(self, button_find, button_name, vk_key):
         for button in button_find:

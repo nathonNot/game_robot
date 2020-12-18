@@ -1,11 +1,10 @@
-import pyautogui
 import win32api
 import win32gui
 import win32ui
 import win32con  # 导入win32api相关模块
 import time
 from PIL import Image
-
+from lib import pyscreeze
 
 class Controls:
 
@@ -63,8 +62,8 @@ class Controls:
     @classmethod
     def localall(cls, path, hwnd, contrast_ratio=0.9, offset_form=None):
         locat_all = []
-        all_list = pyautogui.locateAll(
-            path, cls.screen, confidence=contrast_ratio, region=offset_form
+        all_list = cls.locateAll(
+            path, contrast_ratio, offset_form
         )
         if not all_list:
             return []
@@ -76,7 +75,7 @@ class Controls:
 
     @classmethod
     def locate(cls, path, hwnd, contrast_ratio=0.9):
-        loca_box = pyautogui.locate(
+        loca_box = pyscreeze.locate(
             path, cls.screen, confidence=contrast_ratio)
         return cls.offset_box(loca_box)
 
@@ -150,3 +149,21 @@ class Controls:
     def win_gunlun_qian(hwnd):
         for _ in range(50):
             win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0x780000, 0x0176022C)
+
+    @classmethod
+    def locateAll(cls,path,confidence=0.9, region=None):
+        box_list = pyscreeze.locateAll_opencv(path,cls.screen,confidence = confidence,region=region)
+        new_list = []
+        box_list = list(box_list)
+        box_list.sort(key = lambda x:x.left)
+        last_box = None
+        for box in box_list:
+            if last_box == None:
+                last_box = box
+                new_list.append(box)
+                continue
+            if (box.left - last_box.left) <= 5:
+                continue
+            last_box = box
+            new_list.append(box)
+        return new_list

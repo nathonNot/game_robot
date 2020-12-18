@@ -177,7 +177,7 @@ def _load_cv2(img, grayscale=None):
     return img_cv
 
 def locateAll_opencv(*args,**kwargs):
-    _locateAll_opencv(*args,**kwargs)
+    return _locateAll_opencv(*args,**kwargs)
 
 def _locateAll_opencv(needleImage, haystackImage, grayscale=None, limit=10000, region=None, step=1,
                       confidence=0.999):
