@@ -1,6 +1,5 @@
 from lib.BaseModule import BaseModule
 from lib.gui_controls import Controls
-import pyautogui
 from loguru import logger
 import time
 
@@ -28,4 +27,3 @@ class CaiJi(BaseModule):
             Controls.win_mouse_click(hwnd,self.this_x,self.this_y)
             logger.info("获取采集")
             time.sleep(3)
-            # pyautogui.leftClick(400,250)

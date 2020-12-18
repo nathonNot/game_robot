@@ -3,7 +3,6 @@ from ctypes import windll
 from PIL import Image
 import cv2
 import numpy
-import pyautogui
 
 def main():
     hWndList = [] 

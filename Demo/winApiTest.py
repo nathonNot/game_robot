@@ -3,7 +3,6 @@ import win32api
 import win32gui
 import win32con  # 导入win32api相关模块
 import time
-import pyautogui
 import cv2
 import numpy as np
 from PIL import Image
@@ -161,5 +160,6 @@ def anjian(hwnd):
 
 
 if __name__ == "__main__":
-    hwnd = get_hwnd()
-    anjian(hwnd)
+    # hwnd = get_hwnd()
+    # anjian(hwnd)
+    win32api.MessageBox(0, "这是一个测试消息", "消息框标题",win32con.MB_OK)

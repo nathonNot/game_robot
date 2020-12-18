@@ -1,9 +1,9 @@
 
 import win32gui
 import win32con
+import win32api
 from ctypes import windll
 from lib import global_data
-import pyautogui
 
 def set_windwos():
     base_config = global_data.config_dc["base"]
@@ -38,6 +38,6 @@ def get_jiuyin_hwnd():
                 # screenshot_by_hwnd(hwnd)
                 _, win_type, _, _, _ = win32gui.GetWindowPlacement(hwnd)
                 if win_type == 2:
-                    pyautogui.alert(text='请勿将游戏窗口最小化', title='重置窗口')
+                    win32api.MessageBox(0, "请勿将游戏窗口最小化", "重置窗口",win32con.MB_OK)
     jiuyin_hwnd.sort()
     return jiuyin_hwnd

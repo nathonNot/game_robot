@@ -1,6 +1,5 @@
 from lib.BaseModule import BaseModule
 from lib.gui_controls import Controls
-import pyautogui
 from loguru import logger
 
 # 杀手

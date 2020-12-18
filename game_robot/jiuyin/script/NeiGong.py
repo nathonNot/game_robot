@@ -1,6 +1,5 @@
 from lib.BaseModule import BaseModule
 from lib.gui_controls import Controls
-import pyautogui
 from loguru import logger
 
 # 内功
@@ -14,5 +13,5 @@ class NeiGong(BaseModule):
     def update_hwnd(self,hwnd):
         up = Controls.locate("image\\ng_jxxl.png", hwnd)
         if up:
-            pyautogui.leftClick(up)
+            Controls.win_mouse_click_box(hwnd,up)
             logger.info("继续修炼")
