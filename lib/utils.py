@@ -76,6 +76,7 @@ win_key_dc = {
     "左":win32con.VK_LEFT,
     "下":win32con.VK_DOWN,
     "右":win32con.VK_RIGHT,
+    "0":48,
     "1":49,
     "2":50,
     "3":51,

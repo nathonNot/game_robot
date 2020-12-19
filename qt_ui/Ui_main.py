@@ -69,6 +69,9 @@ class Ui_main(object):
         self.cb_lianan = QtWidgets.QCheckBox(self.page_base)
         self.cb_lianan.setObjectName("cb_lianan")
         self.gridLayout_2.addWidget(self.cb_lianan, 3, 0, 1, 1)
+        self.cb_labiao = QtWidgets.QCheckBox(self.page_base)
+        self.cb_labiao.setObjectName("cb_labiao")
+        self.gridLayout_2.addWidget(self.cb_labiao, 3, 1, 1, 1)
         self.verticalLayout_2.addLayout(self.gridLayout_2)
         self.bt_start_up = QtWidgets.QPushButton(self.page_base)
         self.bt_start_up.setObjectName("bt_start_up")
@@ -163,7 +166,7 @@ class Ui_main(object):
         self.verticalLayout.setStretch(2, 2)
 
         self.retranslateUi(main)
-        self.tw_config.setCurrentIndex(2)
+        self.tw_config.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(main)
 
     def retranslateUi(self, main):
@@ -180,6 +183,7 @@ class Ui_main(object):
         self.cb_neigong.setText(_translate("main", "自动点内功"))
         self.cb_main_win.setText(_translate("main", "主游戏窗口不强锁分辨率"))
         self.cb_lianan.setText(_translate("main", "数字8键连按"))
+        self.cb_labiao.setText(_translate("main", "燕京拉镖"))
         self.bt_start_up.setText(_translate("main", "启动"))
         self.tw_config.setTabText(self.tw_config.indexOf(self.page_base), _translate("main", "基本设置"))
         self.lb_an_num.setText(_translate("main", "当前在线远端设备数：0"))

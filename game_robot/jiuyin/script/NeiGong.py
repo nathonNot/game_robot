@@ -5,7 +5,7 @@ from loguru import logger
 # 内功
 class NeiGong(BaseModule):
 
-    is_act = True
+    is_act = False
 
     def __init__(self):
         logger.info("初始化内功模块")

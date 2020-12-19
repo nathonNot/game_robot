@@ -5,6 +5,7 @@ import lib.windows_con as win_con
 import time
 from lib.web_socket import WebSocketClient
 from PyQt5.QtCore import QThread,pyqtSignal
+import threading
 
 class ThreadBase(QThread):
     
@@ -15,7 +16,8 @@ class ThreadBase(QThread):
     def stop(self):
         logger.info(self.class_name()+"线程结束")
 
-class MainRefresh(ThreadBase):
+# class MainRefresh(ThreadBase):
+class MainRefresh(threading.Thread):
 
     is_run = False
 
@@ -36,7 +38,6 @@ class MainRefresh(ThreadBase):
                             m.fram_update(hwnd)
             except Exception as e:
                 logger.error(str(e))
-            self.msleep(int(gbd.threa_sleep_time*100))
 
     def stop(self):
         self.is_run = False

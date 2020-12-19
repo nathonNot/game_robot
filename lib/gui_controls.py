@@ -17,11 +17,11 @@ class Controls:
     thread = None
 
     @classmethod
-    def sleep(cls,time):
+    def sleep(cls,times):
         if cls.thread == None:
-            time.sleep(time)
+            time.sleep(times)
         else:
-            cls.thread.msleep(int(time*100))
+            cls.thread.msleep(int(times*100))
 
     @classmethod
     def get_screen(cls, hwnd):
@@ -74,9 +74,9 @@ class Controls:
         return locat_all
 
     @classmethod
-    def locate(cls, path, hwnd, contrast_ratio=0.9):
+    def locate(cls, path, hwnd, contrast_ratio=0.9,offset_form=None):
         loca_box = pyscreeze.locate(
-            path, cls.screen, confidence=contrast_ratio)
+            path, cls.screen, confidence=contrast_ratio,region=offset_form)
         return cls.offset_box(loca_box)
 
     @classmethod

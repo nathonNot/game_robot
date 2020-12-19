@@ -3,6 +3,12 @@ import time
 import win32api
 import win32gui
 import win32con  # 导入win32api相关模块
+from  lib.utils import win_key_dc
+
+def get_xy(x,y):
+    x_list = [win_key_dc[xx] for xx in str(x)]
+    y_list = [win_key_dc[yy] for yy in str(y)]
+    return x_list,y_list
 
 def move_to_pos(hwnd,x,y):
     # 出发地图键m
@@ -13,29 +19,30 @@ def move_to_pos(hwnd,x,y):
     Controls.key_post(hwnd,0x4D)
     # x,y = get_hwnd_offset(hwnd,115,34)
     Controls.win_mouse_click(hwnd,115,34)
-    input_hwnd(hwnd,[0x37,0x32,0x32])
+    input_hwnd(hwnd,x)
     Controls.win_mouse_click(hwnd,185,40)
-    input_hwnd(hwnd,[0x35,0x31,0x37])
+    input_hwnd(hwnd,y)
     Controls.win_mouse_click(hwnd,223,33)
     time.sleep(1)
+    Controls.win_mouse_move(hwnd,320,274,0.5)
     Controls.win_mouse_click(hwnd,320,274)
     # 关闭地图
     Controls.key_post(hwnd,0x4D)
-    # 移动到拉镖点
-    time.sleep(2)
-    box = check(hwnd)
-    print(box)
-    Controls.win_mouse_move(hwnd,700,93)
-    time.sleep(1)
-    Controls.win_mouse_click(hwnd,700,93)
-    time.sleep(1)
-    Controls.win_mouse_click(hwnd,150,221)
-    Controls.get_screen(hwnd)
-    box = Controls.locate2("D:\project\python\jiuyin_robot\image\la_jiebiao.png")
-    if box:
-        print(box)
-        Controls.win_mouse_move(hwnd,244,479)
-        Controls.win_mouse_click(hwnd,244,479)
+    # # 移动到拉镖点
+    # time.sleep(2)
+    # box = check(hwnd)
+    # print(box)
+    # Controls.win_mouse_move(hwnd,700,93)
+    # time.sleep(1)
+    # Controls.win_mouse_click(hwnd,700,93)
+    # time.sleep(1)
+    # Controls.win_mouse_click(hwnd,150,221)
+    # Controls.get_screen(hwnd)
+    # box = Controls.locate2("D:\project\python\jiuyin_robot\image\la_jiebiao.png")
+    # if box:
+    #     print(box)
+    #     Controls.win_mouse_move(hwnd,244,479)
+    #     Controls.win_mouse_click(hwnd,244,479)
 
 def input_hwnd(hwnd,input_list):
     # 先删除

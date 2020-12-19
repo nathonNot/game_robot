@@ -52,6 +52,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.bt_add_key.clicked.connect(self.on_bt_add_key_clicked)
         self.bt_clear_key_list.clicked.connect(self.on_bt_clear_key_list_clicked)
         self.bt_start_range_key.clicked.connect(self.on_bt_start_range_key_clicked)
+        self.cb_labiao.clicked.connect(self.on_cb_labiao_clicked)
 
     def open_chongzhi(self):
         url = "www.baidu.com"
@@ -101,6 +102,13 @@ class MainForm(Ui_main, BaseForm,QObject):
     
     def on_cb_lianan_clicked(self):
         gbd.module_dc["连按"].is_act = self.cb_lianan.isChecked()
+
+    def on_cb_labiao_clicked(self):
+        gbd.module_dc["拉镖"].is_act = self.cb_labiao.isChecked()
+        if self.cb_labiao.isChecked():
+            gbd.module_dc["拉镖"].start()
+        else:
+            gbd.module_dc["拉镖"].stop()
 
     def on_bt_start_up_clicked(self):
         if gbd.Exit:

@@ -91,18 +91,18 @@ def move_to_pos(hwnd,x,y):
     # Controls.key_post(hwnd,0x4D)
     # # 移动到拉镖点
     # time.sleep(2)
-    # box = check(hwnd)
-    # Controls.win_mouse_move(hwnd,700,93)
-    # time.sleep(1)
-    # Controls.win_mouse_click(hwnd,700,93)
-    # time.sleep(1)
+    box = check(hwnd)
+    Controls.win_mouse_move(hwnd,700,93)
+    time.sleep(1)
+    Controls.win_mouse_click(hwnd,700,93)
+    time.sleep(1)
     # Controls.win_mouse_click(hwnd,150,221)
     # Controls.get_screen(hwnd)
-    # box = Controls.locate2("D:\project\python\jiuyin_robot\image\lb_jiebiao.png")
+    box = Controls.locate2("D:\project\python\jiuyin_robot\image\lb_jiebiao.png")
     # if box:
     #     print("接镖1")
     #     Controls.win_mouse_move(hwnd,244,479)
-    #     Controls.win_mouse_click(hwnd,244,479)
+        # Controls.win_mouse_click(hwnd,244,479)
     # Controls.get_screen(hwnd)
     # biaoche = Controls.locate2("D:\project\python\jiuyin_robot\image\lb_jiebiaot.png",0.5)
     # if biaoche:
@@ -122,7 +122,7 @@ def move_to_pos(hwnd,x,y):
     #     print("选择驾车")
     #     x,y = get_xy(jiache)
     #     Controls.win_mouse_click(hwnd,x,y)
-    status = Controls.locate2("D:\project\python\jiuyin_robot\image\lb_icon.png")
+    status = Controls.locate("D:\project\python\jiuyin_robot\image\lb_icon.png")
     if status:
         print("拉镖状态ok")
 
@@ -132,13 +132,13 @@ def get_xy(box):
     return int(x), int(y)
 
 def check(hwnd):
+    offset = (650,50,100,50)
     while True:
-        for x in range(695,700):
-            for y in range(88,93):
-                Controls.win_mouse_move(hwnd,x,y)
-                time.sleep(0.2)
+        for x in range(695,710):
+            for y in range(85,100):
+                Controls.win_mouse_move(hwnd,x,y,0.1)
                 Controls.get_screen(hwnd)
-                box = Controls.locate2("D:\project\python\jiuyin_robot\image\lb_jiangliefeng.png",0.5)
+                box = Controls.locate("D:\project\python\jiuyin_robot\image\lb_jiangliefeng.png",0.3)
                 if box:
                     return box
 
@@ -151,6 +151,7 @@ def tanwei(hwnd):
     win32api.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, 1, point)
     time.sleep(0.2)
     win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
+
 def anjian(hwnd):
     Controls.activate_hwnd(hwnd)
     Controls.key_post(hwnd, 0x68)
@@ -158,8 +159,8 @@ def anjian(hwnd):
         Controls.key_post(hwnd, 56)
         time.sleep(0.1)
 
-
 if __name__ == "__main__":
-    # hwnd = get_hwnd()
+    hwnd = get_hwnd()
+    move_to_pos(hwnd,0,0)
     # anjian(hwnd)
-    win32api.MessageBox(0, "这是一个测试消息", "消息框标题",win32con.MB_OK)
+    # win32api.MessageBox(0, "这是一个测试消息", "消息框标题",win32con.MB_OK)

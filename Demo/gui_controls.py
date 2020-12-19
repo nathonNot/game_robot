@@ -1,8 +1,10 @@
-import pyautogui
-import win32api,win32gui,win32ui
+import win32api
+import win32gui
+import win32ui
 import win32con  # 导入win32api相关模块
 import time
 from PIL import Image
+import pyscreeze
 
 class Controls:
 
@@ -12,9 +14,17 @@ class Controls:
     offset_right = 0
     offset_top = 0
     offset_bottom = 0
+    thread = None
 
     @classmethod
-    def get_screen(cls,hwnd):
+    def sleep(cls,times):
+        if cls.thread == None:
+            time.sleep(times)
+        else:
+            cls.thread.msleep(int(times*100))
+
+    @classmethod
+    def get_screen(cls, hwnd):
         left, top, right, bottom = win32gui.GetWindowRect(hwnd)
         cls.offset_left = left
         cls.offset_right = right
@@ -32,9 +42,14 @@ class Controls:
         bmpinfo = dataBitMap.GetInfo()
         bmpstr = dataBitMap.GetBitmapBits(True)
         image = Image.frombuffer(
-            'RGB',
-            (bmpinfo['bmWidth'], bmpinfo['bmHeight']),
-            bmpstr, 'raw', 'BGRX', 0, 1)
+            "RGB",
+            (bmpinfo["bmWidth"], bmpinfo["bmHeight"]),
+            bmpstr,
+            "raw",
+            "BGRX",
+            0,
+            1,
+        )
         # bmpfilenamename = "jiuyin.png"
         # dataBitMap.SaveBitmapFile(cDC, bmpfilenamename)
         # 清理内存
@@ -45,10 +60,10 @@ class Controls:
         cls.screen = image
 
     @classmethod
-    def localall(cls, path, hwnd, contrast_ratio=0.9,offset_form=None):
+    def localall(cls, path, hwnd, contrast_ratio=0.9, offset_form=None):
         locat_all = []
-        all_list = pyautogui.locateAll(
-            path, cls.screen,confidence=contrast_ratio
+        all_list = cls.locateAll(
+            path, contrast_ratio, offset_form
         )
         if not all_list:
             return []
@@ -59,18 +74,17 @@ class Controls:
         return locat_all
 
     @classmethod
-    def locate(cls, path, hwnd, contrast_ratio=0.9):
-        loca_box = pyautogui.locate(path, cls.screen,confidence=contrast_ratio)
+    def locate(cls, path, hwnd, contrast_ratio=0.9,offset_form=None):
+        loca_box = pyscreeze.locate(
+            path, cls.screen, confidence=contrast_ratio,region=offset_form)
         return cls.offset_box(loca_box)
-    
-    @classmethod
-    def locate2(cls, path, contrast_ratio=0.9):
-        # cls.screen.show()
-        loca_box = pyautogui.locate(path, cls.screen,confidence=contrast_ratio)
-        return loca_box
 
     @classmethod
-    def offset_box(cls,box):
+    def get_offset(cls):
+        return cls.offset_left,cls.offset_top
+
+    @classmethod
+    def offset_box(cls, box):
         if box is None:
             return None
         new_left = box.left + cls.offset_left
@@ -86,27 +100,74 @@ class Controls:
         win32api.SendMessage(hwnd, win32con.WM_IME_SETCONTEXT, 0x1, 0xC000000F)
         win32api.SendMessage(hwnd, win32con.WM_IME_NOTIFY, 0x2, 0)
 
-    # 键盘摁下抬起
     @staticmethod
-    def key_post(hwnd, key):
+    def un_activate_hwnd(hwnd):
+        win32api.SendMessage(hwnd, win32con.WM_ACTIVATEAPP, 0, 0)
+        win32api.SendMessage(hwnd, win32con.WM_ACTIVATE, 0, 0)
+
+    # 键盘摁下抬起
+    @classmethod
+    def key_post(cls,hwnd, key, sleep_time=0):
         win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, key, 0x2E0001)
+        if sleep_time > 0:
+            cls.sleep(sleep_time)
         win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0x2E0001)
 
-    # 直接发起鼠标点击，走windows窗口事件
     @staticmethod
-    def win_mouse_click(hwnd, x, y, sleep_time=1):
+    def win_mouse_click_box(hwnd, box, rexy=False, sleep_tim=0.2):
+        Controls.activate_hwnd(hwnd)
+        if rexy:
+            x, y = Controls.get_box_xy(box)
+        else:
+            x = box.left
+            y = box.top
+        Controls.win_mouse_click(hwnd, x, y, sleep_tim)
+        Controls.un_activate_hwnd(hwnd)
+
+    # 直接发起鼠标点击，走windows窗口事件
+    @classmethod
+    def win_mouse_click(cls,hwnd, x, y, sleep_time=0.2):
         point = win32api.MAKELONG(x, y)
         win32api.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, 1, point)
-        time.sleep(sleep_time)
+        cls.sleep(sleep_time)
         win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
 
-    @staticmethod
-    def win_mouse_move(hwnd, x, y, sleep_time=1):
+    @classmethod
+    def win_mouse_move(cls,hwnd, x, y, sleep_time=1):
         point = win32api.MAKELONG(x, y)
         win32api.PostMessage(hwnd, win32con.WM_MOUSEMOVE, 0, point)
-        time.sleep(sleep_time)
+        cls.sleep(sleep_time)
+
+    # 闪烁窗口
+    @staticmethod
+    def flash_hwnd(hwnd, type=True, flash_num=2, time=0):
+        win32gui.FlashWindowEx(hwnd, type, flash_num, time)
+
+    @staticmethod
+    def get_box_xy(box):
+        x = box.left + box.width/2
+        y = box.top - box.height
+        return int(x), int(y)
 
     @staticmethod
     def win_gunlun_qian(hwnd):
         for _ in range(50):
             win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0x780000, 0x0176022C)
+
+    @classmethod
+    def locateAll(cls,path,confidence=0.9, region=None):
+        box_list = pyscreeze.locateAll_opencv(path,cls.screen,confidence = confidence,region=region)
+        new_list = []
+        box_list = list(box_list)
+        box_list.sort(key = lambda x:x.left)
+        last_box = None
+        for box in box_list:
+            if last_box == None:
+                last_box = box
+                new_list.append(box)
+                continue
+            if (box.left - last_box.left) <= 5:
+                continue
+            last_box = box
+            new_list.append(box)
+        return new_list
