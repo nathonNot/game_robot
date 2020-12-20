@@ -16,8 +16,8 @@ class ThreadBase(QThread):
     def stop(self):
         logger.info(self.class_name()+"线程结束")
 
-# class MainRefresh(ThreadBase):
-class MainRefresh(threading.Thread):
+class MainRefresh(ThreadBase):
+# class MainRefresh(threading.Thread):
 
     is_run = False
 
@@ -36,6 +36,7 @@ class MainRefresh(threading.Thread):
                     for m in gbd.module_dc.values():
                         if m.is_act:
                             m.fram_update(hwnd)
+                self.msleep(500)
             except Exception as e:
                 logger.error(str(e))
 

@@ -180,7 +180,7 @@ def locateAll_opencv(*args,**kwargs):
     return _locateAll_opencv(*args,**kwargs)
 
 def _locateAll_opencv(needleImage, haystackImage, grayscale=None, limit=10000, region=None, step=1,
-                      confidence=0.999):
+                      confidence=0.999,threshold=False):
     """
     TODO - rewrite this
         faster but more memory-intensive than pure python
@@ -205,6 +205,13 @@ def _locateAll_opencv(needleImage, haystackImage, grayscale=None, limit=10000, r
     else:
         region = (0, 0)  # full image; these values used in the yield statement
     # new_im = cv2.imwrite("im_save.png", haystackImage)
+    
+    if threshold:
+            #二值化
+        pass
+        # ret, needleImage = cv2.threshold(needleImage, 96, 255, cv2.THRESH_BINARY_INV)
+        # ret, haystackImage = cv2.threshold(haystackImage, 96, 255, cv2.THRESH_BINARY_INV)
+
     if (haystackImage.shape[0] < needleImage.shape[0] or
         haystackImage.shape[1] < needleImage.shape[1]):
         # avoid semi-cryptic OpenCV error below if bad size

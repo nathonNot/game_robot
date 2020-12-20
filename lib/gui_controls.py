@@ -1,3 +1,4 @@
+from numpy.lib.function_base import kaiser
 import win32api
 import win32gui
 import win32ui
@@ -5,6 +6,7 @@ import win32con  # 导入win32api相关模块
 import time
 from PIL import Image
 from lib import pyscreeze
+import pyautogui
 
 class Controls:
 
@@ -60,10 +62,10 @@ class Controls:
         cls.screen = image
 
     @classmethod
-    def localall(cls, path, hwnd, contrast_ratio=0.9, offset_form=None):
+    def localall(cls, path, hwnd, confidence=0.9, **kwargs):
         locat_all = []
         all_list = cls.locateAll(
-            path, contrast_ratio, offset_form
+            path, confidence = confidence, **kwargs
         )
         if not all_list:
             return []
@@ -155,8 +157,9 @@ class Controls:
             win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0x780000, 0x0176022C)
 
     @classmethod
-    def locateAll(cls,path,confidence=0.9, region=None):
-        box_list = pyscreeze.locateAll_opencv(path,cls.screen,confidence = confidence,region=region)
+    def locateAll(cls,path,**kwargs):
+        # box_list = pyscreeze.locateAll_opencv(path,cls.screen,**kwargs)
+        box_list = pyautogui.locateAll(path,cls.screen,**kwargs)
         new_list = []
         box_list = list(box_list)
         box_list.sort(key = lambda x:x.left)

@@ -7,6 +7,10 @@ from lib import global_data as gbd
 # 团练授业
 class TuanLian(BaseModule):
 
+
+    # TODO
+    # https://gitee.com/AiPandaBear/opencv-python4qqx5/blob/master/rectcheck.py
+    
     is_act = False
 
     onec_button = []
@@ -20,13 +24,13 @@ class TuanLian(BaseModule):
         # 获取窗口左上角和右下角坐标
         self.onec_button.clear()
         x,y = Controls.get_offset()
-        form = (213,410,400,80)
-        up = Controls.localall("image\\tl_up.png", hwnd,self.config["up"],form)
-        down = Controls.localall("image\\tl_down.png", hwnd,self.config["down"],form)
-        right = Controls.localall("image\\tl_right.png", hwnd,self.config["right"],form)
-        left = Controls.localall("image\\tl_left.png", hwnd,self.config["left"],form)
-        tl_k = Controls.localall("image\\tl_k.png", hwnd,self.config["k"],form)
-        tl_j = Controls.localall("image\\tl_j.png", hwnd,self.config["j"],form)
+        form = (230,440,340,45)
+        up = Controls.localall("image\\tl_up.png", hwnd,self.config["up"],region = form)
+        down = Controls.localall("image\\tl_down.png", hwnd,self.config["down"],region = form)
+        right = Controls.localall("image\\tl_right.png", hwnd,self.config["right"],region = form)
+        left = Controls.localall("image\\tl_left.png", hwnd,self.config["left"],region = form)
+        tl_k = Controls.localall("image\\tl_k.png", hwnd,self.config["k"],region = form)
+        tl_j = Controls.localall("image\\tl_j.png", hwnd,self.config["j"],region = form)
         if up:
             self.add_button_cilck(up, "up", win32con.VK_UP)
         if down:
@@ -64,10 +68,13 @@ class TuanLian(BaseModule):
     def de_repetition(self):
         self.onec_button.sort(key=lambda x: x[1])
         new_list = []
-        for button in self.onec_button:
-            if button in new_list:
+        for i in range(len(self.onec_button)):
+            if self.onec_button[i] in new_list:
                 continue
-            new_list.append(button)
+            if len(self.onec_button) > i+1:
+                if (self.onec_button[i+1][1] - self.onec_button[i][1])<7:
+                    continue
+            new_list.append(self.onec_button[i])
         self.onec_button = new_list
     
     def get_log_data(self):

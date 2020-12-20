@@ -180,7 +180,7 @@ def locateAll_opencv(*args,**kwargs):
     return _locateAll_opencv(*args,**kwargs)
 
 def _locateAll_opencv(needleImage, haystackImage, grayscale=None, limit=10000, region=None, step=1,
-                      confidence=0.999):
+                      confidence=0.999,threshold=False):
     """
     TODO - rewrite this
         faster but more memory-intensive than pure python
@@ -209,6 +209,10 @@ def _locateAll_opencv(needleImage, haystackImage, grayscale=None, limit=10000, r
         haystackImage.shape[1] < needleImage.shape[1]):
         # avoid semi-cryptic OpenCV error below if bad size
         raise ValueError('needle dimension(s) exceed the haystack image or region dimensions')
+    if threshold:
+            #二值化
+        ret, needleImage = cv2.threshold(needleImage, 96, 255, cv2.THRESH_BINARY_INV)
+        ret, haystackImage = cv2.threshold(haystackImage, 96, 255, cv2.THRESH_BINARY_INV)
 
     if step == 2:
         confidence *= 0.95
