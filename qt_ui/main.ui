@@ -74,7 +74,7 @@
       <string/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_base">
       <property name="enabled">
@@ -249,6 +249,37 @@
        <string>其他功能</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
+       <item row="2" column="1" colspan="2">
+        <widget class="QLabel" name="lb_key_list">
+         <property name="text">
+          <string>循环按键</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QComboBox" name="cbb_key"/>
+       </item>
+       <item row="2" column="5">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>循环次数</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="lb_key_name">
+         <property name="text">
+          <string>按键循环</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="8">
+        <widget class="QPushButton" name="bt_clear_key_list">
+         <property name="text">
+          <string>清空循环列表</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label_2">
          <property name="text">
@@ -259,51 +290,34 @@
        <item row="0" column="2" colspan="2">
         <widget class="QComboBox" name="cbb_target_hwnd"/>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="lb_key_name">
-         <property name="text">
-          <string>按键循环</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QLabel" name="lb_key_list">
-         <property name="text">
-          <string>循环按键</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QComboBox" name="cbb_key"/>
-       </item>
-       <item row="1" column="4">
-        <widget class="QPushButton" name="bt_add_key">
-         <property name="text">
-          <string>添加</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>循环次数</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="6">
-        <widget class="QLineEdit" name="le_range_num"/>
-       </item>
-       <item row="1" column="7">
+       <item row="2" column="7">
         <widget class="QPushButton" name="bt_start_range_key">
          <property name="text">
           <string>开始循环</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="8">
-        <widget class="QPushButton" name="bt_clear_key_list">
+       <item row="2" column="4">
+        <widget class="QPushButton" name="bt_add_key">
          <property name="text">
-          <string>清空循环列表</string>
+          <string>添加</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="6">
+        <widget class="QLineEdit" name="le_range_num"/>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>循环时间间隔（毫秒）</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QLineEdit" name="le_range_sleep_time">
+         <property name="text">
+          <string>200</string>
          </property>
         </widget>
        </item>

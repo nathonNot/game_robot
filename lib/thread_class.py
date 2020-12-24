@@ -36,7 +36,7 @@ class MainRefresh(ThreadBase):
                     for m in gbd.module_dc.values():
                         if m.is_act:
                             m.fram_update(hwnd)
-                self.msleep(500)
+                self.msleep(200)
             except Exception as e:
                 logger.error(str(e))
 
@@ -69,17 +69,18 @@ class KeyRangeThread(ThreadBase):
     thread_done = pyqtSignal()
     run_num = 0
     hwnd = 0
-    def __init__(self,hwnd,run_times):
+    def __init__(self,hwnd,run_times,sleep_times):
         super(KeyRangeThread, self).__init__()
         self.run_num = run_times
         self.hwnd = hwnd
+        self.sleep_times = sleep_times
 
     def run(self):
         Controls.activate_hwnd(self.hwnd)
         for _ in range(self.run_num):
             for key in gbd.key_range_list:
                 Controls.key_post(self.hwnd,key)
-            self.msleep(100)
+            self.msleep(self.sleep_times)
         self.thread_done.emit()
         self.sleep(1)
 

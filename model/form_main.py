@@ -23,6 +23,7 @@ class MainForm(Ui_main, BaseForm,QObject):
     def setupUi(self, LoginForm):
         super().setupUi(LoginForm)
         self.le_range_num.setValidator(QIntValidator(0, 65535))
+        self.le_range_sleep_time.setValidator(QIntValidator(0, 65535))
         self.refresh_main_win_combox()
         self.refresh_key_range_combox()
 
@@ -70,7 +71,8 @@ class MainForm(Ui_main, BaseForm,QObject):
         except Exception as identifier:
             self.lb_log.setText(str(identifier))
             return
-        q_thread = KeyRangeThread(hwnd,run_times)
+        sleep_times = self.le_range_sleep_time.text()
+        q_thread = KeyRangeThread(hwnd,run_times,int(sleep_times))
         q_thread.thread_done.connect(self.thread_key_range_done)
         start_thread(q_thread,False)
         self.bt_start_range_key.setText("正在循环按键")
