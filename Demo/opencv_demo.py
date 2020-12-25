@@ -96,19 +96,19 @@ def tuanlian_test2(tem_path,target_path):
     #二值化
     target_ret, target_binary = cv2.threshold(target_gray, 96, 255, cv2.THRESH_BINARY_INV)
     tem_ret, tem_binary = cv2.threshold(tem_gray, 96, 255, cv2.THRESH_BINARY_INV)
-    # cv2.imshow("target_binary", target_binary)
-    # cv2.imshow("tem_binary", tem_binary)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    cv2.imshow("target_binary", target_binary)
+    cv2.imshow("tem_binary", tem_binary)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     # print(type(target_binary))
     # print(type(tem_binary))
 
-    box_list = pyscreeze.locateAll_opencv(target_binary,tem_binary)
+    box_list = pyscreeze.locateAll_opencv(target_binary,tem_binary,confidence=0.8)
     box_list = list(box_list)
     print(box_list)
 
 if __name__ == '__main__':
     # tuanlian_test()
-    tem_path = "D:\demo\jiuyin_robot\Demo\img\im_save.png"
-    tar_path = "D:\demo\jiuyin_robot\Demo\img\\tl_down.png"
+    tem_path = "D:\project\python\jiuyin_robot\Demo\img\im_save.png"
+    tar_path = "D:\project\python\jiuyin_robot\Demo\img\\tl_up.png"
     tuanlian_test2(tem_path,tar_path)

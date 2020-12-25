@@ -176,13 +176,16 @@ class Controls:
         return new_list
 
     @classmethod
-    def get_tuanlian_box(cls,path,**kwargs):
+    def get_tuanlian_box(cls,path,hwnd,confidence,region = None,**kwargs):
         target_img = pyscreeze.load_cv2(path)
         tem_img = pyscreeze.load_cv2(cls.screen)
 
         # 灰度图像
         target_gray = cv2.cvtColor(target_img, cv2.COLOR_BGR2GRAY)
         tem_gray = cv2.cvtColor(tem_img, cv2.COLOR_BGR2GRAY)
+        if region:
+            tem_gray = tem_gray[region[1]:region[1]+region[3],
+                                        region[0]:region[0]+region[2]]
 
         #二值化
         target_ret, target_binary = cv2.threshold(target_gray, 96, 255, cv2.THRESH_BINARY_INV)
@@ -193,8 +196,10 @@ class Controls:
         # cv2.destroyAllWindows()
         # print(type(target_binary))
         # print(type(tem_binary))
+        cv2.imwrite("im_save1.png", target_binary)
+        cv2.imwrite("im_save2.png", tem_binary)
 
-        box_list = pyscreeze.locateAll_opencv(target_binary,tem_binary,**kwargs)
+        box_list = pyscreeze.locateAll_opencv(target_binary,tem_binary,confidence=confidence,**kwargs)
         new_list = []
         box_list = list(box_list)
         box_list.sort(key = lambda x:x.left)
