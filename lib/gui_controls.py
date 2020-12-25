@@ -6,7 +6,7 @@ import win32con  # 导入win32api相关模块
 import time
 from PIL import Image
 from lib import pyscreeze
-import pyautogui
+import cv2
 
 class Controls:
 
@@ -158,8 +158,43 @@ class Controls:
 
     @classmethod
     def locateAll(cls,path,**kwargs):
-        # box_list = pyscreeze.locateAll_opencv(path,cls.screen,**kwargs)
-        box_list = pyautogui.locateAll(path,cls.screen,**kwargs)
+        box_list = pyscreeze.locateAll(path,cls.screen,**kwargs)
+        # box_list = pyautogui.locateAll(path,cls.screen,**kwargs)
+        new_list = []
+        box_list = list(box_list)
+        box_list.sort(key = lambda x:x.left)
+        last_box = None
+        for box in box_list:
+            if last_box == None:
+                last_box = box
+                new_list.append(box)
+                continue
+            if (box.left - last_box.left) <= 5:
+                continue
+            last_box = box
+            new_list.append(box)
+        return new_list
+
+    @classmethod
+    def get_tuanlian_box(cls,path,**kwargs):
+        target_img = pyscreeze.load_cv2(path)
+        tem_img = pyscreeze.load_cv2(cls.screen)
+
+        # 灰度图像
+        target_gray = cv2.cvtColor(target_img, cv2.COLOR_BGR2GRAY)
+        tem_gray = cv2.cvtColor(tem_img, cv2.COLOR_BGR2GRAY)
+
+        #二值化
+        target_ret, target_binary = cv2.threshold(target_gray, 96, 255, cv2.THRESH_BINARY_INV)
+        tem_ret, tem_binary = cv2.threshold(tem_gray, 96, 255, cv2.THRESH_BINARY_INV)
+        # cv2.imshow("target_binary", target_binary)
+        # cv2.imshow("tem_binary", tem_binary)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
+        # print(type(target_binary))
+        # print(type(tem_binary))
+
+        box_list = pyscreeze.locateAll_opencv(target_binary,tem_binary,**kwargs)
         new_list = []
         box_list = list(box_list)
         box_list.sort(key = lambda x:x.left)

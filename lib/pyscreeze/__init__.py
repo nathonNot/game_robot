@@ -135,6 +135,9 @@ def requiresPillow(wrappedFunction):
         return wrappedFunction(*args, **kwargs)
     return wrapper
 
+def load_cv2(img,grayscale=None):
+    return _load_cv2(img,grayscale=None)
+
 def _load_cv2(img, grayscale=None):
     """
     TODO

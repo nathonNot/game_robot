@@ -22,7 +22,7 @@ def get_box():
     print(new_list)
 
 def tuanlian_test():
-    img = "D:\project\python\jiuyin_robot\Demo\img\im_save.png"
+    img = "D:\demo\jiuyin_robot\Demo\img\im_save.png"
     img = cv2.imread(img)
     # 灰度图像
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -85,5 +85,30 @@ def tuanlian_test():
             result.append((direction,px))
     print(result)
 
+def tuanlian_test2(tem_path,target_path):
+    target_img = cv2.imread(target_path)
+    tem_img = cv2.imread(tem_path)
+
+    # 灰度图像
+    target_gray = cv2.cvtColor(target_img, cv2.COLOR_BGR2GRAY)
+    tem_gray = cv2.cvtColor(tem_img, cv2.COLOR_BGR2GRAY)
+
+    #二值化
+    target_ret, target_binary = cv2.threshold(target_gray, 96, 255, cv2.THRESH_BINARY_INV)
+    tem_ret, tem_binary = cv2.threshold(tem_gray, 96, 255, cv2.THRESH_BINARY_INV)
+    # cv2.imshow("target_binary", target_binary)
+    # cv2.imshow("tem_binary", tem_binary)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
+    # print(type(target_binary))
+    # print(type(tem_binary))
+
+    box_list = pyscreeze.locateAll_opencv(target_binary,tem_binary)
+    box_list = list(box_list)
+    print(box_list)
+
 if __name__ == '__main__':
-    tuanlian_test()
+    # tuanlian_test()
+    tem_path = "D:\demo\jiuyin_robot\Demo\img\im_save.png"
+    tar_path = "D:\demo\jiuyin_robot\Demo\img\\tl_down.png"
+    tuanlian_test2(tem_path,tar_path)
