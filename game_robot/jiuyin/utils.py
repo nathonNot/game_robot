@@ -24,8 +24,12 @@ def move_to_pos(hwnd,x,y):
     input_hwnd(hwnd,y)
     Controls.win_mouse_click(hwnd,223,33)
     time.sleep(1)
-    Controls.win_mouse_move(hwnd,320,274,0.5)
-    Controls.win_mouse_click(hwnd,320,274)
+    Controls.win_mouse_move(hwnd,316,281,0.5)
+    Controls.win_mouse_click(hwnd,316,281)
+    # 洛阳
+    # Controls.win_mouse_click(hwnd,328,290)
+    # 燕京
+    # Controls.win_mouse_click(hwnd,331,290)
     # 关闭地图
     Controls.key_post(hwnd,0x4D)
     # # 移动到拉镖点

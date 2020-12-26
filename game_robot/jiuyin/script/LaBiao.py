@@ -46,11 +46,9 @@ class LaBiao(BaseModule):
         self.this_hwnd = hwnd
         # 判断拉镖图标是否存在
         lb_icon = Controls.locate("image\lb_icon.png",self.this_hwnd)
-        if not lb_icon and self.this_state == reset_in_labiao:
+        if not lb_icon and self.this_state == in_labiao:
             self.this_state = labiao_end
         elif self.this_state == start:
-            self.reset_labiao()
-        elif self.next_move and self.this_state == move_to_npc:
             self.reset_labiao()
         elif self.this_state == move_to_npc:
             self.check_is_over_move()
@@ -69,12 +67,13 @@ class LaBiao(BaseModule):
         elif self.this_state == reset_in_labiao:
             self.check_labiao_end()
         elif self.this_state == labiao_end:
+            self.reset_labiao()
             self.try_to_reset()
 
     # 检测是否移动到了拉镖npc旁边
     def check_is_over_move(self):
-        Controls.activate_hwnd(self.this_hwnd)
-        Controls.win_mouse_click(self.this_hwnd, 697, 93)
+        # Controls.activate_hwnd(self.this_hwnd)
+        # Controls.win_mouse_click(self.this_hwnd, 697, 93)
         jiebiao = Controls.locate("image\lb_jiebiao.png",self.this_hwnd,0.8)
         if jiebiao:
             x = jiebiao.left
@@ -105,7 +104,9 @@ class LaBiao(BaseModule):
         jiache = Controls.locate("image\lb_jiache.png",self.this_hwnd)
         if jiache:
             Controls.activate_hwnd(self.this_hwnd)
+            Controls.key_post(self.this_hwnd,0x57)
             Controls.win_mouse_click_box(self.this_hwnd,jiache,True)
+            self.this_state = in_labiao
             return 
         jiebiao_ok = Controls.locate("image\lb_queding.png",self.this_hwnd)
         if jiebiao_ok:
@@ -120,7 +121,10 @@ class LaBiao(BaseModule):
 
     # 检测是否有劫匪
     def wait_jiefei(self):
-        pass
+        key_list = [49,50,51,52]
+        Controls.activate_hwnd(self.this_hwnd)
+        for key in key_list:
+            Controls.key_post(self.this_hwnd,key)
 
     # 检测劫匪是否死亡
     def check_jiefei_death(self):
@@ -128,11 +132,27 @@ class LaBiao(BaseModule):
 
     # 重新进入拉镖状态
     def reset_labiao(self):
+        Controls.activate_hwnd(self.this_hwnd)
+        lb_map_box = Controls.locate("D:\project\python\jiuyin_robot\image\lb_chengdu.png",self.this_hwnd,0.8)
+        if lb_map_box:
+            Controls.key_post(self.this_hwnd,0x57)
+            Controls.win_mouse_click_box(self.this_hwnd,lb_map_box,True)
+            time.sleep(0.1)
+            Controls.win_mouse_click_box(self.this_hwnd,lb_map_box,True)
+            Controls.key_post(self.this_hwnd,0x57)
+            return
+        map_box = Controls.locate("image\map_biaoqian.png",self.this_hwnd,0.8)
+        if map_box:
+            Controls.key_post(self.this_hwnd,0x57)
+            Controls.win_mouse_click_box(self.this_hwnd,map_box,True)
         # 移动到npc
-        x,y = jiuyin_game.get_xy(591,226)
+        x,y = jiuyin_game.get_xy(722,517)
+        # 打开地图
+        # 视角距离滑动拉到最近
+        Controls.win_gunlun_qian(self.this_hwnd)
+        Controls.key_post(self.this_hwnd,0x4D)
         jiuyin_game.move_to_pos(self.this_hwnd,x,y)
-        self.this_state = move_to_npc
-        self.next_move = False
+        # self.this_state = move_to_npc
         time.sleep(2)
 
     # 判断拉镖是否结束

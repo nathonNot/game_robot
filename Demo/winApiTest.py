@@ -42,6 +42,15 @@ def test_done1():
     win32api.PostMessage(200352, win32con.WM_LBUTTONUP, 1, 0x003002F3)
 
 
+def yidong(hwnd):
+    Controls.activate_hwnd(hwnd)
+    win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, 0x57, 0x40110001)#发送F9键
+    time.sleep(3)
+    for _ in range(1000):
+        win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, 0x57, 0x40110001)#发送F9键
+        time.sleep(1)
+    win32api.PostMessage(hwnd, win32con.WM_KEYUP, 0x57, 0xC0110001)
+
 # 按钮点击
 def mouse_click(hwnd,x, y):
     point = win32api.MAKELONG(x, y)
@@ -159,8 +168,17 @@ def anjian(hwnd):
         Controls.key_post(hwnd, 56)
         time.sleep(0.1)
 
+def labiao_npc_text(hwnd):
+    Controls.activate_hwnd(hwnd)
+    # Controls.win_mouse_move(hwnd,316,290,0.5)
+    # Controls.win_mouse_click(hwnd,316,290)
+    # time.sleep(1)
+    Controls.win_mouse_move(hwnd,316,281,0.5)
+    Controls.win_mouse_click(hwnd,316,281)
+
+
 if __name__ == "__main__":
     hwnd = get_hwnd()
-    move_to_pos(hwnd,0,0)
+    labiao_npc_text(hwnd)
     # anjian(hwnd)
     # win32api.MessageBox(0, "这是一个测试消息", "消息框标题",win32con.MB_OK)
