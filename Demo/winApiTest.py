@@ -44,12 +44,10 @@ def test_done1():
 
 def yidong(hwnd):
     Controls.activate_hwnd(hwnd)
-    win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, 0x57, 0x40110001)#发送F9键
-    time.sleep(3)
-    for _ in range(1000):
-        win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, 0x57, 0x40110001)#发送F9键
-        time.sleep(1)
-    win32api.PostMessage(hwnd, win32con.WM_KEYUP, 0x57, 0xC0110001)
+    Controls.key_post(hwnd, 75)
+    win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, win32con.VK_RIGHT, 0x014D0001)
+    time.sleep(0.5)
+    win32api.PostMessage(hwnd, win32con.WM_KEYUP, win32con.VK_RIGHT, 0xC14D0001)
 
 # 按钮点击
 def mouse_click(hwnd,x, y):
@@ -141,15 +139,18 @@ def get_xy(box):
     return int(x), int(y)
 
 def check(hwnd):
-    offset = (650,50,100,50)
+    Controls.activate_hwnd(hwnd)
+    offset = (600,31,200,200)
     while True:
-        for x in range(695,710):
-            for y in range(85,100):
+        for x in range(637,759,5):
+            for y in range(31,154,5):
                 Controls.win_mouse_move(hwnd,x,y,0.1)
                 Controls.get_screen(hwnd)
-                box = Controls.locate("D:\project\python\jiuyin_robot\image\lb_jiangliefeng.png",0.3)
+                box = Controls.locate("D:\project\python\jiuyin_robot\image\cj_qiankuang.png",0.8,offset_form= offset)
                 if box:
-                    return box
+                    print(box)
+                    # Controls.win_mouse_click_box(hwnd,box,True)
+                    Controls.win_mouse_click(hwnd,x,y)
 
 # 闪烁窗口
 def fluash_hwnd(hwnd):
@@ -179,6 +180,8 @@ def labiao_npc_text(hwnd):
 
 if __name__ == "__main__":
     hwnd = get_hwnd()
-    labiao_npc_text(hwnd)
+    # yidong(hwnd)
+    # Controls.win_mouse_click(hwnd,696,89,False)
+    check(hwnd)
     # anjian(hwnd)
     # win32api.MessageBox(0, "这是一个测试消息", "消息框标题",win32con.MB_OK)

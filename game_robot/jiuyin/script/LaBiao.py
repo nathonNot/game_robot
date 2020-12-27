@@ -36,7 +36,8 @@ class LaBiao(BaseModule):
     this_state = stop
     this_hwnd = 0
     next_move = False
-    
+    jiache = None
+
     def __init__(self):
         logger.info("初始化拉镖模块")
 
@@ -87,7 +88,13 @@ class LaBiao(BaseModule):
 
     # 点击接镖
     def check_jiebiao(self):
-        pass
+        Controls.activate_hwnd(self.this_hwnd)
+        biaoche = Controls.locate("image\lb_biaoche.png",self.this_hwnd)
+        if biaoche:
+            Controls.win_mouse_click(self.this_hwnd,377,203)
+            Controls.win_mouse_click_box(self.this_hwnd,self.jiache,True)
+            return 
+        Controls.key_post(self.this_hwnd,)
 
     # 选择路线
     def chose_path(self):
@@ -104,10 +111,11 @@ class LaBiao(BaseModule):
         jiache = Controls.locate("image\lb_jiache.png",self.this_hwnd)
         if jiache:
             Controls.activate_hwnd(self.this_hwnd)
-            Controls.key_post(self.this_hwnd,0x57)
-            Controls.win_mouse_click_box(self.this_hwnd,jiache,True)
-            self.this_state = in_labiao
-            return 
+            time.sleep(2)
+            self.this_state = click_npc
+            self.jiache = jiache
+            return
+            # Controls.key_post(self.this_hwnd,0x57)
         jiebiao_ok = Controls.locate("image\lb_queding.png",self.this_hwnd)
         if jiebiao_ok:
             Controls.activate_hwnd(self.this_hwnd)
@@ -132,27 +140,14 @@ class LaBiao(BaseModule):
 
     # 重新进入拉镖状态
     def reset_labiao(self):
-        Controls.activate_hwnd(self.this_hwnd)
-        lb_map_box = Controls.locate("D:\project\python\jiuyin_robot\image\lb_chengdu.png",self.this_hwnd,0.8)
-        if lb_map_box:
-            Controls.key_post(self.this_hwnd,0x57)
-            Controls.win_mouse_click_box(self.this_hwnd,lb_map_box,True)
-            time.sleep(0.1)
-            Controls.win_mouse_click_box(self.this_hwnd,lb_map_box,True)
-            Controls.key_post(self.this_hwnd,0x57)
-            return
-        map_box = Controls.locate("image\map_biaoqian.png",self.this_hwnd,0.8)
-        if map_box:
-            Controls.key_post(self.this_hwnd,0x57)
-            Controls.win_mouse_click_box(self.this_hwnd,map_box,True)
         # 移动到npc
-        x,y = jiuyin_game.get_xy(722,517)
+        x,y = jiuyin_game.get_xy(591,226)
         # 打开地图
         # 视角距离滑动拉到最近
         Controls.win_gunlun_qian(self.this_hwnd)
-        Controls.key_post(self.this_hwnd,0x4D)
+        # Controls.key_post(self.this_hwnd,0x4D)
         jiuyin_game.move_to_pos(self.this_hwnd,x,y)
-        # self.this_state = move_to_npc
+        self.this_state = move_to_npc
         time.sleep(2)
 
     # 判断拉镖是否结束
