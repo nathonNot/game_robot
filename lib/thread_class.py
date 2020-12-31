@@ -16,8 +16,8 @@ class ThreadBase(QThread):
     def stop(self):
         logger.info(self.class_name()+"线程结束")
 
-# class MainRefresh(ThreadBase):
-class MainRefresh(threading.Thread):
+class MainRefresh(ThreadBase):
+# class MainRefresh(threading.Thread):
 
     is_run = False
 
@@ -79,11 +79,13 @@ class KeyRangeThread(ThreadBase):
     def run(self):
         Controls.activate_hwnd(self.hwnd)
         for _ in range(self.run_num):
+            if len(gbd.key_range_list) <= 0:
+                break
             for key in gbd.key_range_list:
                 Controls.key_post(self.hwnd,key)
-            self.msleep(self.sleep_times)
+                self.msleep(self.sleep_times)
         self.thread_done.emit()
-        self.sleep(1)
+        # self.sleep(1)
 
     @staticmethod
     def class_name():

@@ -51,10 +51,15 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.cb_lianan.clicked.connect(self.on_cb_lianan_clicked)
         self.set_data_signal.connect(self.set_data)
         self.cbb_main_win.currentIndexChanged.connect(self.on_cbb_main_win_index_changed)
+        self.cbb_target_hwnd.currentIndexChanged.connect(self.on_cbb_target_ndex_changed)
         self.bt_add_key.clicked.connect(self.on_bt_add_key_clicked)
         self.bt_clear_key_list.clicked.connect(self.on_bt_clear_key_list_clicked)
         self.bt_start_range_key.clicked.connect(self.on_bt_start_range_key_clicked)
         self.cb_labiao.clicked.connect(self.on_cb_labiao_clicked)
+        self.bt_add_hwnd.clicked.connect(self.on_bt_add_hwnd_check)
+        self.bt_clear_main_hwnd.clicked.connect(self.on_bt_clear_key_list_clicked)
+        # self.cbb_main_win.clicked.connect(self.refresh_main_win_combox)
+        # self.cbb_target_hwnd.clicked.connect(self.refresh_main_win_combox)
 
     def open_chongzhi(self):
         url = "www.baidu.com"
@@ -226,17 +231,21 @@ class MainForm(Ui_main, BaseForm,QObject):
             gbd.hwnd_list = get_jiuyin_hwnd()
         self.cbb_main_win.addItems([str(i) for i in gbd.hwnd_list])
         self.cbb_target_hwnd.addItems([str(i) for i in gbd.hwnd_list])
-    
+
     def on_cb_main_win_clicked(self):
         if self.cb_main_win.isChecked():
-            gbd.main_window_hwnd = int(self.cbb_main_win.currentText())
+            gbd.main_window_no_flush = True
         else:
-            gbd.main_window_hwnd = 0
+            gbd.main_window_no_flush = False
     
     def on_cbb_main_win_index_changed(self):
         hwnd = self.cbb_main_win.currentText()
         Controls.flash_hwnd(int(hwnd))
     
+    def on_cbb_target_ndex_changed(self):
+        hwnd = self.cbb_target_hwnd.currentText()
+        Controls.flash_hwnd(int(hwnd))
+
     # 刷新按键循环下拉框
     def refresh_key_range_combox(self):
         key_list = list(win_key_dc.keys())
@@ -245,3 +254,13 @@ class MainForm(Ui_main, BaseForm,QObject):
     def thread_key_range_done(self):
         self.bt_start_range_key.setText("开始循环")
         self.bt_start_range_key.setEnabled(True)
+
+    def on_bt_add_hwnd_check(self):
+        hwnd = self.cbb_target_hwnd.currentText()
+        gbd.main_window_hwnd.append(int(hwnd))
+        new_text = ",".join([str(i) for i in gbd.main_window_hwnd])
+        self.lb_hwnd_list.setText(new_text)
+    
+    def on_clear_bt_hwnd_check(self):
+        self.lb_hwnd_list.setText("")
+        gbd.main_window_hwnd.clear()

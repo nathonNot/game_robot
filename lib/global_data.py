@@ -2,7 +2,8 @@ file_name = []
 module_dc = {}
 
 hwnd_list = []
-main_window_hwnd = 0
+main_window_no_flush = False
+main_window_hwnd = []
 
 this_screen = None
 
