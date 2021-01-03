@@ -77,12 +77,13 @@ class KeyRangeThread(ThreadBase):
         self.sleep_times = sleep_times
 
     def run(self):
-        Controls.activate_hwnd(self.hwnd)
         for _ in range(self.run_num):
             if len(gbd.key_range_list) <= 0:
                 break
             for key in gbd.key_range_list:
+                Controls.activate_hwnd(self.hwnd)
                 Controls.key_post(self.hwnd,key)
+                Controls.un_activate_hwnd(self.hwnd)
                 self.msleep(self.sleep_times)
         self.thread_done.emit()
         # self.sleep(1)

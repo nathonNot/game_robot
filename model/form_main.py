@@ -13,6 +13,7 @@ from lib.windows_con import get_jiuyin_hwnd
 from lib.gui_controls import Controls
 from lib.utils import win_key_dc
 from lib.thread_class import KeyRangeThread
+from model.form_caiji import CaiJiForm
 
 class MainForm(Ui_main, BaseForm,QObject):
 
@@ -26,12 +27,15 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.le_range_sleep_time.setValidator(QIntValidator(0, 65535))
         self.refresh_main_win_combox()
         self.refresh_key_range_combox()
+        self.set_caiji = CaiJiForm()
+        self.set_caiji.init()
 
     def show_ui(self):
         self.lb_user_name.setText(gbd.user_data.user_name)
         self.lb_key_list.setText("")
         self.bt_chongzhi.setVisible(False)
         self.bt_ws_con.setVisible(False)
+        self.cb_labiao.setVisible(False)
         # self.cb_labiao.setVisible(False)
         self.widget.show()
 
@@ -58,8 +62,12 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.cb_labiao.clicked.connect(self.on_cb_labiao_clicked)
         self.bt_add_hwnd.clicked.connect(self.on_bt_add_hwnd_check)
         self.bt_clear_main_hwnd.clicked.connect(self.on_bt_clear_key_list_clicked)
+        self.bt_caiji_set.clicked.connect(self.show_caiji)
         # self.cbb_main_win.clicked.connect(self.refresh_main_win_combox)
         # self.cbb_target_hwnd.clicked.connect(self.refresh_main_win_combox)
+
+    def show_caiji(self):
+        self.set_caiji.show_ui()
 
     def open_chongzhi(self):
         url = "www.baidu.com"

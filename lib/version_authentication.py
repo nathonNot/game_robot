@@ -39,7 +39,7 @@ class RsaUtil:
 
 
 def get_version():
-    url = "https://fuakorm.com/api/jiuyin/get_version"
+    url = config.base_url + "/api/jiuyin/get_version"
     response = requests.get(url)
     if response.status_code != 200:
         return None

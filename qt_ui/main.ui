@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>598</width>
+    <width>694</width>
     <height>392</height>
    </rect>
   </property>
@@ -41,14 +41,14 @@
      <item>
       <widget class="QLabel" name="lb_user_vip">
        <property name="text">
-        <string>vip</string>
+        <string>vip到期时间:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="lb_q_qun">
+      <widget class="QLabel" name="lb_vip_end_time">
        <property name="text">
-        <string>qq群：978098280</string>
+        <string>2021-1-1</string>
        </property>
       </widget>
      </item>
@@ -74,7 +74,7 @@
       <string/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_base">
       <property name="enabled">
@@ -86,10 +86,10 @@
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="2" column="1">
-          <widget class="QCheckBox" name="cb_labiao">
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="cb_tanwei">
            <property name="text">
-            <string>燕京拉镖</string>
+            <string>刷摊位</string>
            </property>
           </widget>
          </item>
@@ -100,20 +100,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="cb_tuanlian">
-           <property name="text">
-            <string>团练授业</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QCheckBox" name="cb_tanwei">
-           <property name="text">
-            <string>刷摊位</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
           <widget class="QCheckBox" name="cb_shashou">
            <property name="text">
@@ -121,10 +107,38 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="cb_labiao">
+           <property name="text">
+            <string>燕京拉镖</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="cb_tuanlian">
+           <property name="text">
+            <string>团练授业</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="1">
           <widget class="QCheckBox" name="cb_neigong">
            <property name="text">
             <string>自动点内功</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="cb_caiji">
+           <property name="text">
+            <string>采集</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QPushButton" name="bt_caiji_set">
+           <property name="text">
+            <string>采集设置</string>
            </property>
           </widget>
          </item>
@@ -149,14 +163,14 @@
          <item>
           <widget class="QLabel" name="lb_an_num">
            <property name="text">
-            <string>当前在线远端设备数：0</string>
+            <string>当前在线设备数：0</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="bt_task_up">
            <property name="text">
-            <string>提交修改</string>
+            <string>保存</string>
            </property>
           </widget>
          </item>

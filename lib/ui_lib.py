@@ -4,13 +4,16 @@ import os
 
 class BaseForm():
     
+    isDialog = False
+
     def show_ui(self):
         self.widget.show()
 
     def init(self):
         self.widget = QWidget()
         self.setupUi(self.widget)
-        self.widget.closeEvent = self.closeEvent
+        if not self.isDialog:
+            self.widget.closeEvent = self.closeEvent
 
     def closeEvent(self, event):
         """

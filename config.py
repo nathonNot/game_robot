@@ -17,9 +17,9 @@ mpWi6CMLZduub1kAvew4B5HKSRohQAQdOIPjOHQwaw5Ie6cRNeBk4RG2K4cS12qf
 SiT+DifcA7BVOgQjgbTchSfaA+YNe7A9qiVmA+G4GQ==
 '''
 
-base_url = "https://fuakorm.com"
+# base_url = "https://fuakorm.com"
 ws_url = "ws://127.0.0.1:8000"
-# base_url = "http://127.0.0.1:8000"
+base_url = "http://127.0.0.1:8000"
 
 import json
 from loguru import logger
@@ -48,15 +48,28 @@ def init_config():
         win32api.MessageBox(0, "版本号异常，请更新重试", "版本异常",win32con.MB_OK)
         return
     version = version_data.get("version")
+    t_version = gbd.config_dc.get("version")
+    if check_version(t_version,version):
+        logger.error("版本号异常")
+        win32api.MessageBox(0, "版本号异常，请更新重试", "版本异常",win32con.MB_OK)
+        return
     end_time = version_data.get("end_time")
     if end_time == None:
         logger.error("时间异常")
         return
     time_now = datetime.datetime.now()
-    time_now = time_now.year * 1000 + time_now.month * 100 + time_now.day
+    time_now = time_now.year * 10000 + time_now.month * 100 + time_now.day
     if time_now > end_time:
         logger.error("有效期结束")
         return
     logger.info("当前程序版本号：：：" + gbd.config_dc["version"])
     return True
 
+def check_version(t_version,version):
+    t_version_int = t_version.split(".")
+    version_int = version.split(".")
+    for index,v in enumerate(version_int):
+        if index <= len(t_version_int):
+            if int(v) > int(t_version_int[index]):
+                return True
+    return False

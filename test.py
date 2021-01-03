@@ -2,6 +2,7 @@ import lib.gui_controls as gui_controls
 import requests 
 import base64
 import config
+import os
 
 class BaiDuApi:
 
@@ -37,7 +38,17 @@ class BaiDuApi:
         if response:
             print (response.json())
 
+# adb测试
+class ADB:
+    exe_path = "bin\\adb.exe"
+
+    def start_server(self):
+        d = os.popen(self.exe_path+" devices")
+        print(d.read())
+
 if __name__ == '__main__':
     # gui_controls.left_click("image\\kaifuhuodong.png")
-    bda = BaiDuApi()
-    bda.text_1()
+    # bda = BaiDuApi()
+    # bda.text_1()
+    adb = ADB()
+    adb.start_server()
