@@ -7,7 +7,7 @@ from lib import global_data as gbd
 # 团练授业
 class TuanLian(BaseModule):
 
-
+    is_vip = False
     # TODO
     # https://gitee.com/AiPandaBear/opencv-python4qqx5/blob/master/rectcheck.py
     

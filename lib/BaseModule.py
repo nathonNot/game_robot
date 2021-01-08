@@ -3,7 +3,8 @@ from lib import global_data
 
 class BaseModule:
 
-    is_act = True
+    is_act = False
+    is_vip = True
 
     def __init__(self):
         pass

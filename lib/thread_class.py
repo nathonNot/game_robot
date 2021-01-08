@@ -34,6 +34,9 @@ class MainRefresh(ThreadBase):
                         continue
                     controls.get_screen(hwnd)
                     for m in gbd.module_dc.values():
+                        if m.is_vip:
+                            if not gbd.user_data.is_vip():
+                                continue
                         if m.is_act:
                             m.fram_update(hwnd)
                 # self.msleep(200)
