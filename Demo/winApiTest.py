@@ -171,17 +171,19 @@ def anjian(hwnd):
 
 def labiao_npc_text(hwnd):
     Controls.activate_hwnd(hwnd)
-    # Controls.win_mouse_move(hwnd,316,290,0.5)
-    # Controls.win_mouse_click(hwnd,316,290)
+    Controls.key_post(hwnd, 78)
     # time.sleep(1)
-    Controls.win_mouse_move(hwnd,316,281,0.5)
-    Controls.win_mouse_click(hwnd,316,281)
 
 
 if __name__ == "__main__":
     hwnd = get_hwnd()
     # yidong(hwnd)
     # Controls.win_mouse_click(hwnd,696,89,False)
-    check(hwnd)
+    # labiao_npc_text(hwnd)
+    Controls.activate_hwnd(hwnd)
+    for _ in range(50):
+        win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0xFF880000, 0x014501DC)
+    for _ in range(10):
+        win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0x780000, 0x0176022C)
     # anjian(hwnd)
     # win32api.MessageBox(0, "这是一个测试消息", "消息框标题",win32con.MB_OK)

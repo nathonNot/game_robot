@@ -134,6 +134,14 @@ class Controls:
         cls.sleep(sleep_time)
         win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
 
+    # 直接发起鼠标点击，走windows窗口事件
+    @classmethod
+    def win_mouse_right_click(cls,hwnd, x, y, sleep_time=0.2):
+        point = win32api.MAKELONG(x, y)
+        win32api.PostMessage(hwnd, win32con.WM_RBUTTONDOWN, 1, point)
+        cls.sleep(sleep_time)
+        win32api.PostMessage(hwnd, win32con.WM_RBUTTONUP, 1, point)
+
     @classmethod
     def win_mouse_move(cls,hwnd, x, y, sleep_time=1):
         point = win32api.MAKELONG(x, y)
@@ -154,7 +162,9 @@ class Controls:
     @staticmethod
     def win_gunlun_qian(hwnd):
         for _ in range(50):
-            win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0x780000, 0x0176022C)
+            win32api.PostMessage(hwnd, win32con.WM_MOUSELAST, 0xFF880000, 0x014501DC)
+        # for _ in range(10):
+        #     win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0x780000, 0x0176022C)
 
     @classmethod
     def locateAll(cls,path,**kwargs):

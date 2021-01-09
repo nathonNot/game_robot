@@ -74,7 +74,7 @@
       <string/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_base">
       <property name="enabled">
@@ -110,7 +110,7 @@
          <item row="2" column="1">
           <widget class="QCheckBox" name="cb_labiao">
            <property name="text">
-            <string>燕京拉镖</string>
+            <string>成都拉镖</string>
            </property>
           </widget>
          </item>

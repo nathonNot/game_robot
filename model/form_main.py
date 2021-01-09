@@ -35,7 +35,6 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.lb_key_list.setText("")
         self.bt_chongzhi.setVisible(False)
         self.bt_ws_con.setVisible(False)
-        self.cb_labiao.setVisible(False)
         # self.cb_labiao.setVisible(False)
         self.widget.show()
 
