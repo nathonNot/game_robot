@@ -16,8 +16,8 @@ class ThreadBase(QThread):
     def stop(self):
         logger.info(self.class_name()+"线程结束")
 
-# class MainRefresh(ThreadBase):
-class MainRefresh(threading.Thread):
+class MainRefresh(ThreadBase):
+# class MainRefresh(threading.Thread):
 
     is_run = False
 

@@ -58,7 +58,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.bt_start_range_key.clicked.connect(self.on_bt_start_range_key_clicked)
         self.cb_labiao.clicked.connect(self.on_cb_labiao_clicked)
         self.bt_add_hwnd.clicked.connect(self.on_bt_add_hwnd_check)
-        self.bt_clear_main_hwnd.clicked.connect(self.on_bt_clear_key_list_clicked)
+        self.bt_clear_main_hwnd.clicked.connect(self.on_clear_bt_hwnd_check)
         # self.cbb_main_win.clicked.connect(self.refresh_main_win_combox)
         # self.cbb_target_hwnd.clicked.connect(self.refresh_main_win_combox)
 
@@ -196,6 +196,7 @@ class MainForm(Ui_main, BaseForm,QObject):
     def on_bt_add_hwnd_check(self):
         hwnd = self.cbb_target_hwnd.currentText()
         gbd.main_window_hwnd.append(int(hwnd))
+        gbd.main_window_hwnd = list(set(gbd.main_window_hwnd))
         new_text = ",".join([str(i) for i in gbd.main_window_hwnd])
         self.lb_hwnd_list.setText(new_text)
     
