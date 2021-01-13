@@ -37,6 +37,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.bt_ws_con.setVisible(False)
         # self.cb_labiao.setVisible(False)
         self.widget.show()
+        self.lb_vip_end_time.setText(gbd.user_data.vip_end_time)
 
     def init_callback(self):
         self.bt_chongzhi.clicked.connect(self.open_chongzhi)
@@ -47,9 +48,6 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.cb_shashou.clicked.connect(self.on_cb_shashou_clicked)
         self.cb_tanwei.clicked.connect(self.on_cb_tanwei_clicked)
         self.bt_start_up.clicked.connect(self.on_bt_start_up_clicked)
-        self.bt_creat_task.clicked.connect(self.on_bt_creat_task_clicked)
-        self.bt_task_up.clicked.connect(self.on_bt_task_up_clicked)
-        self.bt_del_task.clicked.connect(self.on_del_task_clicked)
         self.cb_main_win.clicked.connect(self.on_cb_main_win_clicked)
         self.cb_lianan.clicked.connect(self.on_cb_lianan_clicked)
         self.set_data_signal.connect(self.set_data)
@@ -61,7 +59,6 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.cb_labiao.clicked.connect(self.on_cb_labiao_clicked)
         self.bt_add_hwnd.clicked.connect(self.on_bt_add_hwnd_check)
         self.bt_clear_main_hwnd.clicked.connect(self.on_bt_clear_key_list_clicked)
-        self.bt_caiji_set.clicked.connect(self.show_caiji)
         # self.cbb_main_win.clicked.connect(self.refresh_main_win_combox)
         # self.cbb_target_hwnd.clicked.connect(self.refresh_main_win_combox)
 
@@ -144,72 +141,6 @@ class MainForm(Ui_main, BaseForm,QObject):
         else:
             thread_stop(WebSocketThread)
             self.bt_ws_con.setText("连接到服务器")
-
-    def on_bt_creat_task_clicked(self):
-        self.install_tb_row(0,"000000","000000","江湖七区","醉江湖","",-1,0)
-
-    def install_tb_row(self,id,acc,pas,server1,server2,update_time,start_time,status):
-        row_count = self.tw_citan_data.rowCount()
-        self.tw_citan_data.insertRow(row_count)  # 插入到第一行
-        # id
-        item_id = QTableWidgetItem(str(id))
-        self.tw_citan_data.setItem(row_count, 0, item_id)
-        item_id.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-        item_acc = QTableWidgetItem(str(acc))
-        self.tw_citan_data.setItem(row_count, 1, item_acc)
-        item_acc_pas = QTableWidgetItem(pas)
-        self.tw_citan_data.setItem(row_count, 2, item_acc_pas)
-        item_acc_server1 = QTableWidgetItem(server1)
-        self.tw_citan_data.setItem(row_count, 3, item_acc_server1)
-        item_acc_server2 = QTableWidgetItem(server2)
-        self.tw_citan_data.setItem(row_count, 4, item_acc_server2)
-        item_update_time = QTableWidgetItem(update_time)
-        self.tw_citan_data.setItem(row_count, 5, item_update_time)
-        item_update_time.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-        # 定时任务时间
-        start_time_combox = QComboBox()
-        if int(start_time == -1):
-            start_time_text = "立刻"
-        start_time_text = str(0)
-        start_time_combox.addItem("立刻")
-        start_time_combox.addItems([str(i) for i in range(0,24)])
-        start_time_combox.setCurrentText(start_time_text)
-        self.tw_citan_data.setCellWidget(row_count, 6, start_time_combox)
-        # 状态
-        item_status = QTableWidgetItem(str(status))
-        self.tw_citan_data.setItem(row_count, 7, item_status)
-        item_status.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-        self.tw_citan_ref()
-
-    def tw_citan_ref(self):
-        self.tw_citan_data.resizeColumnsToContents()
-        self.tw_citan_data.resizeRowsToContents()
-
-    def on_bt_task_up_clicked(self):
-        row_count = self.tw_citan_data.rowCount()
-        data = []
-        for row in range(row_count):
-            if row < 0:
-                continue
-            row_data = {
-                "task_id": self.tw_citan_data.item(row, 0).text(),
-                "acc": self.tw_citan_data.item(row, 1).text(),
-                "acc_pas": self.tw_citan_data.item(row, 2).text(),
-                "acc_server1": self.tw_citan_data.item(row, 3).text(),
-                "acc_server2": self.tw_citan_data.item(row, 4).text(),
-                "start_time": self.tw_citan_data.cellWidget(row, 6).currentText(),
-            }
-            data.append(row_data)
-        syn = {
-                "call_back":socket_msg.update_citan_task,
-                "data":data
-            }
-        WebSocketClient.send_json(syn)
-    
-    def on_del_task_clicked(self):
-        del_index = self.tw_citan_data.currentRow()
-        if del_index >=0:
-            self.tw_citan_data.removeRow(del_index)
     
     def set_data(self,data):
         self.ref_val = data

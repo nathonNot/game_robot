@@ -9,6 +9,7 @@ from PIL import Image
 import collections
 from gui_controls import Controls
 
+
 def get_hwnd():
     hWndList = []
     win32gui.EnumWindows(lambda hWnd, param: param.append(hWnd), hWndList)
@@ -45,28 +46,35 @@ def test_done1():
 def yidong(hwnd):
     Controls.activate_hwnd(hwnd)
     Controls.key_post(hwnd, 75)
-    win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, win32con.VK_RIGHT, 0x014D0001)
+    win32api.PostMessage(hwnd, win32con.WM_KEYDOWN,
+                         win32con.VK_RIGHT, 0x014D0001)
     time.sleep(0.5)
-    win32api.PostMessage(hwnd, win32con.WM_KEYUP, win32con.VK_RIGHT, 0xC14D0001)
+    win32api.PostMessage(hwnd, win32con.WM_KEYUP,
+                         win32con.VK_RIGHT, 0xC14D0001)
 
 # 按钮点击
-def mouse_click(hwnd,x, y):
+
+
+def mouse_click(hwnd, x, y):
     point = win32api.MAKELONG(x, y)
     win32api.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, 1, point)
     time.sleep(1)
     win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
 
 # 窗口最大最小化
+
+
 def window_test(hwnd):
     _, win_type, _, _, _ = win32gui.GetWindowPlacement(hwnd)
     print(win_type)
 
 
-def get_hwnd_offset(hwnd,x,y):
+def get_hwnd_offset(hwnd, x, y):
     left, top, right, bottom = win32gui.GetWindowRect(hwnd)
-    return x+left,y+top
+    return x+left, y+top
 
-def input_hwnd(hwnd,input_list):
+
+def input_hwnd(hwnd, input_list):
     # 先删除
     for _ in range(5):
         win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, 0x27, 0x1F0001)
@@ -80,7 +88,7 @@ def input_hwnd(hwnd,input_list):
         win32api.PostMessage(hwnd, win32con.WM_CHAR, input, 0x1F0001)
 
 
-def move_to_pos(hwnd,x,y):
+def move_to_pos(hwnd, x, y):
     # 出发地图键m
     Controls.activate_hwnd(hwnd)
     # 视角距离滑动拉到最近
@@ -99,17 +107,18 @@ def move_to_pos(hwnd,x,y):
     # # 移动到拉镖点
     # time.sleep(2)
     box = check(hwnd)
-    Controls.win_mouse_move(hwnd,700,93)
+    Controls.win_mouse_move(hwnd, 700, 93)
     time.sleep(1)
-    Controls.win_mouse_click(hwnd,700,93)
+    Controls.win_mouse_click(hwnd, 700, 93)
     time.sleep(1)
     # Controls.win_mouse_click(hwnd,150,221)
     # Controls.get_screen(hwnd)
-    box = Controls.locate2("D:\project\python\jiuyin_robot\image\lb_jiebiao.png")
+    box = Controls.locate2(
+        "D:\project\python\jiuyin_robot\image\lb_jiebiao.png")
     # if box:
     #     print("接镖1")
     #     Controls.win_mouse_move(hwnd,244,479)
-        # Controls.win_mouse_click(hwnd,244,479)
+    # Controls.win_mouse_click(hwnd,244,479)
     # Controls.get_screen(hwnd)
     # biaoche = Controls.locate2("D:\project\python\jiuyin_robot\image\lb_jiebiaot.png",0.5)
     # if biaoche:
@@ -129,32 +138,39 @@ def move_to_pos(hwnd,x,y):
     #     print("选择驾车")
     #     x,y = get_xy(jiache)
     #     Controls.win_mouse_click(hwnd,x,y)
-    status = Controls.locate("D:\project\python\jiuyin_robot\image\lb_icon.png")
+    status = Controls.locate(
+        "D:\project\python\jiuyin_robot\image\lb_icon.png")
     if status:
         print("拉镖状态ok")
+
 
 def get_xy(box):
     x = box.left + box.width/2
     y = box.top - box.height
     return int(x), int(y)
 
+
 def check(hwnd):
     Controls.activate_hwnd(hwnd)
-    offset = (600,31,200,200)
+    offset = (600, 31, 200, 200)
     while True:
-        for x in range(637,759,5):
-            for y in range(31,154,5):
-                Controls.win_mouse_move(hwnd,x,y,0.1)
+        for x in range(637, 759, 5):
+            for y in range(31, 154, 5):
+                Controls.win_mouse_move(hwnd, x, y, 0.1)
                 Controls.get_screen(hwnd)
-                box = Controls.locate("D:\project\python\jiuyin_robot\image\cj_qiankuang.png",0.8,offset_form= offset)
+                box = Controls.locate(
+                    "D:\project\python\jiuyin_robot\image\cj_tiekuang.png", 0.5, offset_form=offset)
                 if box:
                     print(box)
                     # Controls.win_mouse_click_box(hwnd,box,True)
-                    Controls.win_mouse_click(hwnd,x,y)
+                    Controls.win_mouse_click(hwnd, x, y)
 
 # 闪烁窗口
+
+
 def fluash_hwnd(hwnd):
-    win32gui.FlashWindowEx(hwnd,True,5,0)
+    win32gui.FlashWindowEx(hwnd, True, 5, 0)
+
 
 def tanwei(hwnd):
     point = win32api.MAKELONG(479, 344)
@@ -162,12 +178,14 @@ def tanwei(hwnd):
     time.sleep(0.2)
     win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
 
+
 def anjian(hwnd):
     Controls.activate_hwnd(hwnd)
     Controls.key_post(hwnd, 0x68)
     for _ in range(100):
         Controls.key_post(hwnd, 56)
         time.sleep(0.1)
+
 
 def labiao_npc_text(hwnd):
     Controls.activate_hwnd(hwnd)
@@ -177,13 +195,9 @@ def labiao_npc_text(hwnd):
 
 if __name__ == "__main__":
     hwnd = get_hwnd()
-    # yidong(hwnd)
+    check(hwnd)
     # Controls.win_mouse_click(hwnd,696,89,False)
     # labiao_npc_text(hwnd)
-    Controls.activate_hwnd(hwnd)
-    for _ in range(50):
-        win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0xFF880000, 0x014501DC)
-    for _ in range(10):
-        win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0x780000, 0x0176022C)
+    # Controls.activate_hwnd(hwnd)
     # anjian(hwnd)
     # win32api.MessageBox(0, "这是一个测试消息", "消息框标题",win32con.MB_OK)

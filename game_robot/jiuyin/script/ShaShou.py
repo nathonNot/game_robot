@@ -7,6 +7,7 @@ class ShaShou(BaseModule):
 
     is_act = False
     tiezi_box = None
+    is_vip = False
 
     def __init__(self):
         logger.info("初始化杀手模块")
@@ -20,6 +21,5 @@ class ShaShou(BaseModule):
             self.tiezi_box = tiezi
         jieshou = Controls.locate("image\\ss_jieshou.png", hwnd)
         if jieshou:
-            print(jieshou)
             Controls.win_mouse_click_box(hwnd,jieshou,True)
             logger.info("接受杀手邀请")

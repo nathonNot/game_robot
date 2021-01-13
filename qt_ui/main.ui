@@ -14,21 +14,6 @@
    <string>设置</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="2,8,2">
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <property name="sizeConstraint">
-    <enum>QLayout::SetDefaultConstraint</enum>
-   </property>
-   <property name="topMargin">
-    <number>9</number>
-   </property>
-   <property name="rightMargin">
-    <number>9</number>
-   </property>
-   <property name="bottomMargin">
-    <number>9</number>
-   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -74,18 +59,32 @@
       <string/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_base">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <attribute name="title">
-       <string>基本设置</string>
+       <string>基本功能</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="cb_shashou">
+           <property name="text">
+            <string>接杀手</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QCheckBox" name="cb_neigong">
+           <property name="text">
+            <string>自动点内功</string>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="1">
           <widget class="QCheckBox" name="cb_tanwei">
            <property name="text">
@@ -100,20 +99,6 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="cb_shashou">
-           <property name="text">
-            <string>接杀手</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QCheckBox" name="cb_labiao">
-           <property name="text">
-            <string>成都拉镖</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QCheckBox" name="cb_tuanlian">
            <property name="text">
@@ -121,126 +106,75 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QCheckBox" name="cb_neigong">
+         <item row="2" column="1">
+          <widget class="QPushButton" name="bt_start2">
            <property name="text">
-            <string>自动点内功</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QCheckBox" name="cb_caiji">
-           <property name="text">
-            <string>采集</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QPushButton" name="bt_caiji_set">
-           <property name="text">
-            <string>采集设置</string>
+            <string>启动</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
-       <item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_vip">
+      <property name="toolTip">
+       <string/>
+      </property>
+      <attribute name="title">
+       <string>vip功能</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0" colspan="3">
+        <widget class="QCheckBox" name="cb_caiji">
+         <property name="text">
+          <string>采集(需勾掉所有目标筛选，并小地图拉到最大)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="cb_main_win">
+         <property name="text">
+          <string>选择窗口不强锁分辨率</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="lb_hwnd_list">
+         <property name="text">
+          <string>请选择窗口</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" colspan="2">
+        <widget class="QComboBox" name="cbb_main_win"/>
+       </item>
+       <item row="1" column="4">
+        <widget class="QPushButton" name="bt_add_hwnd">
+         <property name="text">
+          <string>添加</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QPushButton" name="bt_clear_main_hwnd">
+         <property name="text">
+          <string>清空选中窗口</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QCheckBox" name="cb_labiao">
+         <property name="text">
+          <string>成都拉镖</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
         <widget class="QPushButton" name="bt_start_up">
          <property name="text">
           <string>启动</string>
          </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="page_citan">
-      <attribute name="title">
-       <string>刺探设置</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QLabel" name="lb_an_num">
-           <property name="text">
-            <string>当前在线设备数：0</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="bt_task_up">
-           <property name="text">
-            <string>保存</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="bt_del_task">
-           <property name="text">
-            <string>删除</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="bt_creat_task">
-           <property name="text">
-            <string>创建</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="tw_citan_data">
-         <property name="sizeAdjustPolicy">
-          <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-         </property>
-         <property name="autoScrollMargin">
-          <number>16</number>
-         </property>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>60</number>
-         </attribute>
-         <column>
-          <property name="text">
-           <string>任务id</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>账号</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>密码</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>大区</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>服务器</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>修改时间</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>定时计划（小时）</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>任务状态</string>
-          </property>
-         </column>
         </widget>
        </item>
       </layout>
@@ -253,20 +187,37 @@
        <string>其他功能</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="2" column="1" colspan="2">
-        <widget class="QLabel" name="lb_key_list">
+       <item row="2" column="7">
+        <widget class="QPushButton" name="bt_start_range_key">
          <property name="text">
-          <string>循环按键</string>
+          <string>开始循环</string>
          </property>
         </widget>
+       </item>
+       <item row="2" column="6">
+        <widget class="QLineEdit" name="le_range_num"/>
        </item>
        <item row="2" column="3">
         <widget class="QComboBox" name="cbb_key"/>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="lb_key_name">
+       <item row="2" column="5">
+        <widget class="QLabel" name="label">
          <property name="text">
-          <string>按键循环</string>
+          <string>循环次数</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>循环时间间隔（毫秒）</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2">
+        <widget class="QLabel" name="lb_key_list">
+         <property name="text">
+          <string>循环按键</string>
          </property>
         </widget>
        </item>
@@ -277,10 +228,10 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="7">
-        <widget class="QPushButton" name="bt_start_range_key">
+       <item row="2" column="0">
+        <widget class="QLabel" name="lb_key_name">
          <property name="text">
-          <string>开始循环</string>
+          <string>按键循环</string>
          </property>
         </widget>
        </item>
@@ -288,16 +239,6 @@
         <widget class="QPushButton" name="bt_clear_key_list">
          <property name="text">
           <string>清空循环列表</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="6">
-        <widget class="QLineEdit" name="le_range_num"/>
-       </item>
-       <item row="2" column="5">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>循环次数</string>
          </property>
         </widget>
        </item>
@@ -318,54 +259,20 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="4">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>循环时间间隔（毫秒）</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="4">
-        <widget class="QComboBox" name="cbb_main_win"/>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QCheckBox" name="cb_main_win">
-         <property name="text">
-          <string>选择窗口不强锁分辨率</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2" colspan="2">
-        <widget class="QLabel" name="lb_hwnd_list">
-         <property name="text">
-          <string>请选择窗口</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="5">
-        <widget class="QPushButton" name="bt_add_hwnd">
-         <property name="text">
-          <string>添加</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="6" colspan="2">
-        <widget class="QPushButton" name="bt_clear_main_hwnd">
-         <property name="text">
-          <string>清空选中窗口</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="lb_log">
-     <property name="text">
-      <string>运行日志</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="8">
+     <item>
+      <widget class="QLabel" name="lb_log">
+       <property name="text">
+        <string>运行日志</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

@@ -17,7 +17,7 @@ def set_windwos():
     x, y = 0, 0
     for hwnd in global_data.hwnd_list:
         # 主游戏窗口不做处理
-        if global_data.main_window_no_flush and hwnd in global_data.main_window_hwnd:
+        if global_data.main_window_no_flush and hwnd in global_data.main_window_hwnd and global_data.user_data.is_vip():
             continue
         # win32gui.SetWindowPos(hwnd, win32con.HWND_TOP,
         #                       x, y, 800, 600, win32con.SWP_SHOWWINDOW)

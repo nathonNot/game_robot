@@ -6,6 +6,7 @@ from loguru import logger
 class TanWei(BaseModule):
 
     is_act = False
+    is_vip = False
 
     def __init__(self):
         logger.info("初始化摊位模块")

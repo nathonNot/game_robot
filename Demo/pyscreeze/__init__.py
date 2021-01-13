@@ -205,6 +205,9 @@ def _locateAll_opencv(needleImage, haystackImage, grayscale=None, limit=10000, r
                                       region[0]:region[0]+region[2]]
     else:
         region = (0, 0)  # full image; these values used in the yield statement
+        
+    new_im = cv2.imwrite("im_save.png", haystackImage)
+
     if (haystackImage.shape[0] < needleImage.shape[0] or
         haystackImage.shape[1] < needleImage.shape[1]):
         # avoid semi-cryptic OpenCV error below if bad size
