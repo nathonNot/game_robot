@@ -17,7 +17,7 @@ mpWi6CMLZduub1kAvew4B5HKSRohQAQdOIPjOHQwaw5Ie6cRNeBk4RG2K4cS12qf
 SiT+DifcA7BVOgQjgbTchSfaA+YNe7A9qiVmA+G4GQ==
 '''
 
-base_url = "https://fuakorm.com"
+base_url = "http://47.102.159.15"
 ws_url = "ws://127.0.0.1:8000"
 # base_url = "http://127.0.0.1:8000"
 
