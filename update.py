@@ -86,7 +86,7 @@ def download_from_url(url, dst):
     return True
 
 if __name__ == '__main__':
-    update("https://fuakorm.com/api/jiuyin/get_version")
+    update("http://47.102.159.15/api/jiuyin/get_version")
     # unzip("0.0.0.2.zip")
     # exe_path = "start dist\\main\\main.exe"
     # os.system(exe_path)

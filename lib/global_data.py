@@ -24,10 +24,11 @@ class UserData:
     vip_end_time = None
 
     def __init__(self,**kwargs):
+        import datetime
         self.user_id = kwargs.get("id")
         self.user_name = kwargs.get("user_name")
         self.user_pass = kwargs.get("user_password")
-        self.vip_end_time = kwargs.get("vip_end_time")
+        self.vip_end_time = kwargs.get("vip_end_time")[:10]
     
     @classmethod
     def is_vip(cls):
@@ -35,7 +36,8 @@ class UserData:
             return False
         import datetime
         now = datetime.datetime.now()
-        if now > cls.vip_end_time:
+        vip_end_time = datetime.datetime.strptime(cls.vip_end_time,'%Y-%m-%d')
+        if now > vip_end_time:
             return False
         return True     
 
