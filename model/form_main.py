@@ -197,7 +197,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.bt_start_range_key.setEnabled(True)
 
     def on_bt_add_hwnd_check(self):
-        hwnd = self.cbb_target_hwnd.currentText()
+        hwnd = self.cbb_main_win.currentText()
         gbd.main_window_hwnd.append(int(hwnd))
         gbd.main_window_hwnd = list(set(gbd.main_window_hwnd))
         new_text = ",".join([str(i) for i in gbd.main_window_hwnd])
