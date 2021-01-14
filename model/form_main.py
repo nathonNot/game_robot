@@ -48,6 +48,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.cb_shashou.clicked.connect(self.on_cb_shashou_clicked)
         self.cb_tanwei.clicked.connect(self.on_cb_tanwei_clicked)
         self.bt_start_up.clicked.connect(self.on_bt_start_up_clicked)
+        self.bt_start2.clicked.connect(self.on_bt_start_up_clicked)
         self.cb_main_win.clicked.connect(self.on_cb_main_win_clicked)
         self.cb_lianan.clicked.connect(self.on_cb_lianan_clicked)
         self.set_data_signal.connect(self.set_data)
@@ -127,8 +128,10 @@ class MainForm(Ui_main, BaseForm,QObject):
             gbd.Exit = False
             thread_stop(MainRefresh)
             self.bt_start_up.setText("启动")
+            self.bt_start2.setText("启动")
         else:
             self.bt_start_up.setText("停止")
+            self.bt_start2.setText("停止")
             thread_stop(MainRefresh)
             gbd.Exit = True
             start_thread(MainRefresh)
