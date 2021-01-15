@@ -7,6 +7,7 @@ from lib.ui_lib import BaseForm
 from lib import global_data as gbd
 from model import md_user
 
+
 class MainWiondows(QMainWindow, BaseForm):
 
     log_q = []

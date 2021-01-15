@@ -3,22 +3,24 @@ import win32gui
 import win32con
 import win32api
 from ctypes import windll
-from lib import global_data
+from lib import global_data as gbd
 
 def set_windwos():
-    base_config = global_data.config_dc["base"]
+    base_config = gbd.config_dc["base"]
     jiuyin_hwnd = get_jiuyin_hwnd()
-    if jiuyin_hwnd != global_data.hwnd_list:
+    if jiuyin_hwnd != gbd.hwnd_list:
         # 设置qt窗口，刷新数据
-        global_data.hwnd_list = jiuyin_hwnd
-        global_data.MainWindow.main_widget.ref_data.connect(global_data.MainWindow.main_widget.refresh_main_win_combox)
-        global_data.MainWindow.main_widget.ref_data.emit()
-        global_data.MainWindow.main_widget.ref_data.disconnect(global_data.MainWindow.main_widget.on_ref_data)
+        gbd.hwnd_list = jiuyin_hwnd
+        gbd.MainWindow.main_widget.ref_data.connect(gbd.MainWindow.main_widget.refresh_main_win_combox)
+        gbd.MainWindow.main_widget.ref_data.emit()
+        gbd.MainWindow.main_widget.ref_data.disconnect(gbd.MainWindow.main_widget.on_ref_data)
     x, y = 0, 0
-    for hwnd in global_data.hwnd_list:
+    for hwnd in gbd.hwnd_list:
         # 主游戏窗口不做处理
-        if global_data.main_window_no_flush and hwnd in global_data.main_window_hwnd and global_data.user_data.is_vip():
-            continue
+        if gbd.main_window_no_flush:
+            if hwnd in gbd.main_window_hwnd:
+                if gbd.user_data.is_vip():
+                    continue
         # win32gui.SetWindowPos(hwnd, win32con.HWND_TOP,
         #                       x, y, 800, 600, win32con.SWP_SHOWWINDOW)
         win32gui.SetWindowPos(hwnd, win32con.HWND_BOTTOM,
