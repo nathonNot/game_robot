@@ -23,7 +23,7 @@ class TuanLian(BaseModule):
     def update_hwnd(self, hwnd):
         # 获取窗口左上角和右下角坐标
         self.onec_button.clear()
-        x,y = Controls.get_offset()
+        x,y = Controls.get_offset(hwnd)
         form = (230,440,340,45)
         up = Controls.localall("image\\tl_up.png", hwnd,self.config["up"],region = form)
         down = Controls.localall("image\\tl_down.png", hwnd,self.config["down"],region = form)

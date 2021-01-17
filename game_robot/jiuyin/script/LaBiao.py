@@ -167,10 +167,8 @@ class LaBiao(BaseModule):
         Controls.key_post(self.this_hwnd,win_key_dc["n"])
         # 视角距离滑动拉到最近
         Controls.win_gunlun_qian(self.this_hwnd)
-        Controls.sleep(1)
         # Controls.key_post(self.this_hwnd,0x4D)
         Controls.win_mouse_click(self.this_hwnd,526,35)
-        Controls.sleep(1)
         Controls.win_mouse_click(self.this_hwnd,512,456)
         self.this_state = move_to_npc
         time.sleep(1)

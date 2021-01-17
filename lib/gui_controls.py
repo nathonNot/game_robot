@@ -18,6 +18,14 @@ class Controls:
     offset_bottom = 0
     thread = None
 
+    def __init__(self,is_run):
+        self.is_run = is_run
+
+    @staticmethod
+    def get_self(hwnd):
+        from lib import global_data as gbd
+        return gbd.hwnd_work_dc[hwnd]
+
     @classmethod
     def sleep(cls,times):
         if cls.thread == None:
@@ -25,13 +33,16 @@ class Controls:
         else:
             cls.thread.msleep(int(times*100))
 
-    @classmethod
-    def get_screen(cls, hwnd):
+    @staticmethod
+    def get_screen(hwnd):
+        loc = Controls.get_self(hwnd)
+        if not loc.is_run:
+            return
         left, top, right, bottom = win32gui.GetWindowRect(hwnd)
-        cls.offset_left = left
-        cls.offset_right = right
-        cls.offset_bottom = bottom
-        cls.offset_top = top
+        loc.offset_left = left
+        loc.offset_right = right
+        loc.offset_bottom = bottom
+        loc.offset_top = top
         w = right - left
         h = bottom - top
         wDC = win32gui.GetWindowDC(hwnd)
@@ -59,12 +70,15 @@ class Controls:
         cDC.DeleteDC()
         win32gui.ReleaseDC(hwnd, wDC)
         win32gui.DeleteObject(dataBitMap.GetHandle())
-        cls.screen = image
+        loc.screen = image
 
-    @classmethod
-    def localall(cls, path, hwnd, confidence=0.9, **kwargs):
+    @staticmethod
+    def localall(path, hwnd, confidence=0.9, **kwargs):
+        loc = Controls.get_self(hwnd)
+        if not loc.is_run:
+            return
         locat_all = []
-        all_list = cls.locateAll(
+        all_list = loc.locateAll(
             path, confidence = confidence, **kwargs
         )
         if not all_list:
@@ -72,25 +86,30 @@ class Controls:
         for box in all_list:
             if box is None:
                 return []
-            locat_all.append(cls.offset_box(box))
+            locat_all.append(loc.offset_box(box))
         return locat_all
 
-    @classmethod
-    def locate(cls, path, hwnd, contrast_ratio=0.9,offset_form=None):
+    @staticmethod
+    def locate(path, hwnd, contrast_ratio=0.9,offset_form=None):
+        loc = Controls.get_self(hwnd)
+        if not loc.is_run:
+            return
         loca_box = pyscreeze.locate(
-            path, cls.screen, confidence=contrast_ratio,region=offset_form)
-        return cls.offset_box(loca_box)
+            path, loc.screen, confidence=contrast_ratio,region=offset_form)
+        return loc.offset_box(loca_box)
 
-    @classmethod
-    def get_offset(cls):
-        return cls.offset_left,cls.offset_top
+    @staticmethod
+    def get_offset(hwnd):
+        loc = Controls.get_self(hwnd)
+        return loc.offset_left,loc.offset_top
 
-    @classmethod
-    def offset_box(cls, box):
+    def offset_box(self, box):
+        if not self.is_run:
+            return
         if box is None:
             return None
-        new_left = box.left + cls.offset_left
-        new_top = box.top + cls.offset_top
+        new_left = box.left + self.offset_left
+        new_top = box.top + self.offset_top
         box._replace(left=new_left)
         box._replace(top=new_top)
         return box
@@ -117,36 +136,48 @@ class Controls:
 
     @staticmethod
     def win_mouse_click_box(hwnd, box, rexy=False, sleep_tim=0.2):
-        Controls.activate_hwnd(hwnd)
+        loc = Controls.get_self(hwnd)
+        if not loc.is_run:
+            return
+        loc.activate_hwnd(hwnd)
         if rexy:
-            x, y = Controls.get_box_xy(box)
+            x, y = loc.get_box_xy(box)
         else:
             x = box.left
             y = box.top
-        Controls.win_mouse_click(hwnd, x, y, sleep_tim)
-        Controls.un_activate_hwnd(hwnd)
+        loc.win_mouse_click(hwnd, x, y, sleep_tim)
+        loc.un_activate_hwnd(hwnd)
 
     # 直接发起鼠标点击，走windows窗口事件
-    @classmethod
-    def win_mouse_click(cls,hwnd, x, y, sleep_time=0.2):
+    @staticmethod
+    def win_mouse_click(hwnd, x, y, sleep_time=0.2):
+        loc = Controls.get_self(hwnd)
+        if not loc.is_run:
+            return
         point = win32api.MAKELONG(x, y)
         win32api.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, 1, point)
-        cls.sleep(sleep_time)
+        loc.sleep(sleep_time)
         win32api.PostMessage(hwnd, win32con.WM_LBUTTONUP, 1, point)
 
     # 直接发起鼠标点击，走windows窗口事件
-    @classmethod
-    def win_mouse_right_click(cls,hwnd, x, y, sleep_time=0.2):
+    @staticmethod
+    def win_mouse_right_click(hwnd, x, y, sleep_time=0.2):
+        loc = Controls.get_self(hwnd)
+        if not loc.is_run:
+            return
         point = win32api.MAKELONG(x, y)
         win32api.PostMessage(hwnd, win32con.WM_RBUTTONDOWN, 1, point)
-        cls.sleep(sleep_time)
+        loc.sleep(sleep_time)
         win32api.PostMessage(hwnd, win32con.WM_RBUTTONUP, 1, point)
 
-    @classmethod
-    def win_mouse_move(cls,hwnd, x, y, sleep_time=1):
+    @staticmethod
+    def win_mouse_move(hwnd, x, y, sleep_time=1):
+        loc = Controls.get_self(hwnd)
+        if not loc.is_run:
+            return
         point = win32api.MAKELONG(x, y)
         win32api.PostMessage(hwnd, win32con.WM_MOUSEMOVE, 0, point)
-        cls.sleep(sleep_time)
+        loc.sleep(sleep_time)
 
     # 闪烁窗口
     @staticmethod
@@ -166,10 +197,11 @@ class Controls:
         # for _ in range(10):
         #     win32api.PostMessage(hwnd, win32con.WM_MOUSEWHEEL, 0x780000, 0x0176022C)
 
-    @classmethod
-    def locateAll(cls,path,**kwargs):
-        box_list = pyscreeze.locateAll(path,cls.screen,**kwargs)
-        # box_list = pyautogui.locateAll(path,cls.screen,**kwargs)
+    def locateAll(self,path,**kwargs):
+        if not self.is_run:
+            return
+        box_list = pyscreeze.locateAll(path,self.screen,**kwargs)
+        # box_list = pyautogui.locateAll(path,self.screen,**kwargs)
         new_list = []
         box_list = list(box_list)
         box_list.sort(key = lambda x:x.left)
@@ -185,42 +217,43 @@ class Controls:
             new_list.append(box)
         return new_list
 
-    @classmethod
-    def get_tuanlian_box(cls,path,hwnd,confidence,region = None,**kwargs):
-        target_img = pyscreeze.load_cv2(path)
-        tem_img = pyscreeze.load_cv2(cls.screen)
+    # def get_tuanlian_box(self,path,hwnd,confidence,region = None,**kwargs):
+    #     if self.is_run:
+    #         return
+    #     target_img = pyscreeze.load_cv2(path)
+    #     tem_img = pyscreeze.load_cv2(self.screen)
 
-        # 灰度图像
-        target_gray = cv2.cvtColor(target_img, cv2.COLOR_BGR2GRAY)
-        tem_gray = cv2.cvtColor(tem_img, cv2.COLOR_BGR2GRAY)
-        if region:
-            tem_gray = tem_gray[region[1]:region[1]+region[3],
-                                        region[0]:region[0]+region[2]]
+    #     # 灰度图像
+    #     target_gray = cv2.cvtColor(target_img, cv2.COLOR_BGR2GRAY)
+    #     tem_gray = cv2.cvtColor(tem_img, cv2.COLOR_BGR2GRAY)
+    #     if region:
+    #         tem_gray = tem_gray[region[1]:region[1]+region[3],
+    #                                     region[0]:region[0]+region[2]]
 
-        #二值化
-        target_ret, target_binary = cv2.threshold(target_gray, 96, 255, cv2.THRESH_BINARY_INV)
-        tem_ret, tem_binary = cv2.threshold(tem_gray, 96, 255, cv2.THRESH_BINARY_INV)
-        # cv2.imshow("target_binary", target_binary)
-        # cv2.imshow("tem_binary", tem_binary)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
-        # print(type(target_binary))
-        # print(type(tem_binary))
-        cv2.imwrite("im_save1.png", target_binary)
-        cv2.imwrite("im_save2.png", tem_binary)
+    #     #二值化
+    #     target_ret, target_binary = cv2.threshold(target_gray, 96, 255, cv2.THRESH_BINARY_INV)
+    #     tem_ret, tem_binary = cv2.threshold(tem_gray, 96, 255, cv2.THRESH_BINARY_INV)
+    #     # cv2.imshow("target_binary", target_binary)
+    #     # cv2.imshow("tem_binary", tem_binary)
+    #     # cv2.waitKey(0)
+    #     # cv2.destroyAllWindows()
+    #     # print(type(target_binary))
+    #     # print(type(tem_binary))
+    #     cv2.imwrite("im_save1.png", target_binary)
+    #     cv2.imwrite("im_save2.png", tem_binary)
 
-        box_list = pyscreeze.locateAll_opencv(target_binary,tem_binary,confidence=confidence,**kwargs)
-        new_list = []
-        box_list = list(box_list)
-        box_list.sort(key = lambda x:x.left)
-        last_box = None
-        for box in box_list:
-            if last_box == None:
-                last_box = box
-                new_list.append(box)
-                continue
-            if (box.left - last_box.left) <= 5:
-                continue
-            last_box = box
-            new_list.append(box)
-        return new_list
+    #     box_list = pyscreeze.locateAll_opencv(target_binary,tem_binary,confidence=confidence,**kwargs)
+    #     new_list = []
+    #     box_list = list(box_list)
+    #     box_list.sort(key = lambda x:x.left)
+    #     last_box = None
+    #     for box in box_list:
+    #         if last_box == None:
+    #             last_box = box
+    #             new_list.append(box)
+    #             continue
+    #         if (box.left - last_box.left) <= 5:
+    #             continue
+    #         last_box = box
+    #         new_list.append(box)
+    #     return new_list

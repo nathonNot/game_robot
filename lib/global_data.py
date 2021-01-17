@@ -2,8 +2,11 @@ file_name = []
 module_dc = {}
 
 hwnd_list = []
+
+hwnd_work_dc = {} #窗口句柄id：控制对象
 main_window_no_flush = False
 main_window_hwnd = []
+
 
 this_screen = None
 

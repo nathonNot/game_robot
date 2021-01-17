@@ -14,6 +14,7 @@ from lib.gui_controls import Controls
 from lib.utils import win_key_dc
 from lib.thread_class import KeyRangeThread
 from model.form_caiji import CaiJiForm
+import win32gui,win32con,win32api
 
 class MainForm(Ui_main, BaseForm,QObject):
 
@@ -179,6 +180,13 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.cbb_target_hwnd.addItems([str(i) for i in gbd.hwnd_list])
 
     def on_cb_main_win_clicked(self):
+        if gbd.Exit:
+            win32api.MessageBox(0, "运行中无法修改窗口锁定", "确定",win32con.MB_OK)
+            if self.cb_main_win.isChecked():
+                self.cb_main_win.setChecked(False)
+            else:
+                self.cb_main_win.setChecked(True)
+            return
         if self.cb_main_win.isChecked():
             gbd.main_window_no_flush = True
         else:
@@ -202,6 +210,9 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.bt_start_range_key.setEnabled(True)
 
     def on_bt_add_hwnd_check(self):
+        if gbd.Exit:
+            win32api.MessageBox(0, "运行中无法修改窗口锁定", "确定",win32con.MB_OK)
+            return
         hwnd = self.cbb_main_win.currentText()
         gbd.main_window_hwnd.append(int(hwnd))
         gbd.main_window_hwnd = list(set(gbd.main_window_hwnd))
@@ -209,5 +220,8 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.lb_hwnd_list.setText(new_text)
     
     def on_clear_bt_hwnd_check(self):
+        if gbd.Exit:
+            win32api.MessageBox(0, "运行中无法修改窗口锁定", "确定",win32con.MB_OK)
+            return
         self.lb_hwnd_list.setText("")
         gbd.main_window_hwnd.clear()
