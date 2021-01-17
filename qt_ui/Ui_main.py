@@ -150,7 +150,7 @@ class Ui_main(object):
         self.verticalLayout.setStretch(2, 2)
 
         self.retranslateUi(main)
-        self.tw_config.setCurrentIndex(2)
+        self.tw_config.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(main)
 
     def retranslateUi(self, main):
