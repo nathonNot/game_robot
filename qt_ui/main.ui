@@ -40,7 +40,7 @@
      <item>
       <widget class="QPushButton" name="bt_chongzhi">
        <property name="text">
-        <string>赞助</string>
+        <string>激活vip</string>
        </property>
       </widget>
      </item>

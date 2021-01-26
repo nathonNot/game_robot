@@ -13,7 +13,7 @@ from lib.windows_con import get_jiuyin_hwnd
 from lib.gui_controls import Controls
 from lib.utils import win_key_dc
 from lib.thread_class import KeyRangeThread
-from model.form_caiji import CaiJiForm
+from model.form_actvip import ActVipForm
 import win32gui,win32con,win32api
 
 class MainForm(Ui_main, BaseForm,QObject):
@@ -28,13 +28,12 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.le_range_sleep_time.setValidator(QIntValidator(0, 65535))
         self.refresh_main_win_combox()
         self.refresh_key_range_combox()
-        self.set_caiji = CaiJiForm()
-        self.set_caiji.init()
+        self.dialog_actvip = ActVipForm()
+        self.dialog_actvip.init()
 
     def show_ui(self):
         self.lb_user_name.setText(gbd.user_data.user_name)
         self.lb_key_list.setText("")
-        self.bt_chongzhi.setVisible(False)
         self.bt_ws_con.setVisible(False)
         self.cb_labiao.setVisible(False)
         # self.cb_labiao.setVisible(False)
@@ -70,8 +69,11 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.set_caiji.show_ui()
 
     def open_chongzhi(self):
-        url = "www.baidu.com"
-        webbrowser.open(url)
+        # url = "www.baidu.com"
+        # webbrowser.open(url)
+        if not self.dialog_actvip.widget.isVisible():
+            self.dialog_actvip.show_ui()
+        
 
     def on_bt_start_range_key_clicked(self):
         if (self.bt_start_range_key.text == "正在循环按键"):

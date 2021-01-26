@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\project\python\jiuyin_robot\qt_ui\main.ui'
+# Form implementation generated from reading ui file 'd:\demo\jiuyin_robot\qt_ui\main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.1
 #
@@ -159,7 +159,7 @@ class Ui_main(object):
         self.lb_user_name.setText(_translate("main", "用户名"))
         self.lb_user_vip.setText(_translate("main", "vip到期时间:"))
         self.lb_vip_end_time.setText(_translate("main", "2021-1-1"))
-        self.bt_chongzhi.setText(_translate("main", "赞助"))
+        self.bt_chongzhi.setText(_translate("main", "激活vip"))
         self.bt_ws_con.setText(_translate("main", "连接到服务器"))
         self.cb_shashou.setText(_translate("main", "接杀手"))
         self.cb_neigong.setText(_translate("main", "自动点内功"))
