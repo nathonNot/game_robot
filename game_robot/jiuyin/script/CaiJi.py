@@ -17,10 +17,10 @@ class CaiJi(BaseModule):
         Controls.un_activate_hwnd(hwnd)
         
     def flush(self,hwnd):
-        for x in range(678,726,5):
+        for x in range(680,720,5):
             if self.check_shiqu(hwnd,x,40):
                 return
-        for x in range(670,734,5):
+        for x in range(675,730,5):
             if self.check_shiqu(hwnd,x,50):
                 return
         for x in range(650,745,5):
@@ -28,9 +28,6 @@ class CaiJi(BaseModule):
                 return
         for x in range(640,750,5):
             if self.check_shiqu(hwnd,x,70):
-                return
-        for x in range(637,755,5):
-            if self.check_shiqu(hwnd,x,80):
                 return
         for x in range(637,755,5):
             if self.check_shiqu(hwnd,x,80):
