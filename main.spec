@@ -4,7 +4,7 @@ block_cipher = pyi_crypto.PyiBlockCipher(key='asdbasd')
 
 
 a = Analysis(['main.py'],
-             pathex=['D:/DevelopLanguage/python/env/jiuyin_robot/Lib/site-packages/qt5_applications/Qt/bin', 'D:\\project\\python\\jiuyin_robot'],
+             pathex=['D:/DevelopLanguage/python/env/jiuyin_robot/Lib/site-packages', 'D:\\project\\python\\jiuyin_robot'],
              binaries=[],
              datas=[('image', 'image'),('config','config'),('log','log')],
              hiddenimports=['pywintypes'],
