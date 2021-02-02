@@ -15,7 +15,7 @@ def set_windwos():
         gbd.MainWindow.main_widget.ref_data.emit()
         gbd.MainWindow.main_widget.ref_data.disconnect(gbd.MainWindow.main_widget.on_ref_data)
     x, y = 0, 0
-    for hwnd in gbd.hwnd_list:
+    for index,hwnd in enumerate(gbd.hwnd_list):
         # 主游戏窗口不做处理
         if gbd.main_window_no_flush:
             if hwnd in gbd.main_window_hwnd:
@@ -24,7 +24,7 @@ def set_windwos():
         # win32gui.SetWindowPos(hwnd, win32con.HWND_TOP,
         #                       x, y, 800, 600, win32con.SWP_SHOWWINDOW)
         win32gui.SetWindowPos(hwnd, win32con.HWND_BOTTOM,
-                              x, y, base_config["resolving_w"], base_config["resolving_h"], win32con.SWP_NOMOVE)
+                              index*base_config["resolving_w"], 0, base_config["resolving_w"], base_config["resolving_h"], win32con.SWP_NOMOVE)
     # 查找窗口句柄
     # win32gui.FindWindow("")
 
