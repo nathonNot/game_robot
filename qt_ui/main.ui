@@ -125,52 +125,59 @@
        <string>vip功能</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0" colspan="3">
-        <widget class="QCheckBox" name="cb_caiji">
-         <property name="text">
-          <string>采集(需勾掉所有目标筛选，并小地图拉到最大)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="cb_main_win">
-         <property name="text">
-          <string>选择窗口不强锁分辨率</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="lb_hwnd_list">
-         <property name="text">
-          <string>请选择窗口</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2" colspan="2">
-        <widget class="QComboBox" name="cbb_main_win"/>
-       </item>
-       <item row="1" column="4">
-        <widget class="QPushButton" name="bt_add_hwnd">
-         <property name="text">
-          <string>添加</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
+       <item row="2" column="5">
         <widget class="QPushButton" name="bt_clear_main_hwnd">
          <property name="text">
           <string>清空选中窗口</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
+       <item row="1" column="0" colspan="3">
+        <widget class="QCheckBox" name="cb_caiji">
+         <property name="text">
+          <string>采集(需勾掉所有目标筛选，并小地图拉到最大)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QPushButton" name="bt_add_hwnd">
+         <property name="text">
+          <string>添加</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2" colspan="2">
+        <widget class="QComboBox" name="cbb_main_win"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="lb_hwnd_list">
+         <property name="text">
+          <string>请选择窗口</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="cb_main_win">
+         <property name="text">
+          <string>选择窗口不强锁分辨率</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
         <widget class="QCheckBox" name="cb_labiao">
          <property name="text">
           <string>成都拉镖</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="4">
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="cb_tanqin">
+         <property name="text">
+          <string>自动战斗琴（技能放到6键，并把右下角窗口全部缩小）</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="5">
         <widget class="QPushButton" name="bt_start_up">
          <property name="text">
           <string>启动</string>
