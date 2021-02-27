@@ -13,7 +13,7 @@ def set_windwos():
         gbd.hwnd_list = jiuyin_hwnd
         gbd.MainWindow.main_widget.ref_data.connect(gbd.MainWindow.main_widget.refresh_main_win_combox)
         gbd.MainWindow.main_widget.ref_data.emit()
-        gbd.MainWindow.main_widget.ref_data.disconnect(gbd.MainWindow.main_widget.on_ref_data)
+        gbd.MainWindow.main_widget.ref_data.disconnect(gbd.MainWindow.main_widget.refresh_main_win_combox)
     x, y = 0, 0
     for index,hwnd in enumerate(gbd.hwnd_list):
         # 主游戏窗口不做处理

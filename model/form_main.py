@@ -178,7 +178,9 @@ class MainForm(Ui_main, BaseForm,QObject):
     def refresh_main_win_combox(self):
         if len(gbd.hwnd_list) < 1:
             gbd.hwnd_list = get_jiuyin_hwnd()
+        self.cbb_main_win.clear()
         self.cbb_main_win.addItems([str(i) for i in gbd.hwnd_list])
+        self.cbb_target_hwnd.clear()
         self.cbb_target_hwnd.addItems([str(i) for i in gbd.hwnd_list])
 
     def on_cb_main_win_clicked(self):
