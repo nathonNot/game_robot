@@ -31,7 +31,7 @@ import win32con
 
 def log_init(level="DEBUG"):
     logger.add(
-        "log\\runtime_{time}.log", retention="10 days", rotation="5 MB", level=level
+        "log\\runtime.log", rotation="5 MB", level=level
     )
 
 

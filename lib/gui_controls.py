@@ -134,6 +134,15 @@ class Controls:
             cls.sleep(sleep_time)
         win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0x2E0001)
 
+    @classmethod
+    def key_post2(cls,hwnd, key, sleep_time=0):
+        win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, key, 0x2E0001)
+        if sleep_time > 0:
+            cls.sleep(sleep_time)
+        win32api.PostMessage(hwnd, win32con.WM_CHAR, key, 0x2E0001)
+        win32api.PostMessage(hwnd, win32con.WM_KEYUP, key, 0x2E0001)
+
+
     @staticmethod
     def win_mouse_click_box(hwnd, box, rexy=False, sleep_tim=0.2):
         loc = Controls.get_self(hwnd)

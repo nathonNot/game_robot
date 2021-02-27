@@ -207,7 +207,9 @@ def _locateAll_opencv(needleImage, haystackImage, grayscale=None, limit=10000, r
                                       region[0]:region[0]+region[2]]
     else:
         region = (0, 0)  # full image; these values used in the yield statement
-    # new_im = cv2.imwrite("im_save.png", haystackImage)
+    
+    # if confidence == 0.5:
+        # cv2.imwrite("im_save.png", haystackImage)
     
     if threshold:
             #二值化

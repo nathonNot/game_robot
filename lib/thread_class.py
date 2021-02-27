@@ -78,7 +78,7 @@ class WorkRefresh(ThreadBase):
                             continue
                     if m.is_act:
                         m.fram_update(self.hwnd)
-                self.msleep(200)
+                self.msleep(100)
                 # time.sleep(0.2)
             except Exception as e:
                 logger.error(str(e))

@@ -62,6 +62,7 @@ class MainForm(Ui_main, BaseForm,QObject):
         self.bt_add_hwnd.clicked.connect(self.on_bt_add_hwnd_check)
         self.bt_clear_main_hwnd.clicked.connect(self.on_clear_bt_hwnd_check)
         self.cb_caiji.clicked.connect(self.on_cb_caiji_clicked)
+        self.cb_tanqin.clicked.connect(self.on_cb_tanqin_clicked)
         # self.cbb_main_win.clicked.connect(self.refresh_main_win_combox)
         # self.cbb_target_hwnd.clicked.connect(self.refresh_main_win_combox)
 
@@ -105,6 +106,9 @@ class MainForm(Ui_main, BaseForm,QObject):
     def on_bt_clear_key_list_clicked(self):
         gbd.key_range_list.clear()
         self.lb_key_list.setText("")
+    
+    def on_cb_tanqin_clicked(self):
+        gbd.module_dc["弹琴"].is_act = self.cb_tanqin.isChecked()
 
     def on_cb_caiji_clicked(self):
         gbd.module_dc["采集"].is_act = self.cb_caiji.isChecked()
