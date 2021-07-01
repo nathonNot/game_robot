@@ -5,3 +5,4 @@ dist.zip
 /dist/main/*
 log/*
 /release/
+config.py
