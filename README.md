@@ -1,6 +1,6 @@
 # game_robot
 
-
+国内gitee镜像：https://gitee.com/liuyu674/game_robot
 ## Introduction - 介绍
 windows下游戏脚本工具
 
@@ -12,28 +12,17 @@ windows下游戏脚本工具
 
 ## Development
 目前这个脚本主要在做九阴真经ol的一些功能，不过由于个人时间目前不太够了，就把这个开源了。
+当初在设计结构的时候考虑到了游戏移植，所以剥离了功能和整体框架的关系，并不影响对其他游戏同等脚本功能的开发。
 
+### 九阴
+目前对九阴这款游戏来说，已经完成了团练，授业，挂机，采集，自动接杀手的功能，自动琴和拉镖之前有做，不过做到一半后来有点事就放弃了。
 
-## Changelog - 更新日志（一个简短的历史记录（更改，替换或者其他）。）
+### Dos - 文档
 
-## FAQ - 常见问题（常见问题。）
-
-## Support - 支持
-
-### Dos - 文档（更多文档。）
 
 ### Contact
 qq群：978098280
 
-
-## License - 版权信息（版权和许可信息（或阅读许可证）、法律声明。）
-游戏脚本
-TODO:
-1.采集
-2.自动接杀手
-3.画师，书生
-4.自动刺探
-
-DONE：
-1.团练，授业
-2.自动点内功
+## License
+ 
+This project is licensed under the MulanPSL2 License - see the [LICENSE.md](LICENSE.md) file for details
