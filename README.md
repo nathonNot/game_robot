@@ -1,6 +1,6 @@
 # game_robot
 
-国内gitee镜像：https://gitee.com/liuyu674/game_robot
+国内gitee镜像：https://gitee.com/ly674/game_robot
 ## Introduction - 介绍
 windows下游戏脚本工具
 
